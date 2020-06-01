@@ -5,4 +5,3 @@ class Player:
 
     def point(self):
         self.score += 1
-

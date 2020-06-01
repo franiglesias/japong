@@ -3,6 +3,7 @@ import random
 import pygame
 
 import pong
+import pong.app.app
 import pong.config
 
 
@@ -79,14 +80,11 @@ class Ball(pygame.sprite.Sprite):
 
     @staticmethod
     def _play_pad_hit_sound():
-        from pong.main import playerHit
-        playerHit.play()
+        pong.app.app.playerHit.play()
 
     @staticmethod
     def _play_side_hit_sound():
-        from pong.main import sideHit
-        sideHit.play()
+        pong.app.app.sideHit.play()
 
     def _start_transformation_count_down(self):
-        from pong.main import FPS
-        self.remaining = FPS / 16
+        self.remaining = pong.config.FPS / 16

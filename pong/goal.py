@@ -1,7 +1,8 @@
 import pygame
 
-import pong.player
+import pong.app
 import pong.config
+import pong.player
 
 GOAL_HIGHLIGHT_IN_SECONDS = 1.5
 
@@ -23,16 +24,13 @@ class Goal(pygame.sprite.Sprite):
         self.player = player
 
     def hit(self):
-        from pong.main import sideHit
-        sideHit.play()
+        pong.app.app.sideHit.play()
         self.image.fill(pong.config.red)
-        from pong.main import FPS
-        self.remaining = FPS * GOAL_HIGHLIGHT_IN_SECONDS
+
+        self.remaining = pong.config.FPS * GOAL_HIGHLIGHT_IN_SECONDS
 
     def update(self):
         if self.remaining > 0:
             self.remaining -= 1
             return
         self.image.fill(pong.config.white)
-
-
