@@ -1,5 +1,6 @@
 import pygame
 
+import pong.app.window
 import pong.config
 import pong.ponggame
 
@@ -12,7 +13,9 @@ point = pygame.mixer.Sound(pong.config.basepath + '/sounds/ohno.wav')
 
 
 class App():
-    def run(self):
-        pong.ponggame.ponggame()
+    def __init__(self):
+        self.window = pong.app.window.Window(800, 600, 'Japong!')
 
-        return 0
+    def run(self):
+        return self.window.run()
+

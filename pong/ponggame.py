@@ -1,7 +1,8 @@
 import pygame
+import pygame.surface
 
 
-def ponggame():
+def ponggame(screen: pygame.surface.Surface):
     import pong.ball
     import pong.border
     import pong.config
@@ -9,12 +10,6 @@ def ponggame():
     import pong.pad
     import pong.player
     import pong.scoreboard
-
-    # Prepare the screen
-    size = (800, 600)
-    screen = pygame.display.set_mode(size)
-    pygame.display.set_caption("Ja pong!")
-    # Prepare sound effects
 
     # game loop control
     done = False
