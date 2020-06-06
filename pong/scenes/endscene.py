@@ -10,12 +10,11 @@ class EndScene(Scene):
         super().__init__(window)
 
     def run(self):
-        scoreFont = pygame.font.Font(pygame.font.get_default_font(), 64)
-        text = scoreFont.render('Game finished', True, pong.config.yellow, pong.config.green)
         self.window.score_board.winner(self.window.screen)
-        text_rect = text.get_rect()
-        text_rect.center = (800 // 2, 600 // 2)
-        self.window.screen.blit(text, text_rect)
+
+        self.text_renderer.blit(pong.config.text_main_title, 'Game finished', 'center', 'middle')
+        self.text_renderer.blit(pong.config.text_prompt, 'Press any key to exit', 'center', 'bottom')
+
         pygame.display.flip()
         done = False
         while not done:

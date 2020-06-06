@@ -1,5 +1,6 @@
 import pygame
 
+import pong.utils.textrenderer
 import pong.config
 from pong.app.scene import Scene
 from pong.app.window import Window
@@ -19,7 +20,10 @@ class StartScene(Scene):
                     done = True
 
             self.window.screen.fill(pong.config.white)
+
             self.window.screen.blit(image, (0, 0))
+            self.text_renderer.blit(pong.config.text_prompt, 'Press any key to play', 'center', 'bottom')
+
             pygame.display.flip()
 
         return 0
