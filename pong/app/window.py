@@ -1,7 +1,5 @@
 import pygame
 
-import pong.ponggame
-
 
 class Window(object):
     def __init__(self, width: int, height: int, title: str):
@@ -14,6 +12,14 @@ class Window(object):
 
         self.score_board = None
 
+        self.scenes = []
+
     def run(self):
-        pong.ponggame.ponggame(self.screen)
+        for scene in self.scenes:
+            error = scene.run()
+            if error != 0:
+                return error
         return 0
+
+    def add_scene(self, scene):
+        self.scenes.append(scene)
