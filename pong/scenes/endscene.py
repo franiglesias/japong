@@ -10,7 +10,6 @@ class EndScene(Scene):
         super().__init__(window)
 
     def run(self):
-        pygame.font.init()
         scoreFont = pygame.font.Font(pygame.font.get_default_font(), 64)
         text = scoreFont.render('Game finished', True, pong.config.yellow, pong.config.green)
         self.window.score_board.winner(self.window.screen)
@@ -23,7 +22,5 @@ class EndScene(Scene):
             for event in pygame.event.get():
                 if event.type == pygame.KEYDOWN:
                     done = True
-
-        pygame.quit()
 
         return 0

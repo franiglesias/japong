@@ -17,6 +17,7 @@ class GameScene(Scene):
         import pong.player
         import pong.scoreboard
 
+
         screen = self.window.screen
         # game loop control
         done = False

@@ -2,18 +2,16 @@ import unittest.mock
 
 import pygame
 
-import pong.scenes.endscene
+import pong.scenes.startscene
 from pong.app.window import Window
 from pong.tests import events
 
 
-class EndSceneTestCase(unittest.TestCase):
-    @unittest.mock.patch("pong.scoreboard.ScoreBoard")
+class StartSceneTestCase(unittest.TestCase):
     @unittest.mock.patch('pygame.event.get', return_value=[events.any_key_event])
-    def test_should_run_fine(self, score_board_mock, mock):
+    def test_should_run_fine(self, mock):
         window = pong.app.window.Window(800, 600, 'Test')
-        window.score_board = score_board_mock
-        scene = pong.scenes.endscene.EndScene(window)
+        scene = pong.scenes.startscene.StartScene(window)
 
         pygame.init()
         self.assertEqual(0, scene.run())

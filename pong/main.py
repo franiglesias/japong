@@ -2,7 +2,6 @@ import os
 import sys
 
 import pong.app.app
-import pong.ponggame
 
 # Init game engine
 

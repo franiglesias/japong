@@ -1,5 +1,7 @@
 import unittest.mock
 
+import pygame
+
 import pong.scenes.gamescene
 from pong.app.window import Window
 from pong.tests import events
@@ -11,7 +13,9 @@ class GameSceneTestCase(unittest.TestCase):
         window = pong.app.window.Window(800, 600, 'Test')
         scene = pong.scenes.gamescene.GameScene(window)
 
+        pygame.init()
         self.assertEqual(0, scene.run())
+        pygame.quit()
 
 
 if __name__ == '__main__':
