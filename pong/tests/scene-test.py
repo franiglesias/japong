@@ -2,7 +2,7 @@ import unittest.mock
 
 import pong.app.window
 from pong.app.scene import Scene
-from pong.scenes.ganescene import GameScene
+
 
 class SceneTestCase(unittest.TestCase):
     def test_should_run_fine(self):

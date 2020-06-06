@@ -18,4 +18,3 @@ class App(object):
 
     def run(self):
         return self.window.run()
-

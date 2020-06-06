@@ -12,6 +12,8 @@ class Window(object):
         self.screen = pygame.display.set_mode(size)
         pygame.display.set_caption(self.title)
 
+        self.score_board = None
+
     def run(self):
         pong.ponggame.ponggame(self.screen)
         return 0

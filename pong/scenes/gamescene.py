@@ -32,7 +32,7 @@ class GameScene(Scene):
         border_bottom = pong.border.Border(590)
         player1 = pong.player.Player('left')
         player2 = pong.player.Player('computer')
-        score_board = pong.scoreboard.ScoreBoard(player1, player2)
+        self.window.score_board = pong.scoreboard.ScoreBoard(player1, player2)
         goal_left = pong.goal.Goal(0, player2)
         goal_right = pong.goal.Goal(790, player1)
         # Prepare sprites
@@ -84,13 +84,13 @@ class GameScene(Scene):
 
             # Game draw
             screen.fill(pong.config.green)
-            score_board.draw(screen)
+            self.window.score_board.draw(screen)
             all_sprites.draw(screen)
 
             # Screen update
             pygame.display.flip()
 
-            if score_board.stop():
+            if self.window.score_board.stop():
                 done = True
 
             clock.tick(pong.config.FPS)
