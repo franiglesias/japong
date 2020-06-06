@@ -12,7 +12,7 @@ sideHit = pygame.mixer.Sound(pong.config.basepath + '/sounds/side.wav')
 point = pygame.mixer.Sound(pong.config.basepath + '/sounds/ohno.wav')
 
 
-class App():
+class App(object):
     def __init__(self):
         self.window = pong.app.window.Window(800, 600, 'Japong!')
 

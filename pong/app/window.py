@@ -8,11 +8,10 @@ class Window(object):
         self.width = width
         self.height = height
         self.title = title
-
-    def run(self):
         size = (self.width, self.height)
-        screen = pygame.display.set_mode(size)
+        self.screen = pygame.display.set_mode(size)
         pygame.display.set_caption(self.title)
 
-        pong.ponggame.ponggame(screen)
+    def run(self):
+        pong.ponggame.ponggame(self.screen)
         return 0
