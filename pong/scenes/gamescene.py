@@ -17,7 +17,6 @@ class GameScene(Scene):
         import pong.player
         import pong.scoreboard
 
-
         screen = self.window.screen
         # game loop control
         done = False
@@ -85,7 +84,7 @@ class GameScene(Scene):
 
             # Game draw
             screen.fill(pong.config.green)
-            self.window.score_board.draw(screen)
+            self.window.score_board.draw(self)
             all_sprites.draw(screen)
 
             # Screen update

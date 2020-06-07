@@ -10,10 +10,10 @@ class EndScene(Scene):
         super().__init__(window)
 
     def run(self):
-        self.window.score_board.winner(self.window.screen)
+        self.window.score_board.winner(self)
 
-        self.text_renderer.blit(pong.config.text_main_title, 'Game finished', 'center', 'middle')
-        self.text_renderer.blit(pong.config.text_prompt, 'Press any key to exit', 'center', 'bottom')
+        self.text_renderer.blit('Game finished', pong.config.style_end_title)
+        self.text_renderer.blit('Press any key to exit', pong.config.style_prompt)
 
         pygame.display.flip()
         done = False

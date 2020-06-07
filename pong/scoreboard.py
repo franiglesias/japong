@@ -10,24 +10,17 @@ class ScoreBoard:
         self.player2 = player2
         self.target = POINTS_TO_WIN
 
-    def draw(self, in_screen):
+    def draw(self, scene):
         board = " {0} : {1} ".format(self.player1.score, self.player2.score)
-        self._render_board(board, in_screen)
+        scene.text_renderer.blit(board, pong.config.style_score)
 
     def stop(self):
         return self.player1.score == self.target or self.player2.score == self.target
 
-    def winner(self, in_screen):
+    def winner(self, scene):
         if self.player1.score > self.player2.score:
             winner = self.player1
         else:
             winner = self.player2
         board = " {0} WON! ({1}-{2}) ".format(winner.name, self.player1.score, self.player2.score)
-        self._render_board(board, in_screen)
-
-    def _render_board(self, board, in_screen):
-        scoreFont = pygame.font.Font(pygame.font.get_default_font(), 64)
-        score_text = scoreFont.render(board, True, pong.config.black, pong.config.white)
-        score_text_rect = score_text.get_rect()
-        score_text_rect.center = (800 // 2, 40)
-        in_screen.blit(score_text, score_text_rect)
+        scene.text_renderer.blit(board, pong.config.style_score)

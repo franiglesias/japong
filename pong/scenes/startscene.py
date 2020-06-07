@@ -22,7 +22,7 @@ class StartScene(Scene):
             self.window.screen.fill(pong.config.white)
 
             self.window.screen.blit(image, (0, 0))
-            self.text_renderer.blit(pong.config.text_prompt, 'Press any key to play', 'center', 'bottom')
+            self.text_renderer.blit('Press any key to play', pong.config.style_prompt)
 
             pygame.display.flip()
 
