@@ -9,13 +9,12 @@ class TestBall(TestCase):
     def setUp(self) -> None:
         super().setUp()
         self.ball = pong.ball.Ball((100, 100, 100), 10)
-        self.pad = pong.pad.Pad('left')
 
     def test_bounce_with_right_pad(self):
         self.ball.dx = 1
         self.ball.dy = 1
 
-        self.ball.bounce_with_pad(self.pad)
+        self.ball.bounce_with_pad()
 
         self.assertEqual(-1, self.ball.dx)
         self.assertEqual(1, self.ball.dy)
@@ -24,17 +23,16 @@ class TestBall(TestCase):
         self.ball.dx = -1
         self.ball.dy = 1
 
-        self.ball.bounce_with_pad(self.pad)
+        self.ball.bounce_with_pad()
 
         self.assertEqual(1, self.ball.dx)
         self.assertEqual(1, self.ball.dy)
-
 
     def test_bounce_in_central_right_pad_region_resets_speed(self):
         self.ball.dx = 2
         self.ball.dy = 2
 
-        self.ball.bounce_with_pad(self.pad)
+        self.ball.bounce_with_pad()
 
         self.assertEqual(-1, self.ball.dx)
         self.assertEqual(1, self.ball.dy)
@@ -43,7 +41,7 @@ class TestBall(TestCase):
         self.ball.dx = -2
         self.ball.dy = -2
 
-        self.ball.bounce_with_pad(self.pad)
+        self.ball.bounce_with_pad()
 
         self.assertEqual(1, self.ball.dx)
         self.assertEqual(-1, self.ball.dy)

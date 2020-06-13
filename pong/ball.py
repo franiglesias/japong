@@ -60,7 +60,7 @@ class Ball(pygame.sprite.Sprite):
             self._start_transformation_count_down()
             self._play_pad_hit_sound()
             self.rx = 1.3
-            self.bounce_with_pad(pad)
+            pad.hit(self)
 
         if self.remaining > 0:
             self.remaining -= 1
@@ -81,10 +81,21 @@ class Ball(pygame.sprite.Sprite):
     def bounce_with_border(self):
         self.dy *= -1
 
-    def bounce_with_pad(self, pad):
+    def bounce_with_pad(self):
         self.dx = 1 * -(self.dx // abs(self.dx))
         self.dy = 1 * (self.dy // abs(self.dy))
 
+    def bounce_middle_pad(self):
+        self.dx = 2 * -(self.dx // abs(self.dx))
+        self.dy = 2 * (self.dy // abs(self.dy))
+
+    def bounce_with_pad_top(self):
+        self.dx = 1 * -(self.dx // abs(self.dx))
+        self.dy = -2
+
+    def bounce_with_pad_bottom(self):
+        self.dx = 1 * -(self.dx // abs(self.dx))
+        self.dy = 2
 
     @staticmethod
     def _play_pad_hit_sound():

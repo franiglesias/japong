@@ -54,3 +54,15 @@ class Pad(pygame.sprite.Sprite):
             self.down()
         if the_ball.rect.y < self.rect.y:
             self.up()
+
+    def hit(self, ball):
+        ball_y_position_respect_pad = ball.rect.y + ball.radius - self.rect.y
+
+        if ball_y_position_respect_pad < 7:
+            ball.bounce_with_pad_top()
+        elif ball_y_position_respect_pad > 68:
+            ball.bounce_with_pad_bottom()
+        elif 7 <= ball_y_position_respect_pad < 18 or 57 < ball_y_position_respect_pad <= 68:
+            ball.bounce_middle_pad()
+        else:
+            ball.bounce_with_pad()
