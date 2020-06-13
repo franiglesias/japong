@@ -52,15 +52,15 @@ class Ball(pygame.sprite.Sprite):
             self._start_transformation_count_down()
             self._play_side_hit_sound()
             self.ry = 1.3
-            self.dy *= -1
+            self.bounce_with_border()
 
         pad_collisions = pygame.sprite.spritecollide(self, self.pads, False)
-        for _ in pad_collisions:
+        for pad in pad_collisions:
             self.rect.x -= self.dx
             self._start_transformation_count_down()
             self._play_pad_hit_sound()
             self.rx = 1.3
-            self.dx *= -1
+            self.bounce_with_pad(pad)
 
         if self.remaining > 0:
             self.remaining -= 1
@@ -77,6 +77,14 @@ class Ball(pygame.sprite.Sprite):
         y = self.radius - (height / 2)
         x = self.radius - (width / 2)
         pygame.draw.ellipse(self.image, self.color, [x, y, width, height])
+
+    def bounce_with_border(self):
+        self.dy *= -1
+
+    def bounce_with_pad(self, pad):
+        self.dx = 1 * -(self.dx // abs(self.dx))
+        self.dy = 1 * (self.dy // abs(self.dy))
+
 
     @staticmethod
     def _play_pad_hit_sound():
