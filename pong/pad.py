@@ -10,6 +10,9 @@ class Pad(pygame.sprite.Sprite):
     def __init__(self, side):
         super().__init__()
 
+        self.top_region_pct = 10
+        self.middle_region_pct = 15
+
         self.width = 25
         self.height = 75
 
@@ -56,13 +59,27 @@ class Pad(pygame.sprite.Sprite):
             self.up()
 
     def hit(self, ball):
-        ball_y_position_respect_pad = ball.rect.y + ball.radius - self.rect.y
+        ball_center_y = ball.rect.y + ball.radius - self.rect.y
 
-        if ball_y_position_respect_pad < 7:
+        if ball_center_y < self.__top_region_limit():
             ball.bounce_with_pad_top()
-        elif ball_y_position_respect_pad > 68:
+        elif ball_center_y > self.__bottom_region_limit():
             ball.bounce_with_pad_bottom()
-        elif 7 <= ball_y_position_respect_pad < 18 or 57 < ball_y_position_respect_pad <= 68:
+        elif self.__top_region_limit() <= ball_center_y < self.__upper_middle_limit():
+            ball.bounce_middle_pad()
+        elif self.__bottom_middle_limit() < ball_center_y <= self.__bottom_region_limit():
             ball.bounce_middle_pad()
         else:
             ball.bounce_with_pad()
+
+    def __top_region_limit(self):
+        return self.top_region_pct * self.height // 100
+
+    def __upper_middle_limit(self):
+        return (self.middle_region_pct + self.top_region_pct) * self.height // 100
+
+    def __bottom_middle_limit(self):
+        return ((100 - self.top_region_pct - self.middle_region_pct) * self.height) // 100
+
+    def __bottom_region_limit(self):
+        return ((100 - self.top_region_pct) * self.height) // 100
