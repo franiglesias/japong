@@ -1,5 +1,3 @@
-import random
-
 import pygame
 
 import pong.ball
@@ -9,6 +7,10 @@ import pong.config
 class Pad(pygame.sprite.Sprite):
     def __init__(self, side):
         super().__init__()
+
+        self.max_ability = 10
+        self.computer_ability = 10
+        self.min_ability = 0
 
         self.top_region_pct = 10
         self.middle_region_pct = 15
@@ -50,9 +52,6 @@ class Pad(pygame.sprite.Sprite):
             self.stop()
 
     def follow(self, the_ball: pong.ball.Ball):
-        if random.randint(0, 10) > 5:
-            self.stop()
-            return
         if the_ball.rect.y > self.rect.y:
             self.down()
         if the_ball.rect.y < self.rect.y:

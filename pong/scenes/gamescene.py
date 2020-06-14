@@ -13,7 +13,7 @@ class GameScene(Scene):
         import pong.border
         import pong.config
         import pong.goal
-        import pong.pad
+        import pong.game.pad
         import pong.player
         import pong.scoreboard
 
@@ -23,8 +23,8 @@ class GameScene(Scene):
         # screen updates
         clock = pygame.time.Clock()
         ball = pong.ball.Ball(pong.config.yellow, 10)
-        pad_left = pong.pad.Pad('left')
-        pad_right = pong.pad.Pad('right')
+        pad_left = pong.game.pad.Pad('left')
+        pad_right = pong.game.pad.Pad('right')
         pads = pygame.sprite.Group()
         pads.add(pad_left)
         pads.add(pad_right)
@@ -55,9 +55,13 @@ class GameScene(Scene):
         goals.add(goal_left)
         goals.add(goal_right)
         # Game loop
+
+        pygame.time.set_timer(pong.config.COMPUTER_MOVES_EVENT, pong.config.COMPUTER_MOVES_TIMER_MS)
         while not done:
             # Event
             for event in pygame.event.get():
+                if event.type == pong.config.COMPUTER_MOVES_EVENT:
+                    pad_right.follow(ball)
                 if event.type == pygame.QUIT:
                     done = True
 
@@ -70,8 +74,6 @@ class GameScene(Scene):
                 pad_left.down()
             else:
                 pad_left.stop()
-
-            pad_right.follow(ball)
 
             all_sprites.update()
 

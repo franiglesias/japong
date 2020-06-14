@@ -1,6 +1,8 @@
 import os
 
 # COLORS
+import pygame.constants
+
 black = (0, 0, 0)
 white = (255, 255, 255)
 green = (36, 102, 38)
@@ -29,4 +31,7 @@ basepath = os.path.dirname(os.path.realpath(__file__))
 POINTS_TO_WIN = 5
 FPS = 180
 
+# CUSTOM GAME EVENTS
 
+COMPUTER_MOVES_EVENT = pygame.constants.USEREVENT + 1
+COMPUTER_MOVES_TIMER_MS = 5

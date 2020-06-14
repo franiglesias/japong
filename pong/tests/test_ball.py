@@ -1,7 +1,7 @@
 from unittest import TestCase
 
 import pong.ball
-import pong.pad
+import pong.game.pad
 
 
 class TestBall(TestCase):
