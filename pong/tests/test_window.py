@@ -1,7 +1,7 @@
 import unittest.mock
 
-from pong.app.window import Window
 from pong.app.scene import Scene
+from pong.app.window import Window
 from pong.tests import events
 
 
@@ -30,6 +30,13 @@ class WindowTestCase(unittest.TestCase):
         with unittest.mock.patch.object(error_scene, 'run', wraps=error_scene.run, return_value=-1) as spy:
             window.add_scene(error_scene)
             self.assertEqual(-1, window.run())
+
+    def test_should_allow_play_again(self):
+        window = Window(800, 600, 'Test')
+        play_again_scene = Scene(window)
+        with unittest.mock.patch.object(play_again_scene, 'run', wraps=play_again_scene.run, side_effect=[1, 0]) as spy:
+            window.add_scene(play_again_scene)
+            self.assertEqual(0, window.run())
 
 
 if __name__ == '__main__':

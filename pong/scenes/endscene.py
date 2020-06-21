@@ -13,13 +13,21 @@ class EndScene(Scene):
         self.window.score_board.winner(self)
 
         self.text_renderer.blit('Game finished', pong.config.style_end_title)
-        self.text_renderer.blit('Press any key to exit', pong.config.style_prompt)
+        self.text_renderer.blit('Press P to play again or any other key to exit', pong.config.style_prompt)
 
         pygame.display.flip()
         done = False
-        while not done:
-            for event in pygame.event.get():
-                if event.type == pygame.KEYDOWN:
-                    done = True
+        exit_code = 0
 
-        return 0
+        pygame.event.clear()
+        pygame.time.delay(1000)
+
+        while not done:
+            event = pygame.event.wait()
+            if event.type in (pygame.KEYDOWN, pygame.KEYUP):
+                key_name = pygame.key.name(event.key)
+                if key_name == "p":
+                    exit_code = self.window.PLAY_AGAIN
+                done = True
+
+        return exit_code
