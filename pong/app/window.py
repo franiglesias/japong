@@ -1,5 +1,7 @@
 import pygame
 
+import pong.game.game
+
 
 class Window(object):
     def __init__(self, width: int, height: int, title: str):
@@ -12,6 +14,8 @@ class Window(object):
 
         self.score_board = None
         self.PLAY_AGAIN = 1
+
+        self.game = pong.game.game.Game()
 
         self.scenes = []
 

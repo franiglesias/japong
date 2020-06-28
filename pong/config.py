@@ -35,3 +35,6 @@ FPS = 180
 
 COMPUTER_MOVES_EVENT = pygame.constants.USEREVENT + 1
 COMPUTER_MOVES_TIMER_MS = 5
+
+
+human_side = 'left'

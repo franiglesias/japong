@@ -23,18 +23,26 @@ class GameScene(Scene):
         # screen updates
         clock = pygame.time.Clock()
         ball = pong.ball.Ball(pong.config.yellow, 10)
-        pad_left = pong.game.pad.Pad('left', 2)
-        pad_right = pong.game.pad.Pad('right')
-        pads = pygame.sprite.Group()
-        pads.add(pad_left)
-        pads.add(pad_right)
+
+        human_side = self.window.game.side_preference
+        if human_side == 'left':
+            computer_side = 'right'
+        else:
+            computer_side = 'left'
+
+        human_player = pong.player.Player('human')
+        human_pad = pong.game.pad.Pad(human_side, 2)
+
+        computer_pad = pong.game.pad.Pad(computer_side)
+        computer_player = pong.player.Player('computer')
+
+        goal_left = pong.goal.Goal(0, human_player)
+        goal_right = pong.goal.Goal(790, computer_player)
         border_top = pong.border.Border(0)
         border_bottom = pong.border.Border(590)
-        player1 = pong.player.Player('left')
-        player2 = pong.player.Player('computer')
-        self.window.score_board = pong.scoreboard.ScoreBoard(player1, player2)
-        goal_left = pong.goal.Goal(0, player2)
-        goal_right = pong.goal.Goal(790, player1)
+
+        self.window.score_board = pong.scoreboard.ScoreBoard(human_player, computer_player)
+
         # Prepare sprites
         all_sprites = pygame.sprite.Group()
         all_sprites.add(ball)
@@ -42,14 +50,17 @@ class GameScene(Scene):
         all_sprites.add(border_bottom)
         all_sprites.add(goal_left)
         all_sprites.add(goal_right)
-        all_sprites.add(pad_left)
-        all_sprites.add(pad_right)
+        all_sprites.add(human_pad)
+        all_sprites.add(computer_pad)
+        pads = pygame.sprite.Group()
+        pads.add(human_pad)
+        pads.add(computer_pad)
         borders = pygame.sprite.Group()
         borders.add(border_top)
         borders.add(border_bottom)
         ball.borders = borders
-        pad_left.borders = borders
-        pad_right.borders = borders
+        human_pad.borders = borders
+        computer_pad.borders = borders
         ball.pads = pads
         goals = pygame.sprite.Group()
         goals.add(goal_left)
@@ -61,7 +72,7 @@ class GameScene(Scene):
             # Event
             for event in pygame.event.get():
                 if event.type == pong.config.COMPUTER_MOVES_EVENT:
-                    pad_right.follow(ball)
+                    computer_pad.follow(ball)
                 if event.type == pygame.QUIT:
                     done = True
 
@@ -69,11 +80,11 @@ class GameScene(Scene):
             pygame.event.pump()
             key = pygame.key.get_pressed()
             if key[pygame.K_w]:
-                pad_left.up()
+                human_pad.up()
             elif key[pygame.K_s]:
-                pad_left.down()
+                human_pad.down()
             else:
-                pad_left.stop()
+                human_pad.stop()
 
             all_sprites.update()
 
