@@ -20,11 +20,10 @@ class EndScene(Scene):
         exit_code = 0
 
         pygame.event.clear()
-        pygame.time.delay(1000)
 
         while not done:
             event = pygame.event.wait()
-            if event.type in (pygame.KEYDOWN, pygame.KEYUP):
+            if event.type == pygame.KEYDOWN:
                 key_name = pygame.key.name(event.key)
                 if key_name == "p":
                     exit_code = self.window.PLAY_AGAIN
