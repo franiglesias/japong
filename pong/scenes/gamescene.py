@@ -36,12 +36,17 @@ class GameScene(Scene):
         computer_pad = pong.game.pad.Pad(computer_side)
         computer_player = pong.player.Player('computer')
 
-        goal_left = pong.goal.Goal(0, human_player)
-        goal_right = pong.goal.Goal(790, computer_player)
         border_top = pong.border.Border(0)
         border_bottom = pong.border.Border(590)
 
-        self.window.score_board = pong.scoreboard.ScoreBoard(human_player, computer_player)
+        if human_side == 'left':
+            goal_left = pong.goal.Goal(0, computer_player)
+            goal_right = pong.goal.Goal(790, human_player)
+            self.window.score_board = pong.scoreboard.ScoreBoard(human_player, computer_player)
+        else:
+            goal_left = pong.goal.Goal(0, human_player)
+            goal_right = pong.goal.Goal(790, computer_player)
+            self.window.score_board = pong.scoreboard.ScoreBoard(computer_player, human_player)
 
         # Prepare sprites
         all_sprites = pygame.sprite.Group()

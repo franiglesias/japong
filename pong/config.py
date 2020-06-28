@@ -23,6 +23,7 @@ style_prompt = {'font_size': 30, 'horizontal': 'center', 'vertical': 'bottom', '
 style_main_title = {'font_size': 60, 'horizontal': 'center', 'vertical': 'middle', 'color': white, 'background': 'transparent'}
 style_end_title = {'font_size': 60, 'horizontal': 'center', 'vertical': 'middle', 'color': yellow, 'background': 'transparent'}
 style_score = {'font_size': 64, 'horizontal': 'center', 'vertical': 'top', 'color': black, 'background': white}
+style_config = {'font_size': 20, 'horizontal': 'left', 'vertical': 'middle', 'color': white, 'background': 'transparent'}
 
 basepath = os.path.dirname(os.path.realpath(__file__))
 
