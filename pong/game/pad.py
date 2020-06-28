@@ -5,12 +5,10 @@ import pong.config
 
 
 class Pad(pygame.sprite.Sprite):
-    def __init__(self, side):
+    def __init__(self, side, speed=1):
         super().__init__()
 
-        self.max_ability = 10
-        self.computer_ability = 10
-        self.min_ability = 0
+        self.speed = speed
 
         self.top_region_pct = 10
         self.middle_region_pct = 15
@@ -35,10 +33,10 @@ class Pad(pygame.sprite.Sprite):
         self.borders = None
 
     def up(self):
-        self.dy = -1
+        self.dy = -self.speed
 
     def down(self):
-        self.dy = 1
+        self.dy = self.speed
 
     def stop(self):
         self.dy = 0

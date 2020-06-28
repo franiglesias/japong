@@ -23,7 +23,7 @@ class GameScene(Scene):
         # screen updates
         clock = pygame.time.Clock()
         ball = pong.ball.Ball(pong.config.yellow, 10)
-        pad_left = pong.game.pad.Pad('left')
+        pad_left = pong.game.pad.Pad('left', 2)
         pad_right = pong.game.pad.Pad('right')
         pads = pygame.sprite.Group()
         pads.add(pad_left)
