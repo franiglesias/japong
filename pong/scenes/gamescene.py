@@ -1,116 +1,127 @@
 import pygame
+from pygame.sprite import Group
+from pygame.time import Clock
 
+import pong.config
 from pong.app.scene import Scene
 from pong.app.window import Window
+from pong.ball import Ball
+from pong.border import Border
+from pong.game.control.computer_control_engine import ComputerControlEngine
+from pong.game.control.keyboard_control_engine import KeyboardControlEngine
+from pong.player import Player
+from pong.scoreboard import ScoreBoard
 
 
 class GameScene(Scene):
     def __init__(self, window: Window):
         super().__init__(window)
+        self.all_sprites = Group()
+        self.goals = Group()
+        self.pads = Group()
+        self.borders = Group()
+        self.ball = Ball(pong.config.yellow, 10)
+        self.all_sprites.add(self.ball)
 
     def run(self):
-        import pong.ball
-        import pong.border
-        import pong.config
-        import pong.goal
-        import pong.game.pad
-        import pong.player
-        import pong.scoreboard
 
-        screen = self.window.screen
-        # game loop control
-        done = False
-        # screen updates
-        clock = pygame.time.Clock()
-        ball = pong.ball.Ball(pong.config.yellow, 10)
+        self.prepare_borders()
 
-        human_side = self.window.game.side_preference
-        if human_side == 'left':
-            computer_side = 'right'
-        else:
-            computer_side = 'left'
+        player_one_side = 'left'
+        player_two_side = 'right'
+        player_one_speed = self.window.game.human_speed
+        player_two_speed = self.window.game.human_speed
+        player_one_engine = self.player_engine(pong.config.left_keys)
+        player_two_engine = self.player_engine(pong.config.right_keys)
 
-        human_player = pong.player.Player('human')
-        human_pad = pong.game.pad.Pad(human_side, 2)
+        if self.window.game.game_mode == 1:
+            player_one_side = self.window.game.side_preference
+            if player_one_side == 'left':
+                player_two_side = 'right'
+            else:
+                player_two_side = 'left'
+            player_one_speed = self.window.game.human_speed
+            player_two_speed = self.window.game.computer_speed
+            player_two_engine = self.player_engine(())
+        elif self.window.game.game_mode == 0:
+            player_one_speed = self.window.game.computer_speed
+            player_two_speed = self.window.game.computer_speed
+            player_one_engine = self.player_engine(())
+            player_two_engine = self.player_engine(())
 
-        computer_pad = pong.game.pad.Pad(computer_side)
-        computer_player = pong.player.Player('computer')
+        player_one = Player('human', player_one_side, player_one_engine, player_one_speed)
+        player_two = Player('computer', player_two_side, player_two_engine, player_two_speed)
 
-        border_top = pong.border.Border(0)
-        border_bottom = pong.border.Border(590)
+        self.window.score_board = ScoreBoard(player_one, player_two)
 
-        if human_side == 'left':
-            goal_left = pong.goal.Goal(0, computer_player)
-            goal_right = pong.goal.Goal(790, human_player)
-            self.window.score_board = pong.scoreboard.ScoreBoard(human_player, computer_player)
-        else:
-            goal_left = pong.goal.Goal(0, human_player)
-            goal_right = pong.goal.Goal(790, computer_player)
-            self.window.score_board = pong.scoreboard.ScoreBoard(computer_player, human_player)
+        player_one.pad.borders = self.borders
+        player_two.pad.borders = self.borders
 
-        # Prepare sprites
-        all_sprites = pygame.sprite.Group()
-        all_sprites.add(ball)
-        all_sprites.add(border_top)
-        all_sprites.add(border_bottom)
-        all_sprites.add(goal_left)
-        all_sprites.add(goal_right)
-        all_sprites.add(human_pad)
-        all_sprites.add(computer_pad)
-        pads = pygame.sprite.Group()
-        pads.add(human_pad)
-        pads.add(computer_pad)
-        borders = pygame.sprite.Group()
-        borders.add(border_top)
-        borders.add(border_bottom)
-        ball.borders = borders
-        human_pad.borders = borders
-        computer_pad.borders = borders
-        ball.pads = pads
-        goals = pygame.sprite.Group()
-        goals.add(goal_left)
-        goals.add(goal_right)
+        self.all_sprites.add(player_one.goal)
+        self.all_sprites.add(player_two.goal)
+
+        self.goals.add(player_one.goal)
+        self.goals.add(player_two.goal)
+
+        self.all_sprites.add(player_one.pad)
+        self.all_sprites.add(player_two.pad)
+
+        self.pads.add(player_one.pad)
+        self.pads.add(player_two.pad)
+
+        self.ball.pads = self.pads
+        self.ball.borders = self.borders
+        self.ball.goals = self.goals
+
         # Game loop
-
+        clock = Clock()
         pygame.time.set_timer(pong.config.COMPUTER_MOVES_EVENT, pong.config.COMPUTER_MOVES_TIMER_MS)
+        done = False
+
         while not done:
-            # Event
             for event in pygame.event.get():
-                if event.type == pong.config.COMPUTER_MOVES_EVENT:
-                    computer_pad.follow(ball)
                 if event.type == pygame.QUIT:
                     done = True
+                player_one.handle(event)
+                player_two.handle(event)
 
-            # Game logic
             pygame.event.pump()
-            key = pygame.key.get_pressed()
-            if key[pygame.K_w]:
-                human_pad.up()
-            elif key[pygame.K_s]:
-                human_pad.down()
-            else:
-                human_pad.stop()
+            self.all_sprites.update()
 
-            all_sprites.update()
-
-            # Manage collisions
-            goal_collisions = pygame.sprite.spritecollide(ball, goals, False)
-            for goal in goal_collisions:
-                goal.hit()
-                goal.player.point()
-                ball.restart()
+            # Manage goals
+            self.ball.manage_goals()
 
             # Game draw
-            screen.fill(pong.config.green)
+            self.window.screen.fill(pong.config.green)
             self.window.score_board.draw(self)
-            all_sprites.draw(screen)
+            self.all_sprites.draw(self.window.screen)
 
             # Screen update
             pygame.display.flip()
 
-            if self.window.score_board.stop():
+            if self.window.score_board.end_of_game():
                 done = True
 
             clock.tick(pong.config.FPS)
 
         return 0
+
+    def player_engine_for_second_player(self, keys):
+        if self.window.game.game_mode == 1 or self.window.game.game_mode == 0:
+            return ComputerControlEngine(self.ball)
+
+        return KeyboardControlEngine(keys)
+
+    def player_engine(self, keys):
+        if len(keys) == 0:
+            return ComputerControlEngine(self.ball)
+
+        return KeyboardControlEngine(keys)
+
+    def prepare_borders(self):
+        border_top = Border(0)
+        border_bottom = Border(590)
+        self.all_sprites.add(border_top)
+        self.all_sprites.add(border_bottom)
+        self.borders.add(border_top)
+        self.borders.add(border_bottom)

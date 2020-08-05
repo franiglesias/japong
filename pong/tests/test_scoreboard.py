@@ -1,15 +1,20 @@
 from unittest import TestCase
 
-import pong.player
-import pong.scoreboard
+import pong.config
+from pong.ball import Ball
+from pong.game.control.computer_control_engine import ComputerControlEngine
+from pong.player import Player
+from pong.scoreboard import ScoreBoard
 
 
 class TestScoreBoard(TestCase):
 
     def setUp(self) -> None:
-        self.left_player = pong.player.Player('left')
-        self.right_player = pong.player.Player('right')
-        self.score_board = pong.scoreboard.ScoreBoard(self.left_player, self.right_player)
+        ball = Ball(pong.config.white, 10)
+        engine = ComputerControlEngine(ball)
+        self.left_player = Player('left', 'left', engine)
+        self.right_player = Player('right', 'right', engine)
+        self.score_board = ScoreBoard(self.left_player, self.right_player)
 
     def test_should_annotate_left_point(self):
         self.left_player.score = 1

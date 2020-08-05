@@ -2,13 +2,11 @@ import pygame
 
 import pong.app
 import pong.config
-import pong.player
 
 GOAL_HIGHLIGHT_IN_SECONDS = 1.5
 
 
 class Goal(pygame.sprite.Sprite):
-    player: pong.player.Player
 
     def __init__(self, x, player):
         super().__init__()

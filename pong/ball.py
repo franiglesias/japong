@@ -1,13 +1,14 @@
 import random
 
-import pygame
-
-import pong
-import pong.app.app
+from pygame.draw import ellipse
+from pygame.sprite import Sprite, spritecollide
+from pygame.surface import Surface
+from pong.game.pad import Pad
+from pong.goal import Goal
 import pong.config
 
 
-class Ball(pygame.sprite.Sprite):
+class Ball(Sprite):
     def __init__(self, color, radius):
         super().__init__()
 
@@ -19,16 +20,17 @@ class Ball(pygame.sprite.Sprite):
         self.ry = 2
         self.remaining = 0
 
-        self.image = pygame.Surface((self.radius * 2, self.radius * 2))
+        self.image = Surface((self.radius * 2, self.radius * 2))
 
         self.image.fill(pong.config.white)
         self.image.set_colorkey(pong.config.white)
-        pygame.draw.ellipse(self.image, self.color, [0, 0, self.radius * self.rx, self.radius * self.ry])
+        ellipse(self.image, self.color, [0, 0, self.radius * self.rx, self.radius * self.ry])
 
         self.rect = self.image.get_rect()
         self.restart()
 
         self.borders = None
+        self.goals = None
         self.pads = None
 
     def restart(self):
@@ -46,7 +48,7 @@ class Ball(pygame.sprite.Sprite):
         self.rect.x += self.dx
         self.rect.y += self.dy
 
-        border_collisions = pygame.sprite.spritecollide(self, self.borders, False)
+        border_collisions = spritecollide(self, self.borders, False)
         for _ in border_collisions:
             self.rect.y -= self.dy
             self._start_transformation_count_down()
@@ -54,7 +56,8 @@ class Ball(pygame.sprite.Sprite):
             self.ry = 1.3
             self.bounce_with_border()
 
-        pad_collisions = pygame.sprite.spritecollide(self, self.pads, False)
+        pad_collisions = spritecollide(self, self.pads, False)
+        pad: Pad
         for pad in pad_collisions:
             self.rect.x -= self.dx
             self._start_transformation_count_down()
@@ -76,7 +79,15 @@ class Ball(pygame.sprite.Sprite):
 
         y = self.radius - (height / 2)
         x = self.radius - (width / 2)
-        pygame.draw.ellipse(self.image, self.color, [x, y, width, height])
+        ellipse(self.image, self.color, [x, y, width, height])
+
+    def manage_goals(self):
+        goal_collisions = spritecollide(self, self.goals, False)
+        goal: Goal
+        for goal in goal_collisions:
+            goal.hit()
+            goal.player.win_point()
+            self.restart()
 
     def bounce_with_border(self):
         self.dy *= -1

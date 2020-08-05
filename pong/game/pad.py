@@ -1,14 +1,18 @@
-import pygame
+from pygame.sprite import Sprite, spritecollide
+from pygame.surface import Surface
 
-import pong.ball
-import pong.config
+from pong.config import white
+from pong.game.control.control_engine import ControlEngine
 
 
-class Pad(pygame.sprite.Sprite):
-    def __init__(self, side, speed=1):
+class Pad(Sprite):
+    def __init__(self, side, speed, engine: ControlEngine):
         super().__init__()
 
         self.speed = speed
+
+        self.engine = engine
+        self.engine.bind_pad(self)
 
         self.top_region_pct = 10
         self.middle_region_pct = 15
@@ -18,8 +22,8 @@ class Pad(pygame.sprite.Sprite):
 
         self.dy = 0
 
-        self.image = pygame.Surface((self.width, self.height))
-        self.image.fill(pong.config.white)
+        self.image = Surface((self.width, self.height))
+        self.image.fill(white)
 
         self.rect = self.image.get_rect()
 
@@ -44,16 +48,12 @@ class Pad(pygame.sprite.Sprite):
     def update(self):
         self.rect.y += self.dy
 
-        border_collisions = pygame.sprite.spritecollide(self, self.borders, False)
-        for _ in border_collisions:
+        for _ in spritecollide(self, self.borders, False):
             self.rect.y -= self.dy
             self.stop()
 
-    def follow(self, the_ball: pong.ball.Ball):
-        if the_ball.rect.y > self.rect.y:
-            self.down()
-        if the_ball.rect.y < self.rect.y:
-            self.up()
+    def handle(self, *events):
+        self.engine.handle(events)
 
     def hit(self, ball):
         ball_center_y = ball.rect.y + ball.radius - self.rect.y

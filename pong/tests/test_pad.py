@@ -1,13 +1,14 @@
 from unittest import TestCase
 
 import pong.ball
+import pong.game.control.keyboard_control_engine
 import pong.game.pad
 
 
 class TestPad(TestCase):
     def setUp(self) -> None:
-        self.pad = pong.game.pad.Pad('left')
         self.ball = pong.ball.Ball((100, 100, 100), 10)
+        self.pad = pong.game.pad.Pad('left', 1, pong.game.control.keyboard_control_engine.KeyboardControlEngine(('u', 'd')))
         self.pad.rect.y = 100
 
     def test_ball_hits_in_central_region_left_pad(self):
@@ -50,20 +51,6 @@ class TestPad(TestCase):
         self.pad.hit(self.ball)
 
         self.assertSpeedEqual(1, 2)
-
-    def test_should_follow_ball_down(self):
-        self.ball.rect.y = 200
-
-        self.pad.follow(self.ball)
-
-        self.assertEqual(1, self.pad.dy)
-
-    def test_should_follow_ball_up(self):
-        self.ball.rect.y = 20
-
-        self.pad.follow(self.ball)
-
-        self.assertEqual(-1, self.pad.dy)
 
     def assertSpeedEqual(self, dx, dy):
         self.assertEqual(dx, self.ball.dx)

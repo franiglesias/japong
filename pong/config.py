@@ -19,11 +19,15 @@ text_winner = 64
 
 # TEXT STYLES
 
-style_prompt = {'font_size': 30, 'horizontal': 'center', 'vertical': 'bottom', 'color': white, 'background': 'transparent'}
-style_main_title = {'font_size': 60, 'horizontal': 'center', 'vertical': 'middle', 'color': white, 'background': 'transparent'}
-style_end_title = {'font_size': 60, 'horizontal': 'center', 'vertical': 'middle', 'color': yellow, 'background': 'transparent'}
+style_prompt = {'font_size': 30, 'horizontal': 'center', 'vertical': 'bottom', 'color': white,
+                'background': 'transparent'}
+style_main_title = {'font_size': 60, 'horizontal': 'center', 'vertical': 'middle', 'color': white,
+                    'background': 'transparent'}
+style_end_title = {'font_size': 60, 'horizontal': 'center', 'vertical': 'middle', 'color': yellow,
+                   'background': 'transparent'}
 style_score = {'font_size': 64, 'horizontal': 'center', 'vertical': 'top', 'color': black, 'background': white}
-style_config = {'font_size': 20, 'horizontal': 'left', 'vertical': 'middle', 'color': white, 'background': 'transparent'}
+style_config = {'font_size': 20, 'horizontal': 'left', 'vertical': 'middle', 'color': white,
+                'background': 'transparent'}
 
 basepath = os.path.dirname(os.path.realpath(__file__))
 
@@ -37,5 +41,13 @@ FPS = 180
 COMPUTER_MOVES_EVENT = pygame.constants.USEREVENT + 1
 COMPUTER_MOVES_TIMER_MS = 5
 
-
 human_side = 'left'
+
+game_mode = 1
+
+computer_speed = 1
+human_speed = 2
+
+left_keys = ('w', 's')
+right_keys = ('o', 'l')
+

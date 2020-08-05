@@ -8,7 +8,7 @@ class SceneTestCase(unittest.TestCase):
     def test_should_run_fine(self):
         window = pong.app.window.Window(800, 600, 'Test')
         scene = Scene(window)
-        self.assertEquals(0, scene.run())
+        self.assertEqual(0, scene.run())
 
 
 if __name__ == '__main__':
