@@ -27,13 +27,18 @@ class StartScene(Scene):
                     self.window.game.set_side_preference('right')
                 elif key_name == 'l':
                     self.window.game.set_side_preference('left')
+                elif key_name == '1':
+                    self.window.game.set_game_mode(1)
+                elif key_name == '2':
+                    self.window.game.set_game_mode(2)
                 else:
                     done = True
 
             self.window.screen.fill(pong.config.white)
             self.window.screen.blit(image, (0, 0))
+            self.text_renderer.blit("Table side: L/R ({0}) ".format(self.window.game.side_preference), pong.config.style_config_side)
+            self.text_renderer.blit("Players: 1/2 ({0}) ".format(self.window.game.game_mode), pong.config.style_config_players)
             self.text_renderer.blit('Press any key to play', pong.config.style_prompt)
-            self.text_renderer.blit("Table side: L/R ({0}) ".format(self.window.game.side_preference), pong.config.style_config)
 
             pygame.display.flip()
 

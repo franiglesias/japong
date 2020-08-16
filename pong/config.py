@@ -26,7 +26,9 @@ style_main_title = {'font_size': 60, 'horizontal': 'center', 'vertical': 'middle
 style_end_title = {'font_size': 60, 'horizontal': 'center', 'vertical': 'middle', 'color': yellow,
                    'background': 'transparent'}
 style_score = {'font_size': 64, 'horizontal': 'center', 'vertical': 'top', 'color': black, 'background': white}
-style_config = {'font_size': 20, 'horizontal': 'left', 'vertical': 'middle', 'color': white,
+style_config_side = {'font_size': 20, 'horizontal': 'left', 'vertical': 'middle', 'color': white,
+                'background': 'transparent'}
+style_config_players = {'font_size': 20, 'horizontal': 'right', 'vertical': 'middle', 'color': white,
                 'background': 'transparent'}
 
 basepath = os.path.dirname(os.path.realpath(__file__))

@@ -11,3 +11,6 @@ class Game(object):
 
     def set_side_preference(self, side_preference):
         self.side_preference = side_preference
+
+    def set_game_mode(self, game_mode):
+        self.game_mode = game_mode
