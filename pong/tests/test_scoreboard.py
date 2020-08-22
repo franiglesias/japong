@@ -17,25 +17,21 @@ class TestScoreBoard(TestCase):
         self.score_board = ScoreBoard(self.left_player, self.right_player)
 
     def test_should_annotate_left_point(self):
-        self.left_player.score = 1
-        self.right_player.score = 0
+        self.left_player.win_point()
 
         self.assertEqual(' 1 : 0 ', self.score_board.score())
 
     def test_should_annotate_right_point(self):
-        self.left_player.score = 0
-        self.right_player.score = 1
+        self.right_player.win_point()
 
         self.assertEqual(' 0 : 1 ', self.score_board.score())
 
     def test_left_should_be_winner(self):
-        self.left_player.score = 1
-        self.right_player.score = 0
+        self.left_player.win_point()
 
         self.assertEqual(' left WON! 1 : 0 ', self.score_board.final_board())
 
     def test_right_should_be_winner(self):
-        self.left_player.score = 0
-        self.right_player.score = 1
+        self.right_player.win_point()
 
         self.assertEqual(' right WON! 0 : 1 ', self.score_board.final_board())
