@@ -11,6 +11,7 @@ from pong.game.control.computer_control_engine import ComputerControlEngine
 from pong.game.control.keyboard_control_engine import KeyboardControlEngine
 from pong.player import Player
 from pong.scoreboard import ScoreBoard
+from pong.game.scoring.score_manager import ScoreManager
 
 
 class GameScene(Scene):
@@ -52,7 +53,8 @@ class GameScene(Scene):
         player_one = Player('human', player_one_side, player_one_engine, player_one_speed)
         player_two = Player('computer', player_two_side, player_two_engine, player_two_speed)
 
-        self.window.score_board = ScoreBoard(player_one, player_two)
+        self.window.score_manager = ScoreManager(player_one, player_two)
+        self.window.score_board = ScoreBoard(self.window.score_manager)
 
         player_one.pad.borders = self.borders
         player_two.pad.borders = self.borders
@@ -99,7 +101,7 @@ class GameScene(Scene):
             # Screen update
             pygame.display.flip()
 
-            if self.window.score_board.end_of_game():
+            if self.window.score_manager.end_of_game():
                 done = True
 
             clock.tick(pong.config.FPS)
