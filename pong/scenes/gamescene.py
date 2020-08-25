@@ -7,11 +7,12 @@ from pong.app.scene import Scene
 from pong.app.window import Window
 from pong.ball import Ball
 from pong.border import Border
+from pong.config import POINTS_TO_WIN
 from pong.game.control.computer_control_engine import ComputerControlEngine
 from pong.game.control.keyboard_control_engine import KeyboardControlEngine
+from pong.game.scoring.score_manager import ScoreManager
 from pong.player import Player
 from pong.scoreboard import ScoreBoard
-from pong.game.scoring.score_manager import ScoreManager
 
 
 class GameScene(Scene):
@@ -53,7 +54,7 @@ class GameScene(Scene):
         player_one = Player('human', player_one_side, player_one_engine, player_one_speed)
         player_two = Player('computer', player_two_side, player_two_engine, player_two_speed)
 
-        self.window.score_manager = ScoreManager(player_one, player_two)
+        self.window.score_manager = ScoreManager(player_one, player_two, (1, POINTS_TO_WIN))
         self.window.score_board = ScoreBoard(self.window.score_manager)
 
         player_one.pad.borders = self.borders

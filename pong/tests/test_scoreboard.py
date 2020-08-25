@@ -15,7 +15,7 @@ class TestScoreBoard(TestCase):
         engine = ComputerControlEngine(ball)
         self.left_player = Player('left', 'left', engine)
         self.right_player = Player('right', 'right', engine)
-        self.score_manager = ScoreManager(self.left_player, self.right_player)
+        self.score_manager = ScoreManager(self.left_player, self.right_player, (1, 5))
         self.score_board = ScoreBoard(self.score_manager)
 
     def test_should_annotate_left_point(self):

@@ -23,3 +23,12 @@ class Player:
 
     def score(self):
         return self._score.points()
+
+    def new_set(self):
+        self._score.new_set()
+
+    def win_set(self):
+        self._score.win_set()
+
+    def sets(self):
+        return self._score.sets()

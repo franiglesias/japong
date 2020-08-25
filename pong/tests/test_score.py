@@ -12,8 +12,11 @@ class TestScore(TestCase):
         self.assertEqual(1, self.score.points())
 
     def test_it_adds_sets(self):
+        self.score.win_set()
+        self.assertEqual(1, self.score.sets())
+
+    def test_it_group_points_in_sets(self):
         self.score.new_set()
-        self.assertEqual(0, self.score.points())
         self.assertEqual([0], self.score.score())
 
     def test_simulate_a_game(self):

@@ -1,5 +1,6 @@
 class Score(object):
     def __init__(self):
+        self._sets = 0
         self._points = 0
         self._score = None
 
@@ -8,6 +9,12 @@ class Score(object):
 
     def points(self):
         return self._points
+
+    def win_set(self):
+        self._sets += 1
+
+    def sets(self):
+        return self._sets
 
     def new_set(self):
         if self._score is None:
