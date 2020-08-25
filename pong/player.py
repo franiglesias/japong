@@ -29,6 +29,7 @@ class Player:
 
     def win_set(self):
         self._score.win_set()
+        self.new_set()
 
     def sets(self):
         return self._score.sets()

@@ -54,7 +54,7 @@ class GameScene(Scene):
         player_one = Player('human', player_one_side, player_one_engine, player_one_speed)
         player_two = Player('computer', player_two_side, player_two_engine, player_two_speed)
 
-        self.window.score_manager = ScoreManager(player_one, player_two, (1, POINTS_TO_WIN))
+        self.window.score_manager = ScoreManager(player_one, player_two, (3, POINTS_TO_WIN))
         self.window.score_board = ScoreBoard(self.window.score_manager)
 
         player_one.pad.borders = self.borders
@@ -79,34 +79,42 @@ class GameScene(Scene):
         # Game loop
         clock = Clock()
         pygame.time.set_timer(pong.config.COMPUTER_MOVES_EVENT, pong.config.COMPUTER_MOVES_TIMER_MS)
-        done = False
+        end_of_match = False
 
-        while not done:
-            for event in pygame.event.get():
-                if event.type == pygame.QUIT:
-                    done = True
-                player_one.handle(event)
-                player_two.handle(event)
+        while not end_of_match:
 
-            pygame.event.pump()
-            self.all_sprites.update()
+            self.window.score_manager.new_set()
+            end_of_set = False
+            while not end_of_set:
+                for event in pygame.event.get():
+                    if event.type == pygame.QUIT:
+                        end_of_match = True
+                        break
+                    player_one.handle(event)
+                    player_two.handle(event)
 
-            # Manage goals
-            self.ball.manage_goals()
+                pygame.event.pump()
+                self.all_sprites.update()
 
-            # Game draw
-            self.window.screen.fill(pong.config.green)
-            self.window.score_board.draw(self)
-            self.all_sprites.draw(self.window.screen)
+                # Manage goals
+                self.ball.manage_goals()
 
-            # Screen update
-            pygame.display.flip()
+                # Game draw
+                self.window.screen.fill(pong.config.green)
+                self.window.score_board.draw(self)
+                self.all_sprites.draw(self.window.screen)
 
-            if self.window.score_manager.end_of_game():
-                done = True
+                # Screen update
+                pygame.display.flip()
 
-            clock.tick(pong.config.FPS)
+                if self.window.score_manager.end_of_set():
+                    end_of_set = True
+                    self.window.score_manager.end_set()
 
+                    if self.window.score_manager.end_of_game():
+                        end_of_match = True
+
+                clock.tick(pong.config.FPS)
         return 0
 
     def player_engine_for_second_player(self, keys):

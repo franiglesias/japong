@@ -1,3 +1,6 @@
+import math
+
+
 class ScoreManager(object):
 
     def __init__(self, player_one, player_two, match) -> None:
@@ -11,7 +14,8 @@ class ScoreManager(object):
 
     def end_of_game(self):
         best = max(self.left.sets(), self.right.sets())
-        return best >= 2
+        target = math.ceil(self.match[0] / 2)
+        return best >= target
 
     def end_of_set(self):
         difference = abs(self.left.score() - self.right.score())
@@ -26,3 +30,13 @@ class ScoreManager(object):
 
     def score(self):
         return self.left.score(), self.right.score()
+
+    def end_set(self):
+        if self.left.score() > self.right.score():
+            self.left.win_set()
+        else:
+            self.right.win_set()
+
+    def new_set(self):
+        self.left.new_set()
+        self.right.new_set()

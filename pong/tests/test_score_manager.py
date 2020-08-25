@@ -48,6 +48,13 @@ class TestScoreManager(TestCase):
         self.scoreInSets(1, 0)
         self.assertFalse(self.score_manager.end_of_game())
 
+    def test_one_set_match_should_have_only_one_set(self):
+        self.left_player = self.preparePlayer()
+        self.right_player = self.preparePlayer()
+        self.score_manager = ScoreManager(self.left_player, self.right_player, (1, 5))
+        self.left_player.win_set()
+        self.assertTrue(self.score_manager.end_of_game())
+
     def scoreAfterSet(self, left, right):
         self.left_player = self.preparePlayer()
         self.right_player = self.preparePlayer()

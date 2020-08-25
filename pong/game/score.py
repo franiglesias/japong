@@ -19,7 +19,8 @@ class Score(object):
     def new_set(self):
         if self._score is None:
             self._score = []
-        self._score.append(self._points)
+        else:
+            self._score.append(self._points)
         self._points = 0
 
     def score(self):
