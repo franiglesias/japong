@@ -31,6 +31,9 @@ class ScoreManager(object):
     def score(self):
         return self.left.score(), self.right.score()
 
+    def sets(self):
+        return self.left.sets(), self.right.sets()
+
     def end_set(self):
         if self.left.score() > self.right.score():
             self.left.win_set()

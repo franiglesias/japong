@@ -1,5 +1,4 @@
 import pong.config
-from pong.game.scoring.score_manager import ScoreManager
 
 
 class ScoreBoard:
@@ -7,11 +6,20 @@ class ScoreBoard:
         self.score_manager = score_manager
 
     def draw(self, scene):
-        board = self.score()
-        scene.text_renderer.blit(board, pong.config.style_score)
+        scene.text_renderer.blit(self.points(), pong.config.style_score)
+        scene.text_renderer.blit(self.sets(), pong.config.style_sets)
 
-    def score(self):
-        return " {0} : {1} ".format(self.score_manager.score()[0], self.score_manager.score()[1])
+    def points(self):
+        return "{0} : {1}".format(
+            self.score_manager.score()[0],
+            self.score_manager.score()[1],
+        )
+
+    def sets(self):
+        return "{0} : {1}".format(
+            self.score_manager.sets()[0],
+            self.score_manager.sets()[1],
+        )
 
     def end_of_game(self):
         return self.score_manager.end_of_game()
@@ -23,5 +31,5 @@ class ScoreBoard:
     def final_board(self):
         winner = self.score_manager.winner()
 
-        score = self.score()
+        score = self.points()
         return (" {0} WON!" + score).format(winner.name)

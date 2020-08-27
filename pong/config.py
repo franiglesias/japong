@@ -6,6 +6,7 @@ import pygame.constants
 black = (0, 0, 0)
 white = (255, 255, 255)
 green = (36, 102, 38)
+dark_green = (22, 64, 24)
 red = (255, 0, 0)
 yellow = (247, 214, 25)
 chroma = (0, 0, 0)
@@ -25,7 +26,9 @@ style_main_title = {'font_size': 60, 'horizontal': 'center', 'vertical': 'middle
                     'background': 'transparent'}
 style_end_title = {'font_size': 60, 'horizontal': 'center', 'vertical': 'middle', 'color': yellow,
                    'background': 'transparent'}
-style_score = {'font_size': 64, 'horizontal': 'center', 'vertical': 'top', 'color': black, 'background': white}
+style_score = {'font_size': 64, 'horizontal': 'center', 'vertical': 'top', 'color': dark_green, 'background': 'transparent'}
+style_sets = {'font_size': 48, 'horizontal': 'center', 'vertical': 'bottom', 'color': dark_green, 'background': 'transparent'}
+
 style_config_side = {'font_size': 20, 'horizontal': 'left', 'vertical': 'middle', 'color': white,
                 'background': 'transparent'}
 style_config_players = {'font_size': 20, 'horizontal': 'right', 'vertical': 'middle', 'color': white,

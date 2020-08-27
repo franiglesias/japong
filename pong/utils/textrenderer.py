@@ -17,7 +17,7 @@ class TextRenderer():
         else:
             background = style['background']
 
-        text = the_font.render(text_to_render, transparent, style['color'], background)
+        text = the_font.render(text_to_render, False, style['color'], background)
         if transparent:
             text.set_colorkey(background)
 
