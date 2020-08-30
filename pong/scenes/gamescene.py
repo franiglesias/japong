@@ -83,7 +83,6 @@ class GameScene(Scene):
 
         while not end_of_match:
 
-            self.window.score_manager.new_set()
             end_of_set = False
             while not end_of_set:
                 for event in pygame.event.get():
@@ -110,6 +109,7 @@ class GameScene(Scene):
                 if self.window.score_manager.end_of_set():
                     end_of_set = True
                     self.window.score_manager.end_set()
+                    self.window.score_manager.new_set()
 
                     if self.window.score_manager.end_of_game():
                         end_of_match = True

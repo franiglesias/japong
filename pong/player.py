@@ -21,15 +21,18 @@ class Player:
     def handle(self, event):
         self.pad.handle(event)
 
-    def score(self):
+    def points(self):
         return self._score.points()
+
+    def partials(self):
+        return self._score.partials()
 
     def new_set(self):
         self._score.new_set()
 
     def win_set(self):
         self._score.win_set()
-        self.new_set()
 
     def sets(self):
         return self._score.sets()
+

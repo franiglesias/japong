@@ -6,13 +6,16 @@ class ScoreBoard:
         self.score_manager = score_manager
 
     def draw(self, scene):
-        scene.text_renderer.blit(self.points(), pong.config.style_score)
-        scene.text_renderer.blit(self.sets(), pong.config.style_sets)
+        lines = [
+            (self.points(), pong.config.style_score),
+            (self.sets(), pong.config.style_sets)
+        ]
+        scene.text_renderer.multi_blit(lines, ('center', 40))
 
     def points(self):
         return "{0} : {1}".format(
-            self.score_manager.score()[0],
-            self.score_manager.score()[1],
+            self.score_manager.points()[0],
+            self.score_manager.points()[1],
         )
 
     def sets(self):
@@ -24,12 +27,23 @@ class ScoreBoard:
     def end_of_game(self):
         return self.score_manager.end_of_game()
 
-    def winner(self, scene):
-        board = self.final_board()
-        scene.text_renderer.blit(board, pong.config.style_score)
-
-    def final_board(self):
+    def final_board(self, scene):
         winner = self.score_manager.winner()
 
-        score = self.points()
-        return (" {0} WON!" + score).format(winner.name)
+        line = (
+            "{0} WON".format(winner.name), pong.config.style_end_title
+        )
+
+        scene.text_renderer.multi_blit([line], ('center', 30))
+
+        partials = self.score_manager.partials()
+
+        lines = [(self.sets(), pong.config.style_score)]
+        for set_index in range(len(partials[0])):
+            line = "{0} : {1}".format(
+                partials[0][set_index],
+                partials[1][set_index]
+            )
+            lines.append((line, pong.config.style_sets))
+
+        scene.text_renderer.multi_blit(lines, ('center', 160))

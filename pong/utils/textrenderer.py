@@ -3,7 +3,7 @@ import pygame
 import pong.config
 
 
-class TextRenderer():
+class TextRenderer(object):
     def __init__(self, surface):
         self.surface = surface
         self.padding = 30
