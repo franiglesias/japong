@@ -38,7 +38,7 @@ basepath = os.path.dirname(os.path.realpath(__file__))
 
 # GAME PARAMS
 
-POINTS_TO_WIN = 2
+POINTS_TO_WIN = 11
 FPS = 180
 
 # CUSTOM GAME EVENTS
