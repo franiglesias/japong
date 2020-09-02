@@ -4,7 +4,7 @@ from pygame.draw import ellipse
 from pygame.sprite import Sprite, spritecollide
 from pygame.surface import Surface
 from pong.game.pad import Pad
-from pong.goal import Goal
+from pong.field.goal import Goal
 import pong.config
 
 

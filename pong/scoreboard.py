@@ -13,13 +13,13 @@ class ScoreBoard:
         scene.text_renderer.multi_blit(lines, ('center', 40))
 
     def points(self):
-        return "{0} : {1}".format(
+        return "{0}   {1}".format(
             self.score_manager.points()[0],
             self.score_manager.points()[1],
         )
 
     def sets(self):
-        return "{0} : {1}".format(
+        return "{0}   {1}".format(
             self.score_manager.sets()[0],
             self.score_manager.sets()[1],
         )
@@ -40,7 +40,7 @@ class ScoreBoard:
 
         lines = [(self.sets(), pong.config.style_score)]
         for set_index in range(len(partials[0])):
-            line = "{0} : {1}".format(
+            line = "{0} - {1}".format(
                 partials[0][set_index],
                 partials[1][set_index]
             )

@@ -1,6 +1,6 @@
 from pong.game.score import Score
 from pong.game.pad import Pad
-from pong.goal import Goal
+from pong.field.goal import Goal
 
 
 class Player:

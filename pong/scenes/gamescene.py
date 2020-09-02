@@ -3,10 +3,12 @@ from pygame.sprite import Group
 from pygame.time import Clock
 
 import pong.config
+import pong.field.net
+from pong.field.net import Net
 from pong.app.scene import Scene
 from pong.app.window import Window
 from pong.ball import Ball
-from pong.border import Border
+from pong.field.border import Border
 from pong.config import POINTS_TO_WIN
 from pong.game.control.computer_control_engine import ComputerControlEngine
 from pong.game.control.keyboard_control_engine import KeyboardControlEngine
@@ -23,6 +25,7 @@ class GameScene(Scene):
         self.pads = Group()
         self.borders = Group()
         self.ball = Ball(pong.config.yellow, 10)
+        self.all_sprites.add(pong.field.net.Net())
         self.all_sprites.add(self.ball)
 
     def run(self):
@@ -75,6 +78,7 @@ class GameScene(Scene):
         self.ball.pads = self.pads
         self.ball.borders = self.borders
         self.ball.goals = self.goals
+
 
         # Game loop
         clock = Clock()
