@@ -1,11 +1,10 @@
-import pygame
-from pygame.sprite import Sprite
 from pygame import Surface
-from pong.config import white
-from pong.config import red
-from pong.config import lighten
+from pygame.sprite import Sprite
+
 import pong.app
 import pong.config
+from pong.config import white, red, lighten
+from pong.utils.soundplayer import SoundPlayer
 
 GOAL_HIGHLIGHT_IN_SECONDS = 1.5
 
@@ -27,7 +26,8 @@ class Goal(Sprite):
         self.player = player
 
     def hit(self):
-        pong.app.app.sideHit.play()
+        player = SoundPlayer()
+        player.play('point')
         self.color = red
         self.image.fill(self.color)
 

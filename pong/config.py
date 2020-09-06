@@ -50,21 +50,55 @@ text_winner = 64
 
 # TEXT STYLES
 
-style_prompt = {'font_size': 30, 'horizontal': 'center', 'vertical': 'bottom', 'color': white,
-                'background': 'transparent'}
-style_main_title = {'font_size': 60, 'horizontal': 'center', 'vertical': 'middle', 'color': white,
-                    'background': 'transparent'}
-style_end_title = {'font_size': 60, 'horizontal': 'center', 'vertical': 'middle', 'color': yellow,
-                   'background': 'transparent'}
-style_score = {'font_size': 64, 'horizontal': 'center', 'vertical': 'top', 'color': dark_green,
-               'background': 'transparent'}
-style_sets = {'font_size': 48, 'horizontal': 'center', 'vertical': 'bottom', 'color': dark_green,
-              'background': 'transparent'}
-
-style_config_side = {'font_size': 20, 'horizontal': 'left', 'vertical': 'middle', 'color': white,
-                     'background': 'transparent'}
-style_config_players = {'font_size': 20, 'horizontal': 'right', 'vertical': 'middle', 'color': white,
-                        'background': 'transparent'}
+style_prompt = {
+    'font_size': 30,
+    'horizontal': 'center',
+    'vertical': 'bottom',
+    'color': white,
+    'background': 'transparent'
+}
+style_main_title = {
+    'font_size': 60,
+    'horizontal': 'center',
+    'vertical': 'middle',
+    'color': white,
+    'background': 'transparent'
+}
+style_end_title = {
+    'font_size': 60,
+    'horizontal': 'center',
+    'vertical': 'middle',
+    'color': yellow,
+    'background': 'transparent'
+}
+style_score = {
+    'font_size': 64,
+    'horizontal': 'center',
+    'vertical': 'top',
+    'color': dark_green,
+    'background': 'transparent'
+}
+style_sets = {
+    'font_size': 48,
+    'horizontal': 'center',
+    'vertical': 'bottom',
+    'color': dark_green,
+    'background': 'transparent'
+}
+style_config_side = {
+    'font_size': 20,
+    'horizontal': 'left',
+    'vertical': 'middle',
+    'color': white,
+    'background': 'transparent'
+}
+style_config_players = {
+    'font_size': 20,
+    'horizontal': 'right',
+    'vertical': 'middle',
+    'color': white,
+    'background': 'transparent'
+}
 
 basepath = os.path.dirname(os.path.realpath(__file__))
 

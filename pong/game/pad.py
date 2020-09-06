@@ -1,6 +1,7 @@
 from pygame.sprite import Sprite, spritecollide
 from pygame.surface import Surface
 
+from pong.utils.soundplayer import SoundPlayer
 from pong.config import white
 from pong.game.control.control_engine import ControlEngine
 
@@ -56,6 +57,8 @@ class Pad(Sprite):
         self.engine.handle(events)
 
     def hit(self, ball):
+        player = SoundPlayer()
+        player.play('pad-hit')
         ball_center_y = ball.rect.y + ball.radius - self.rect.y
 
         if ball_center_y < self.__top_region_limit():

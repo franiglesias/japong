@@ -1,9 +1,8 @@
 import pygame
 
-import pong.config
-import pong.utils.textrenderer
 from pong.app.scene import Scene
 from pong.app.window import Window
+from pong.config import basepath, white, style_prompt, style_config_side, style_config_players
 
 
 class StartScene(Scene):
@@ -11,12 +10,11 @@ class StartScene(Scene):
         super().__init__(window)
 
     def run(self):
-        image = pygame.image.load(pong.config.basepath + '/assets/pong.jpg')
+        image = pygame.image.load(basepath + '/assets/pong.jpg')
 
-        self.window.screen.fill(pong.config.white)
-
+        self.window.screen.fill(white)
         self.window.screen.blit(image, (0, 0))
-        self.text_renderer.blit('Press any key to play', pong.config.style_prompt)
+        self.text_renderer.blit('Press any key to play', style_prompt)
 
         done = False
         while not done:
@@ -34,11 +32,12 @@ class StartScene(Scene):
                 else:
                     done = True
 
-            self.window.screen.fill(pong.config.white)
+            self.window.screen.fill(white)
             self.window.screen.blit(image, (0, 0))
-            self.text_renderer.blit("Table side: L/R ({0}) ".format(self.window.game.side_preference), pong.config.style_config_side)
-            self.text_renderer.blit("Players: 1/2 ({0}) ".format(self.window.game.game_mode), pong.config.style_config_players)
-            self.text_renderer.blit('Press any key to play', pong.config.style_prompt)
+            self.text_renderer.blit("Table side: L/R ({0}) ".format(self.window.game.side_preference),
+                                    style_config_side)
+            self.text_renderer.blit("Players: 1/2 ({0}) ".format(self.window.game.game_mode), style_config_players)
+            self.text_renderer.blit('Press any key to play', style_prompt)
 
             pygame.display.flip()
 

@@ -1,10 +1,10 @@
 from unittest import TestCase
 
 import pong.config
-from pong.ball import Ball
+from pong.game.ball import Ball
 from pong.game.control.computer_control_engine import ComputerControlEngine
-from pong.player import Player
-from pong.scoreboard import ScoreBoard
+from pong.game.player import Player
+from pong.game.scoring.scoreboard import ScoreBoard
 from pong.game.scoring.score_manager import ScoreManager
 
 

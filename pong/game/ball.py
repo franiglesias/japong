@@ -1,11 +1,13 @@
 import random
 
+from pygame import Surface
 from pygame.draw import ellipse
 from pygame.sprite import Sprite, spritecollide
-from pygame.surface import Surface
-from pong.game.pad import Pad
-from pong.field.goal import Goal
+
 import pong.config
+from pong.field.border import Border
+from pong.field.goal import Goal
+from pong.game.pad import Pad
 
 
 class Ball(Sprite):
@@ -48,22 +50,8 @@ class Ball(Sprite):
         self.rect.x += self.dx
         self.rect.y += self.dy
 
-        border_collisions = spritecollide(self, self.borders, False)
-        for _ in border_collisions:
-            self.rect.y -= self.dy
-            self._start_transformation_count_down()
-            self._play_side_hit_sound()
-            self.ry = 1.3
-            self.bounce_with_border()
-
-        pad_collisions = spritecollide(self, self.pads, False)
-        pad: Pad
-        for pad in pad_collisions:
-            self.rect.x -= self.dx
-            self._start_transformation_count_down()
-            self._play_pad_hit_sound()
-            self.rx = 1.3
-            pad.hit(self)
+        self._manage_border_collisions()
+        self._manage_pad_hits()
 
         if self.remaining > 0:
             self.remaining -= 1
@@ -80,6 +68,25 @@ class Ball(Sprite):
         y = self.radius - (height / 2)
         x = self.radius - (width / 2)
         ellipse(self.image, self.color, [x, y, width, height])
+
+    def _manage_pad_hits(self):
+        pad_collisions = spritecollide(self, self.pads, False)
+        pad: Pad
+        for pad in pad_collisions:
+            self.rect.x -= self.dx
+            self._start_transformation_count_down()
+            self.rx = 1.3
+            pad.hit(self)
+
+    def _manage_border_collisions(self):
+        border_collisions = spritecollide(self, self.borders, False)
+        border: Border
+        for border in border_collisions:
+            self.rect.y -= self.dy
+            self._start_transformation_count_down()
+            self.ry = 1.3
+            self.bounce_with_border()
+            border.hit()
 
     def manage_goals(self):
         goal_collisions = spritecollide(self, self.goals, False)
@@ -107,14 +114,6 @@ class Ball(Sprite):
     def bounce_with_pad_bottom(self):
         self.dx = 1 * -(self.dx // abs(self.dx))
         self.dy = 2
-
-    @staticmethod
-    def _play_pad_hit_sound():
-        pong.app.app.playerHit.play()
-
-    @staticmethod
-    def _play_side_hit_sound():
-        pong.app.app.sideHit.play()
 
     def _start_transformation_count_down(self):
         self.remaining = pong.config.FPS / 16

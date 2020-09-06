@@ -1,14 +1,14 @@
 from unittest import TestCase
 
-import pong.ball
-import pong.game.control.keyboard_control_engine
-import pong.game.pad
+from pong.game.ball import Ball
+from pong.game.control.keyboard_control_engine import KeyboardControlEngine
+from pong.game.pad import Pad
 
 
 class TestPad(TestCase):
     def setUp(self) -> None:
-        self.ball = pong.ball.Ball((100, 100, 100), 10)
-        self.pad = pong.game.pad.Pad('left', 1, pong.game.control.keyboard_control_engine.KeyboardControlEngine(('u', 'd')))
+        self.ball = Ball((100, 100, 100), 10)
+        self.pad = Pad('left', 1, KeyboardControlEngine(('u', 'd')))
         self.pad.rect.y = 100
 
     def test_ball_hits_in_central_region_left_pad(self):

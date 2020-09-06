@@ -1,6 +1,7 @@
 import pygame
 
-import pong.config
+from pong.config import white
+from pong.utils.soundplayer import SoundPlayer
 
 
 class Border(pygame.sprite.Sprite):
@@ -8,8 +9,13 @@ class Border(pygame.sprite.Sprite):
         super().__init__()
 
         self.image = pygame.Surface((800, 10))
-        self.image.fill(pong.config.white)
+        self.image.fill(white)
 
         self.rect = self.image.get_rect()
         self.rect.y = y
         self.rect.x = 0
+
+    @staticmethod
+    def hit():
+        player = SoundPlayer()
+        player.play('table-hit')

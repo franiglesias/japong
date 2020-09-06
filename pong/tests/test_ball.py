@@ -1,14 +1,13 @@
 from unittest import TestCase
 
-import pong.ball
-import pong.game.pad
+from pong.game.ball import Ball
 
 
 class TestBall(TestCase):
 
     def setUp(self) -> None:
         super().setUp()
-        self.ball = pong.ball.Ball((100, 100, 100), 10)
+        self.ball = Ball((100, 100, 100), 10)
 
     def test_bounce_with_right_pad(self):
         self.ball.dx = 1

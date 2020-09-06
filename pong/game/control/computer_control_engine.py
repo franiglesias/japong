@@ -1,4 +1,4 @@
-from pong.ball import Ball
+from pong.game.ball import Ball
 from pong.config import COMPUTER_MOVES_EVENT
 from pong.game.control.control_engine import ControlEngine
 
