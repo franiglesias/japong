@@ -2,7 +2,7 @@ import pygame
 
 from pong.app.scene import Scene
 from pong.app.window import Window
-from pong.config import basepath, white, style_prompt, style_config_side, style_config_players
+from pong.config import base_path, white, style_prompt, style_config_side, style_config_players
 
 
 class StartScene(Scene):
@@ -10,7 +10,7 @@ class StartScene(Scene):
         super().__init__(window)
 
     def run(self):
-        image = pygame.image.load(basepath + '/assets/pong.jpg')
+        image = pygame.image.load(base_path + '/assets/pong.jpg')
 
         self.window.screen.fill(white)
         self.window.screen.blit(image, (0, 0))

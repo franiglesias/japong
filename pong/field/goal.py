@@ -26,15 +26,22 @@ class Goal(Sprite):
         self.player = player
 
     def hit(self):
-        player = SoundPlayer()
-        player.play('point')
+        self.play_sound('point')
         self.color = red
         self.image.fill(self.color)
 
         self.remaining = pong.config.FPS * GOAL_HIGHLIGHT_IN_SECONDS
 
+    @staticmethod
+    def play_sound(sound):
+        player = SoundPlayer()
+        player.play(sound)
+
     def update(self):
+        self._update_color()
+        self.image.fill(self.color)
+
+    def _update_color(self):
         if self.remaining > 0:
             self.remaining -= 1
             self.color = lighten(self.color, 2)
-        self.image.fill(self.color)

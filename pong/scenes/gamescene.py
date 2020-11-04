@@ -79,7 +79,6 @@ class GameScene(Scene):
         self.ball.borders = self.borders
         self.ball.goals = self.goals
 
-
         # Game loop
         clock = Clock()
         pygame.time.set_timer(pong.config.COMPUTER_MOVES_EVENT, pong.config.COMPUTER_MOVES_TIMER_MS)

@@ -1,12 +1,12 @@
 import pygame
 
-from pong.config import basepath
+from pong.config import base_path
 
 
 class SoundPlayer(object):
     def __init__(self) -> None:
         pygame.mixer.init()
-        self.base = basepath + '/assets/sounds/'
+        self.base = base_path + '/assets/sounds/'
         self.effects = {
             'pad-hit': 'pad-hit.ogg',
             'table-hit': 'table-hit.ogg',

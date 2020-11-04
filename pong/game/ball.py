@@ -73,20 +73,26 @@ class Ball(Sprite):
         pad_collisions = spritecollide(self, self.pads, False)
         pad: Pad
         for pad in pad_collisions:
-            self.rect.x -= self.dx
+            self._horiz_rebound()
             self._start_transformation_count_down()
             self.rx = 1.3
             pad.hit(self)
+
+    def _horiz_rebound(self):
+        self.rect.x -= self.dx
 
     def _manage_border_collisions(self):
         border_collisions = spritecollide(self, self.borders, False)
         border: Border
         for border in border_collisions:
-            self.rect.y -= self.dy
+            self._vertical_rebound()
             self._start_transformation_count_down()
             self.ry = 1.3
             self.bounce_with_border()
             border.hit()
+
+    def _vertical_rebound(self):
+        self.rect.y -= self.dy
 
     def manage_goals(self):
         goal_collisions = spritecollide(self, self.goals, False)

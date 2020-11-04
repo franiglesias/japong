@@ -11,9 +11,14 @@ class KeyboardControlEngine(ControlEngine):
 
     def handle(self, events):
         for event in events:
-            if event.type == KEYDOWN:
+            if event.type == KEYUP:
+                key_name = key.name(event.key)
+                if key_name == self.upKey or key_name == self.downKey:
+                    self.pad.stop()
+            elif event.type == KEYDOWN:
                 key_name = key.name(event.key)
                 if key_name == self.upKey:
                     self.pad.up()
                 elif key_name == self.downKey:
                     self.pad.down()
+

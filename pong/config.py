@@ -100,11 +100,11 @@ style_config_players = {
     'background': 'transparent'
 }
 
-basepath = os.path.dirname(os.path.realpath(__file__))
+base_path = os.path.dirname(os.path.realpath(__file__))
 
 # GAME PARAMS
 
-POINTS_TO_WIN = 11
+POINTS_TO_WIN = 5
 FPS = 180
 
 # CUSTOM GAME EVENTS

@@ -1,11 +1,15 @@
 from unittest import TestCase
 
+import pygame
+
 import pong.config
+from app.scene import Scene
+from app.window import Window
 from pong.game.ball import Ball
 from pong.game.control.computer_control_engine import ComputerControlEngine
 from pong.game.player import Player
-from pong.game.scoring.scoreboard import ScoreBoard
 from pong.game.scoring.score_manager import ScoreManager
+from pong.game.scoring.scoreboard import ScoreBoard
 
 
 class TestScoreBoard(TestCase):
@@ -17,23 +21,14 @@ class TestScoreBoard(TestCase):
         self.right_player = Player('right', 'right', engine)
         self.score_manager = ScoreManager(self.left_player, self.right_player, (1, 5))
         self.score_board = ScoreBoard(self.score_manager)
+        self.scene = Scene(Window(100, 100, 'Test'))
 
     def test_should_annotate_left_point(self):
         self.left_player.win_point()
 
-        self.assertEqual(' 1 : 0 ', self.score_board.score())
+        self.assertEqual('1   0', self.score_board.points())
 
     def test_should_annotate_right_point(self):
         self.right_player.win_point()
 
-        self.assertEqual(' 0 : 1 ', self.score_board.score())
-
-    def test_left_should_be_winner(self):
-        self.left_player.win_point()
-
-        self.assertEqual(' left WON! 1 : 0 ', self.score_board.final_board())
-
-    def test_right_should_be_winner(self):
-        self.right_player.win_point()
-
-        self.assertEqual(' right WON! 0 : 1 ', self.score_board.final_board())
+        self.assertEqual('0   1', self.score_board.points())

@@ -10,7 +10,7 @@ class Player:
         self.engine = engine
         self.side = side
         self.pad = Pad(self.side, speed, self.engine)
-        if side == 'left':
+        if self.is_at_left():
             self.goal = Goal(790, self)
         else:
             self.goal = Goal(0, self)
@@ -35,3 +35,9 @@ class Player:
 
     def sets(self):
         return self._score.sets()
+
+    def is_at_left(self):
+        return self.side == 'left'
+
+    def beats(self, other):
+        return self.points() > other.points()

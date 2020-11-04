@@ -5,18 +5,16 @@ import pong.game.game
 
 class Window(object):
     def __init__(self, width: int, height: int, title: str):
-        self.width = width
-        self.height = height
+        self.size = (width, height)
         self.title = title
-        size = (self.width, self.height)
-        self.screen = pygame.display.set_mode(size)
+        self.screen = pygame.display.set_mode(self.size)
+
         pygame.display.set_caption(self.title)
 
         self.score_board = None
         self.PLAY_AGAIN = 1
 
         self.game = pong.game.game.Game()
-
         self.scenes = []
 
     def run(self):
