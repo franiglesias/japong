@@ -11,3 +11,18 @@ class ControlEngine(object, metaclass=ABCMeta):
     @abstractmethod
     def handle(self, events):
         pass
+
+    def _pad(self):
+        return self.pad
+
+    def pad_position(self):
+        return self._pad().vertical_position()
+
+    def move_pad_up(self):
+        self._pad().up()
+
+    def move_pad_down(self):
+        self._pad().down()
+
+    def stop_pad(self):
+        self._pad().stop()

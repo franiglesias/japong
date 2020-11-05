@@ -46,6 +46,9 @@ class Ball(Sprite):
         self.dx = direction[0]
         self.dy = direction[1]
 
+    def vertical_position(self):
+        return self.rect.y
+
     def update(self):
         self.rect.x += self.dx
         self.rect.y += self.dy

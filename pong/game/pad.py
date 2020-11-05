@@ -53,6 +53,9 @@ class Pad(Sprite):
             self.rect.y -= self.dy
             self.stop()
 
+    def vertical_position(self):
+        return self.rect.y
+
     def handle(self, *events):
         self.engine.handle(events)
 
