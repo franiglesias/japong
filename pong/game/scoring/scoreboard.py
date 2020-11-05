@@ -1,4 +1,4 @@
-from pong.config import style_score, style_sets, style_end_title
+from pong.config import styles
 
 
 class ScoreBoard:
@@ -7,8 +7,8 @@ class ScoreBoard:
 
     def draw(self, scene):
         lines = [
-            (self.points(), style_score),
-            (self.sets(), style_sets)
+            (self.points(), styles['score']),
+            (self.sets(), styles['sets'])
         ]
         scene.text_renderer.multi_blit(lines, ('center', 40))
 
@@ -30,20 +30,18 @@ class ScoreBoard:
     def final_board(self, scene):
         winner = self.score_manager.winner()
 
-        line = (
-            "{0} WON".format(winner.name), style_end_title
-        )
+        line = ("{0} WON".format(winner.name), styles['end_title'])
 
         scene.text_renderer.multi_blit([line], ('center', 30))
 
         partials = self.score_manager.partials()
 
-        lines = [(self.sets(), style_score)]
+        lines = [(self.sets(), styles['score'])]
         for set_index in range(len(partials[0])):
             line = "{0} - {1}".format(
                 partials[0][set_index],
                 partials[1][set_index]
             )
-            lines.append((line, style_sets))
+            lines.append((line, styles['sets']))
 
         scene.text_renderer.multi_blit(lines, ('center', 160))

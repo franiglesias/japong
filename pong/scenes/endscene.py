@@ -1,6 +1,7 @@
 import pygame
 
 import pong.config
+from pong.config import styles
 from pong.app.scene import Scene
 from pong.app.window import Window
 
@@ -11,9 +12,8 @@ class EndScene(Scene):
 
     def run(self):
         self.window.screen.fill(pong.config.black)
-
         self.window.score_board.final_board(self)
-        self.text_renderer.blit('Press P to play again or any other key to exit', pong.config.style_prompt)
+        self.text_renderer.blit('Press P to play again or any other key to exit', styles['prompt'])
 
         pygame.display.flip()
         done = False

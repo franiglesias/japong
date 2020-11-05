@@ -57,7 +57,11 @@ class GameScene(Scene):
         player_one = Player('human', player_one_side, player_one_engine, player_one_speed)
         player_two = Player('computer', player_two_side, player_two_engine, player_two_speed)
 
-        self.window.score_manager = ScoreManager(player_one, player_two, (3, POINTS_TO_WIN))
+        self.window.score_manager = ScoreManager(
+            match=(3, POINTS_TO_WIN),
+            player_one=player_one,
+            player_two=player_two
+        )
         self.window.score_board = ScoreBoard(self.window.score_manager)
 
         player_one.pad.borders = self.borders

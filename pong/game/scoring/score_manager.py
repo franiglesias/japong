@@ -1,57 +1,75 @@
-import math
+from game.scoring.match import Match
 
 
 class ScoreManager(object):
 
     def __init__(self, player_one, player_two, match) -> None:
-        if player_one.is_at_left():
-            self.left = player_one
-            self.right = player_two
+        self._set_players(player_one, player_two)
+        self._set_match(match)
+
+    def _set_players(self, one, two):
+        if one.is_at_left():
+            self.players = (one, two)
         else:
-            self.left = player_two
-            self.right = player_one
-        self.match = match
+            self.players = (two, one)
+
+    def _set_match(self, match):
+        self.match = Match(match)
+
+    def left_player(self):
+        return self.players[0]
+
+    def right_player(self):
+        return self.players[1]
 
     def end_of_game(self):
-        return self._best() >= self._target()
+        return self._sets_won_by_best_player() >= self._sets_to_win_game()
 
     def end_of_set(self):
-        return self._difference() >= 2 and self._winner_points() >= self.match[1]
+        return self._minimum_score_reached() and self._minimum_difference_reached()
+
+    def _minimum_score_reached(self):
+        return self._winner_points() >= self._points_to_win_set()
+
+    def _minimum_difference_reached(self):
+        return self._points_difference() >= 2
 
     def winner(self):
-        if self.left.beats(self.right):
-            return self.left
+        if self.left_player().beats(self.right_player()):
+            return self.left_player()
 
-        return self.right
+        return self.right_player()
 
-    def _target(self):
-        return math.ceil(self.match[0] / 2)
+    def _points_to_win_set(self):
+        return self.match.points_to_win_set()
 
-    def _best(self):
-        return max(self.left.sets(), self.right.sets())
+    def _sets_to_win_game(self):
+        return self.match.sets_to_win_game()
+
+    def _sets_won_by_best_player(self):
+        return max(self.left_player().sets(), self.right_player().sets())
 
     def _winner_points(self):
-        return max(self.left.points(), self.right.points())
+        return max(self.left_player().points(), self.right_player().points())
 
-    def _difference(self):
-        return abs(self.left.points() - self.right.points())
+    def _points_difference(self):
+        return abs(self.left_player().points() - self.right_player().points())
 
     def points(self):
-        return self.left.points(), self.right.points()
+        return self.left_player().points(), self.right_player().points()
 
     def partials(self):
-        return self.left.partials(), self.right.partials()
+        return self.left_player().partials(), self.right_player().partials()
 
     def sets(self):
-        return self.left.sets(), self.right.sets()
+        return self.left_player().sets(), self.right_player().sets()
 
     def end_set(self):
-        if self.left.beats(self.right):
-            self.left.win_set()
-            return
-
-        self.right.win_set()
+        if self.left_player().beats(self.right_player()):
+            self.left_player().win_set()
+        else:
+            self.right_player().win_set()
 
     def new_set(self):
-        self.left.new_set()
-        self.right.new_set()
+        self.left_player().new_set()
+        self.right_player().new_set()
