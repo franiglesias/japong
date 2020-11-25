@@ -4,9 +4,9 @@ from pygame.event import Event
 
 import pong.config
 import pong.tests.events
-from pong.game.ball import Ball
-from pong.game.control.computer_control_engine import ComputerControlEngine
-from pong.game.pad import Pad
+from game.ball import Ball
+from game.control.computer_control_engine import ComputerControlEngine
+from game.pad import Pad
 
 
 class TestComputerControlEngine(TestCase):

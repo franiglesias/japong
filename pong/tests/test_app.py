@@ -1,7 +1,7 @@
 import unittest.mock
 
-from pong.app.app import App
-from pong.tests import events
+from app.app import App
+from tests import events
 
 
 class AppTestCase(unittest.TestCase):

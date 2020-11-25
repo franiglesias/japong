@@ -1,4 +1,4 @@
-from pong.config import styles
+from config import styles
 
 
 class ScoreBoard:

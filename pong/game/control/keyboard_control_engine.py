@@ -1,6 +1,6 @@
 from pygame import key, KEYDOWN, KEYUP
 
-from pong.game.control.control_engine import ControlEngine
+from game.control.control_engine import ControlEngine
 
 
 class KeyboardControlEngine(ControlEngine):

@@ -5,11 +5,11 @@ import pygame
 import pong.config
 from app.scene import Scene
 from app.window import Window
-from pong.game.ball import Ball
-from pong.game.control.computer_control_engine import ComputerControlEngine
-from pong.game.player import Player
-from pong.game.scoring.score_manager import ScoreManager
-from pong.game.scoring.scoreboard import ScoreBoard
+from game.ball import Ball
+from game.control.computer_control_engine import ComputerControlEngine
+from game.player import Player
+from game.scoring.score_manager import ScoreManager
+from game.scoring.scoreboard import ScoreBoard
 
 
 class TestScoreBoard(TestCase):

@@ -1,9 +1,9 @@
 from pygame.sprite import Sprite, spritecollide
 from pygame.surface import Surface
 
-from pong.utils.soundplayer import SoundPlayer
-from pong.config import white
-from pong.game.control.control_engine import ControlEngine
+from utils.soundplayer import SoundPlayer
+from config import white
+from game.control.control_engine import ControlEngine
 
 
 class Pad(Sprite):

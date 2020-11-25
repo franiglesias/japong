@@ -3,8 +3,8 @@ import unittest.mock
 import pygame
 
 import pong.scenes.startscene
-from pong.app.window import Window
-from pong.tests import events
+from app.window import Window
+from tests import events
 
 
 class StartSceneTestCase(unittest.TestCase):

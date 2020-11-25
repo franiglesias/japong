@@ -1,6 +1,6 @@
 import unittest
 
-from pong.game.game import Game
+from game.game import Game
 
 
 class GameTestCase(unittest.TestCase):

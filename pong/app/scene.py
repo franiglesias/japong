@@ -1,6 +1,6 @@
-from pong.app.window import Window
-from pong.utils.textrenderer import TextRenderer
-from pong.utils.textwriter import TextWriter
+from app.window import Window
+from utils.textrenderer import TextRenderer
+from utils.textwriter import TextWriter
 
 
 class Scene(object):

@@ -1,9 +1,9 @@
 import pygame
 
-from pong.app.window import Window
-from pong.scenes.endscene import EndScene
-from pong.scenes.gamescene import GameScene
-from pong.scenes.startscene import StartScene
+from app.window import Window
+from scenes.endscene import EndScene
+from scenes.gamescene import GameScene
+from scenes.startscene import StartScene
 
 
 class App(object):

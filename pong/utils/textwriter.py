@@ -1,8 +1,8 @@
 from pygame.font import Font
 from pygame.font import get_default_font
 
-import pong.config
-from pong.utils.textrenderer import TextRenderer
+from config import chroma
+from utils.textrenderer import TextRenderer
 
 
 class TextWriter(object):
@@ -40,7 +40,7 @@ class TextWriter(object):
 
     def _background(self, line, transparent):
         if transparent:
-            return pong.config.chroma
+            return chroma
 
         return line[self.STYLE]['background']
 

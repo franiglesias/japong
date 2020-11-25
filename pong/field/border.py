@@ -1,7 +1,7 @@
 import pygame
 
-from pong.config import white
-from pong.utils.soundplayer import SoundPlayer
+from config import white
+from utils.soundplayer import SoundPlayer
 
 
 class Border(pygame.sprite.Sprite):

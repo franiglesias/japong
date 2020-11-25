@@ -1,6 +1,6 @@
 import pygame
 
-import pong.game.game
+from game.game import Game
 
 
 class Window(object):
@@ -14,7 +14,7 @@ class Window(object):
         self.score_board = None
         self.PLAY_AGAIN = 1
 
-        self.game = pong.game.game.Game()
+        self.game = Game()
         self.scenes = []
 
     def run(self):

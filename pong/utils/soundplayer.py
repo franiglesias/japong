@@ -1,6 +1,6 @@
 import pygame
 
-from pong.config import base_path
+from config import base_path
 
 
 class SoundPlayer(object):

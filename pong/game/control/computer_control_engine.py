@@ -1,6 +1,6 @@
-from pong.game.ball import Ball
-from pong.config import COMPUTER_MOVES_EVENT
-from pong.game.control.control_engine import ControlEngine
+from game.ball import Ball
+from config import COMPUTER_MOVES_EVENT
+from game.control.control_engine import ControlEngine
 
 
 class ComputerControlEngine(ControlEngine):

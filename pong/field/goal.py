@@ -1,10 +1,9 @@
 from pygame import Surface
 from pygame.sprite import Sprite
 
-import pong.app
-import pong.config
-from pong.config import white, red, lighten
-from pong.utils.soundplayer import SoundPlayer
+from config import FPS
+from config import white, red, lighten
+from utils.soundplayer import SoundPlayer
 
 GOAL_HIGHLIGHT_IN_SECONDS = 1.5
 
@@ -30,7 +29,7 @@ class Goal(Sprite):
         self.color = red
         self.image.fill(self.color)
 
-        self.remaining = pong.config.FPS * GOAL_HIGHLIGHT_IN_SECONDS
+        self.remaining = FPS * GOAL_HIGHLIGHT_IN_SECONDS
 
     @staticmethod
     def play_sound(sound):

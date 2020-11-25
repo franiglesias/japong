@@ -1,8 +1,8 @@
 from unittest import TestCase
 
-from pong.game.ball import Ball
-from pong.game.control.keyboard_control_engine import KeyboardControlEngine
-from pong.game.pad import Pad
+from game.ball import Ball
+from game.control.keyboard_control_engine import KeyboardControlEngine
+from game.pad import Pad
 
 
 class TestPad(TestCase):

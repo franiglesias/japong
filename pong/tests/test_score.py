@@ -1,6 +1,6 @@
 from unittest import TestCase
 
-from pong.game.score import Score
+from game.score import Score
 
 
 class TestScore(TestCase):

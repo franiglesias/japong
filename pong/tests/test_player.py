@@ -1,9 +1,9 @@
 from unittest import TestCase
 
 import pong.config
-from pong.game.ball import Ball
-from pong.game.control.computer_control_engine import ComputerControlEngine
-from pong.game.player import Player
+from game.ball import Ball
+from game.control.computer_control_engine import ComputerControlEngine
+from game.player import Player
 
 
 class TestPlayer(TestCase):

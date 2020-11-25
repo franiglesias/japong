@@ -1,8 +1,8 @@
 import unittest.mock
 
-from pong.app.scene import Scene
-from pong.app.window import Window
-from pong.tests import events
+from app.scene import Scene
+from app.window import Window
+from tests import events
 
 
 class WindowTestCase(unittest.TestCase):

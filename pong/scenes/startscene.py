@@ -1,8 +1,8 @@
 import pygame
 
-from pong.app.scene import Scene
-from pong.app.window import Window
-from pong.config import base_path, white, styles
+from app.scene import Scene
+from app.window import Window
+from config import base_path, white, styles
 
 
 class StartScene(Scene):

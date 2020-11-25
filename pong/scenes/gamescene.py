@@ -2,19 +2,20 @@ import pygame
 from pygame.sprite import Group
 from pygame.time import Clock
 
-import pong.config
-import pong.field.net
-from pong.field.net import Net
-from pong.app.scene import Scene
-from pong.app.window import Window
-from pong.game.ball import Ball
-from pong.field.border import Border
-from pong.config import POINTS_TO_WIN
-from pong.game.control.computer_control_engine import ComputerControlEngine
-from pong.game.control.keyboard_control_engine import KeyboardControlEngine
-from pong.game.scoring.score_manager import ScoreManager
-from pong.game.player import Player
-from pong.game.scoring.scoreboard import ScoreBoard
+from config import yellow, green
+from config import COMPUTER_MOVES_EVENT, FPS, COMPUTER_MOVES_TIMER_MS
+from config import left_keys, right_keys
+from field.net import Net
+from app.scene import Scene
+from app.window import Window
+from game.ball import Ball
+from field.border import Border
+from config import POINTS_TO_WIN
+from game.control.computer_control_engine import ComputerControlEngine
+from game.control.keyboard_control_engine import KeyboardControlEngine
+from game.scoring.score_manager import ScoreManager
+from game.player import Player
+from game.scoring.scoreboard import ScoreBoard
 
 
 class GameScene(Scene):
@@ -24,8 +25,8 @@ class GameScene(Scene):
         self.goals = Group()
         self.pads = Group()
         self.borders = Group()
-        self.ball = Ball(pong.config.yellow, 10)
-        self.all_sprites.add(pong.field.net.Net())
+        self.ball = Ball(yellow, 10)
+        self.all_sprites.add(Net())
         self.all_sprites.add(self.ball)
 
     def run(self):
@@ -36,11 +37,11 @@ class GameScene(Scene):
         player_two_side = 'right'
         player_one_speed = self.window.game.human_speed
         player_two_speed = self.window.game.human_speed
-        player_one_engine = self.player_engine(pong.config.left_keys)
-        player_two_engine = self.player_engine(pong.config.right_keys)
+        player_one_engine = self.player_engine(left_keys)
+        player_two_engine = self.player_engine(right_keys)
 
         if self.window.game.game_mode == 1:
-            player_one_side = self.window.game.side_preference
+            player_one_side = self.window.game_side()
             if player_one_side == 'left':
                 player_two_side = 'right'
             else:
@@ -85,7 +86,7 @@ class GameScene(Scene):
 
         # Game loop
         clock = Clock()
-        pygame.time.set_timer(pong.config.COMPUTER_MOVES_EVENT, pong.config.COMPUTER_MOVES_TIMER_MS)
+        pygame.time.set_timer(COMPUTER_MOVES_EVENT, COMPUTER_MOVES_TIMER_MS)
         end_of_match = False
 
         while not end_of_match:
@@ -106,7 +107,7 @@ class GameScene(Scene):
                 self.ball.manage_goals()
 
                 # Game draw
-                self.window.screen.fill(pong.config.green)
+                self.window.screen.fill(green)
                 self.window.score_board.draw(self)
                 self.all_sprites.draw(self.window.screen)
 
@@ -121,7 +122,7 @@ class GameScene(Scene):
                     if self.window.score_manager.end_of_game():
                         end_of_match = True
 
-                clock.tick(pong.config.FPS)
+                clock.tick(FPS)
         return 0
 
     def player_engine_for_second_player(self, keys):

@@ -1,6 +1,6 @@
 import pygame
 
-import pong.config
+from config import chroma
 
 
 class TextRenderer(object):
@@ -13,7 +13,7 @@ class TextRenderer(object):
         transparent = style['background'] == 'transparent'
 
         if transparent:
-            background = pong.config.chroma
+            background = chroma
         else:
             background = style['background']
 

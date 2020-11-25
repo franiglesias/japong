@@ -1,7 +1,7 @@
 import unittest.mock
 
 import pong.app.window
-from pong.app.scene import Scene
+from app.scene import Scene
 
 
 class SceneTestCase(unittest.TestCase):

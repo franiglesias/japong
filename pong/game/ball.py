@@ -4,10 +4,10 @@ from pygame import Surface
 from pygame.draw import ellipse
 from pygame.sprite import Sprite, spritecollide
 
-import pong.config
-from pong.field.border import Border
-from pong.field.goal import Goal
-from pong.game.pad import Pad
+from config import white, FPS
+from field.border import Border
+from field.goal import Goal
+from game.pad import Pad
 
 
 class Ball(Sprite):
@@ -24,8 +24,8 @@ class Ball(Sprite):
 
         self.image = Surface((self.radius * 2, self.radius * 2))
 
-        self.image.fill(pong.config.white)
-        self.image.set_colorkey(pong.config.white)
+        self.image.fill(white)
+        self.image.set_colorkey(white)
         ellipse(self.image, self.color, [0, 0, self.radius * self.rx, self.radius * self.ry])
 
         self.rect = self.image.get_rect()
@@ -62,8 +62,8 @@ class Ball(Sprite):
             self.rx = 2
             self.ry = 2
 
-        self.image.fill(pong.config.white)
-        self.image.set_colorkey(pong.config.white)
+        self.image.fill(white)
+        self.image.set_colorkey(white)
 
         width = self.radius * self.rx
         height = self.radius * self.ry
@@ -125,4 +125,4 @@ class Ball(Sprite):
         self.dy = 2
 
     def _start_transformation_count_down(self):
-        self.remaining = pong.config.FPS / 16
+        self.remaining = FPS / 16
