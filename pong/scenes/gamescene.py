@@ -8,6 +8,7 @@ from config import left_keys, right_keys
 from field.net import Net
 from app.scene import Scene
 from app.window import Window
+from app.exit_code import ExitCode
 from game.ball import Ball
 from field.border import Border
 from config import POINTS_TO_WIN
@@ -123,7 +124,7 @@ class GameScene(Scene):
                         end_of_match = True
 
                 clock.tick(FPS)
-        return 0
+        return ExitCode.success()
 
     def player_engine_for_second_player(self, keys):
         if self.window.game.game_mode == 1 or self.window.game.game_mode == 0:

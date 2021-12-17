@@ -1,4 +1,5 @@
 from app.window import Window
+from app.exit_code import ExitCode
 from utils.textrenderer import TextRenderer
 from utils.textwriter import TextWriter
 
@@ -9,4 +10,4 @@ class Scene(object):
         self.text_renderer = TextWriter(TextRenderer(self.window.screen))
 
     def run(self):
-        return 0
+        return ExitCode(0)

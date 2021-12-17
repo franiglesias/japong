@@ -2,6 +2,7 @@ import pygame
 
 from app.scene import Scene
 from app.window import Window
+from app.exit_code import ExitCode
 from config import base_path, white, styles
 
 
@@ -34,7 +35,7 @@ class StartScene(Scene):
 
             pygame.display.flip()
 
-        return 0
+        return ExitCode.success()
 
     def _show_press_key(self):
         self.text_renderer.blit('Press any key to play', styles['prompt'])

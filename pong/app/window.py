@@ -1,5 +1,6 @@
 import pygame
 
+from app.exit_code import ExitCode
 from game.game import Game
 
 
@@ -18,21 +19,20 @@ class Window(object):
         self.scenes = []
 
     def run(self):
-        exit_code = 0
-        for scene in self.scenes:
-            exit_code = scene.run()
-            if self.is_error(exit_code):
-                break
-        if exit_code == self.PLAY_AGAIN:
+        status = self.run_scenes()
+        if status.is_play_again():
             return self.run()
-        return exit_code
+        return status.value()
+
+    def run_scenes(self):
+        for scene in self.scenes:
+            code = scene.run()
+            if code.is_error():
+                return code
+        return ExitCode(0)
 
     def add_scene(self, scene):
         self.scenes.append(scene)
-
-    @staticmethod
-    def is_error(exit_code):
-        return exit_code < 0
 
     def game_side(self):
         return self.game.side_preference

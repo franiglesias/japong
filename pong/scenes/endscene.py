@@ -4,6 +4,7 @@ from config import styles
 from config import black
 from app.scene import Scene
 from app.window import Window
+from app.exit_code import ExitCode
 
 
 class EndScene(Scene):
@@ -17,7 +18,7 @@ class EndScene(Scene):
 
         pygame.display.flip()
         done = False
-        exit_code = 0
+        exit_code = ExitCode.success()
 
         pygame.event.clear()
 
@@ -26,7 +27,7 @@ class EndScene(Scene):
             if event.type == pygame.KEYDOWN:
                 key_name = pygame.key.name(event.key)
                 if key_name == "p":
-                    exit_code = self.window.PLAY_AGAIN
+                    exit_code = ExitCode.play_again()
                 done = True
 
         return exit_code
