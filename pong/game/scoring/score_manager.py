@@ -3,18 +3,15 @@ from game.scoring.match import Match
 
 class ScoreManager(object):
 
-    def __init__(self, player_one, player_two, match) -> None:
-        self._set_players(player_one, player_two)
-        self._set_match(match)
+    def __init__(self, match) -> None:
+        self.players = (None, None)
+        self.match = match
 
-    def _set_players(self, one, two):
+    def register_players(self, one, two):
         if one.is_at_left():
             self.players = (one, two)
         else:
             self.players = (two, one)
-
-    def _set_match(self, match):
-        self.match = Match(match)
 
     def left_player(self):
         return self.players[0]

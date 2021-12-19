@@ -2,9 +2,9 @@ import math
 
 
 class Match(object):
-    def __init__(self, match):
-        self.sets = match[0]
-        self.points_by_set = match[1]
+    def __init__(self, sets: int, points_by_set: int):
+        self.sets = sets
+        self.points_by_set = points_by_set
 
     def points_to_win_set(self):
         return self.points_by_set

@@ -1,34 +1,22 @@
 from unittest import TestCase
 
-import pygame
+from mock import patch
 
-import pong.config
-from app.scene import Scene
-from app.window import Window
-from game.ball import Ball
-from game.control.computer_control_engine import ComputerControlEngine
-from game.player import Player
+from game.scoring.match import Match
 from game.scoring.score_manager import ScoreManager
 from game.scoring.scoreboard import ScoreBoard
 
 
 class TestScoreBoard(TestCase):
 
-    def setUp(self) -> None:
-        ball = Ball(pong.config.white, 10)
-        engine = ComputerControlEngine(ball)
-        self.left_player = Player('left', 'left', engine)
-        self.right_player = Player('right', 'right', engine)
-        self.score_manager = ScoreManager(self.left_player, self.right_player, (1, 5))
-        self.score_board = ScoreBoard(self.score_manager)
-        self.scene = Scene(Window(100, 100, 'Test'))
+    @patch.object(ScoreManager, 'points')
+    def test_should_annotate_left_point(self, score_manager_points_will):
+        score_manager_points_will.return_value = (1, 0)
+        score_board = ScoreBoard(ScoreManager(Match(1, 1)))
+        self.assertEqual('1   0', score_board.points())
 
-    def test_should_annotate_left_point(self):
-        self.left_player.win_point()
-
-        self.assertEqual('1   0', self.score_board.points())
-
-    def test_should_annotate_right_point(self):
-        self.right_player.win_point()
-
-        self.assertEqual('0   1', self.score_board.points())
+    @patch.object(ScoreManager, 'points')
+    def test_should_annotate_right_point(self, score_manager_points_will):
+        score_manager_points_will.return_value = (0, 1)
+        score_board = ScoreBoard(ScoreManager(Match(1, 1)))
+        self.assertEqual('0   1', score_board.points())

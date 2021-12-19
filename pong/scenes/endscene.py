@@ -8,12 +8,13 @@ from app.exit_code import ExitCode
 
 
 class EndScene(Scene):
-    def __init__(self, window: Window):
+    def __init__(self, window: Window, score_board=None):
         super().__init__(window)
+        self.score_board = score_board
 
     def run(self):
         self.window.screen.fill(black)
-        self.window.score_board.final_board(self)
+        self.score_board.final_board(self)
         self.text_renderer.blit('Press P to play again or any other key to exit', styles['prompt'])
 
         pygame.display.flip()

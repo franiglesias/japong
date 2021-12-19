@@ -1,15 +1,18 @@
 class ExitCode(object):
     def __init__(self, code: int):
-        self.code = code
+        self.__code = code
 
     def is_error(self):
-        return self.code < 0
+        return self.__code < 0
 
     def is_play_again(self):
-        return self.code == 1
+        return self.__code == 1
 
     def value(self):
-        return self.code
+        return self.__code
+
+    def equals(self, other):
+        return self.value() == other.value()
 
     @staticmethod
     def play_again():

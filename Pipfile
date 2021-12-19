@@ -10,3 +10,6 @@ pygame = "==2.0.0.dev8"
 
 [requires]
 python_version = "3.7"
+
+pygame~=2.1.0
+mock~=4.0.3

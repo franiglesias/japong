@@ -3,8 +3,9 @@ from unittest import TestCase
 import pong.config
 from game.ball import Ball
 from game.control.computer_control_engine import ComputerControlEngine
-from game.scoring.score_manager import ScoreManager
 from game.player import Player
+from game.scoring.match import Match
+from game.scoring.score_manager import ScoreManager
 
 
 class TestScoreManager(TestCase):
@@ -51,7 +52,8 @@ class TestScoreManager(TestCase):
     def test_one_set_match_should_have_only_one_set(self):
         self.left_player = self.preparePlayer()
         self.right_player = self.preparePlayer()
-        self.score_manager = ScoreManager(self.left_player, self.right_player, (1, 5))
+        self.score_manager = ScoreManager(Match(1, 5))
+        self.score_manager.register_players(self.left_player, self.right_player)
         self.left_player.win_set()
         self.assertTrue(self.score_manager.end_of_game())
 
@@ -62,7 +64,8 @@ class TestScoreManager(TestCase):
             self.left_player.win_point()
         for i in range(right):
             self.right_player.win_point()
-        self.score_manager = ScoreManager(self.left_player, self.right_player, (3, 5))
+        self.score_manager = ScoreManager(Match(3, 5))
+        self.score_manager.register_players(self.left_player, self.right_player)
 
     def scoreInSets(self, left, right):
         self.left_player = self.preparePlayer()
@@ -71,7 +74,8 @@ class TestScoreManager(TestCase):
             self.left_player.win_set()
         for i in range(right):
             self.right_player.win_set()
-        self.score_manager = ScoreManager(self.left_player, self.right_player, (3, 5))
+        self.score_manager = ScoreManager(Match(3, 5))
+        self.score_manager.register_players(self.left_player, self.right_player)
 
     @staticmethod
     def preparePlayer():

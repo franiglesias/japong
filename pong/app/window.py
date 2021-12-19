@@ -6,20 +6,20 @@ from game.game import Game
 
 class Window(object):
     def __init__(self, width: int, height: int, title: str):
-        self.size = (width, height)
-        self.title = title
-        self.screen = pygame.display.set_mode(self.size)
-
-        pygame.display.set_caption(self.title)
-
-        self.score_board = None
-        self.PLAY_AGAIN = 1
-
+        self.screen = self.set_up_screen(width, height, title)
         self.game = Game()
+        self.score_board = None
         self.scenes = []
 
+    @staticmethod
+    def set_up_screen(width: int, height: int, title: str):
+        pygame.display.set_caption(title)
+        return pygame.display.set_mode((width, height))
+
     def run(self):
-        status = self.run_scenes()
+        return self.run_or_exit(self.run_scenes())
+
+    def run_or_exit(self, status):
         if status.is_play_again():
             return self.run()
         return status.value()
