@@ -4,11 +4,13 @@ from app.scene import Scene
 from app.window import Window
 from app.exit_code import ExitCode
 from config import base_path, white, styles
+from game.game import Game
 
 
 class StartScene(Scene):
-    def __init__(self, window: Window):
+    def __init__(self, window: Window, game: Game):
         super().__init__(window)
+        self.game = game
 
     def run(self):
         self._show_background()
@@ -19,43 +21,27 @@ class StartScene(Scene):
             if event.type in (pygame.KEYDOWN, pygame.KEYUP):
                 key_name = pygame.key.name(event.key)
                 if key_name == "r":
-                    self._set_side_preference('right')
+                    self.game.prefer_right()
                 elif key_name == 'l':
-                    self._set_side_preference('left')
+                    self.game.prefer_left()
                 elif key_name == '1':
-                    self._set_game_mode(1)
+                    self.game.prefer_one_player()
                 elif key_name == '2':
-                    self._set_game_mode(2)
+                    self.game.prefer_two_players()
                 else:
                     done = True
 
             self._show_background()
             self._show_configuration()
-            self._show_press_key()
 
             pygame.display.flip()
 
         return ExitCode.success()
 
-    def _show_press_key(self):
-        self.text_renderer.blit('Press any key to play', styles['prompt'])
-
-    def _set_game_mode(self, mode):
-        self.window.set_mode(mode)
-
-    def _set_side_preference(self, side):
-        self.window.set_side(side)
-
     def _show_configuration(self):
-        self.text_renderer.blit("Table side: L/R ({0}) ".format(self._game_side()), styles['config_side'])
-        self.text_renderer.blit("Players: 1/2 ({0}) ".format(self._game_mode()), styles['config_players'])
-        self._show_press_key()
-
-    def _game_mode(self):
-        return self.window.game_mode()
-
-    def _game_side(self):
-        return self.window.game_side()
+        self.text_renderer.blit("Table side: L/R ({0}) ".format(self.game.side_preference), styles['config_side'])
+        self.text_renderer.blit("Players: 1/2 ({0}) ".format(self.game.game_mode), styles['config_players'])
+        self.text_renderer.blit('Press any key to play', styles['prompt'])
 
     def _show_background(self):
         self.window.screen.fill(white)

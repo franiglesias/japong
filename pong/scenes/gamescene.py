@@ -6,7 +6,6 @@ from app.exit_code import ExitCode
 from app.scene import Scene
 from app.window import Window
 from config import COMPUTER_MOVES_EVENT, FPS, COMPUTER_MOVES_TIMER_MS
-from config import POINTS_TO_WIN
 from config import left_keys, right_keys
 from config import yellow, green
 from field.border import Border
@@ -14,51 +13,52 @@ from field.net import Net
 from game.ball import Ball
 from game.control.computer_control_engine import ComputerControlEngine
 from game.control.keyboard_control_engine import KeyboardControlEngine
+from game.game import Game
 from game.player import Player
 from game.scoring.score_manager import ScoreManager
 from game.scoring.scoreboard import ScoreBoard
 
 
 class GameScene(Scene):
-    def __init__(self, window: Window, score_manager=None, score_board=None):
+    def __init__(self, window: Window, game: Game, score_manager: ScoreManager, score_board: ScoreBoard):
         super().__init__(window)
 
+        self.ball = Ball(yellow, 10)
+        self.game = game
         self.score_manager = score_manager
-        player_two_engine = self.player_engine(())
         self.all_sprites = Group()
         self.goals = Group()
         self.pads = Group()
         self.borders = Group()
-        self.ball = Ball(yellow, 10)
         self.all_sprites.add(Net())
         self.all_sprites.add(self.ball)
 
         player_one_side = 'left'
         player_two_side = 'right'
-        player_one_speed = self.window.game.human_speed
-        player_two_speed = self.window.game.human_speed
+        player_one_speed = self.game.human_speed
+        player_two_speed = self.game.human_speed
         player_one_engine = self.player_engine(left_keys)
         player_two_engine = self.player_engine(right_keys)
 
-        if self.window.game.game_mode == 1:
-            player_one_side = self.window.game_side()
+        if self.game.game_mode == 1:
+            player_one_side = self.game.side_preference
             if player_one_side == 'left':
                 player_two_side = 'right'
             else:
                 player_two_side = 'left'
-            player_one_speed = self.window.game.human_speed
-            player_two_speed = self.window.game.computer_speed
+            player_one_speed = self.game.human_speed
+            player_two_speed = self.game.computer_speed
             player_two_engine = self.player_engine(())
-        elif self.window.game.game_mode == 0:
-            player_one_speed = self.window.game.computer_speed
-            player_two_speed = self.window.game.computer_speed
+        elif self.game.game_mode == 0:
+            player_one_speed = self.game.computer_speed
+            player_two_speed = self.game.computer_speed
             player_one_engine = self.player_engine(())
 
         self.player_one = Player('human', player_one_side, player_one_engine, player_one_speed)
         self.player_two = Player('computer', player_two_side, player_two_engine, player_two_speed)
 
         self.score_manager.register_players(self.player_one, self.player_two)
-        self.score_board = score_board or ScoreBoard(self.score_manager)
+        self.score_board = score_board
 
     def run(self):
 
@@ -123,12 +123,6 @@ class GameScene(Scene):
 
                 clock.tick(FPS)
         return ExitCode.success()
-
-    def player_engine_for_second_player(self, keys):
-        if self.window.game.game_mode == 1 or self.window.game.game_mode == 0:
-            return ComputerControlEngine(self.ball)
-
-        return KeyboardControlEngine(keys)
 
     def player_engine(self, keys):
         if len(keys) == 0:

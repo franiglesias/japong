@@ -37,11 +37,3 @@ class Window(object):
     def game_side(self):
         return self.game.side_preference
 
-    def game_mode(self):
-        return self.game.game_mode
-
-    def set_side(self, side):
-        self.game.set_side_preference(side)
-
-    def set_mode(self, mode):
-        self.game.set_game_mode(mode)
