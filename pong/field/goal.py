@@ -1,8 +1,9 @@
 from pygame import Surface
-from pygame.sprite import Sprite
+from pygame.sprite import Sprite, spritecollide
 
 from config import white, red, lighten
 from field.effect import Effect
+from game.ball import Ball
 from utils.soundplayer import SoundPlayer
 
 GOAL_HIGHLIGHT_IN_SECONDS = 1.5
@@ -28,6 +29,11 @@ class Goal(Sprite):
         self.effect = Effect(GOAL_HIGHLIGHT_IN_SECONDS)
         self.player = player
 
+        self.balls = None
+
+    def bind_ball(self, ball: Ball):
+        self.balls = [ball]
+
     def hit(self):
         self.play_sound()
         self.change_color()
@@ -44,6 +50,15 @@ class Goal(Sprite):
     def update(self):
         self.effect.apply(self)
         self.image.fill(self.color)
+
+        self.__manage_ball_collision()
+
+    def __manage_ball_collision(self):
+        collisions = spritecollide(self, self.balls, False)
+        ball: Ball
+        for ball in collisions:
+            ball.goal()
+            self.hit()
 
     def apply_effect(self):
         self.color = lighten(self.color, 2)

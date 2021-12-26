@@ -5,7 +5,6 @@ from pygame.draw import ellipse
 from pygame.sprite import Sprite, spritecollide
 
 from config import white, FPS
-from field.goal import Goal
 from game.direction import Direction
 from game.pad import Pad
 
@@ -86,12 +85,8 @@ class Ball(Sprite):
         self._start_transformation_count_down()
         self.ry = 1.3
 
-    def manage_goals(self):
-        goal_collisions = spritecollide(self, self.goals, False)
-        goal: Goal
-        for goal in goal_collisions:
-            goal.hit()
-            self.restart()
+    def goal(self):
+        self.restart()
 
     def bounce_with_pad(self):
         self.direction.pad_bounce(1, 1)

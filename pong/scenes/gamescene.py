@@ -9,6 +9,7 @@ from config import COMPUTER_MOVES_EVENT, FPS, COMPUTER_MOVES_TIMER_MS
 from config import left_keys, right_keys
 from config import yellow, green
 from field.border import Border
+from field.goal import Goal
 from field.net import Net
 from game.ball import Ball
 from game.control.computer_control_engine import ComputerControlEngine
@@ -71,9 +72,6 @@ class GameScene(Scene):
         self.player_one.pad.borders = self.borders
         self.player_two.pad.borders = self.borders
 
-        self.all_sprites.add(self.player_one.goal)
-        self.all_sprites.add(self.player_two.goal)
-
         self.goals.add(self.player_one.goal)
         self.goals.add(self.player_two.goal)
 
@@ -84,8 +82,11 @@ class GameScene(Scene):
         self.pads.add(self.player_two.pad)
 
         self.ball.pads = self.pads
-        self.ball.goals = self.goals
 
+        goal: Goal
+        for goal in self.goals:
+            goal.bind_ball(self.ball)
+            self.all_sprites.add(goal)
 
         # Game loop
         clock = Clock()
@@ -105,9 +106,6 @@ class GameScene(Scene):
 
                 pygame.event.pump()
                 self.all_sprites.update()
-
-                # Manage goals
-                self.ball.manage_goals()
 
                 # Game draw
                 self.window.screen.fill(green)
