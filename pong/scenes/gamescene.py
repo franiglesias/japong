@@ -23,13 +23,17 @@ class GameScene(Scene):
     def __init__(self, window: Window, game: Game, score_manager: ScoreManager, score_board: ScoreBoard):
         super().__init__(window)
 
-        self.ball = Ball(yellow, 10)
         self.game = game
         self.score_manager = score_manager
+
+        self.ball = Ball(yellow, 10)
+
         self.all_sprites = Group()
         self.goals = Group()
         self.pads = Group()
+
         self.borders = Group()
+
         self.all_sprites.add(Net())
         self.all_sprites.add(self.ball)
 
@@ -62,7 +66,7 @@ class GameScene(Scene):
 
     def run(self):
 
-        self.prepare_borders()
+        self.__prepare_borders()
 
         self.player_one.pad.borders = self.borders
         self.player_two.pad.borders = self.borders
@@ -130,15 +134,12 @@ class GameScene(Scene):
 
         return KeyboardControlEngine(keys)
 
-    def prepare_borders(self):
-        border_top = Border(0)
-        border_bottom = Border(590)
+    def __prepare_borders(self):
+        self.borders.add(Border(0))
+        self.borders.add(Border(590))
 
-        border_top.bind_ball(self.ball)
-        border_bottom.bind_ball(self.ball)
-
-        self.all_sprites.add(border_top)
-        self.all_sprites.add(border_bottom)
-        self.borders.add(border_top)
-        self.borders.add(border_bottom)
+        border: Border
+        for border in self.borders:
+            border.bind_ball(self.ball)
+            self.all_sprites.add(border)
 
