@@ -1,9 +1,9 @@
 from pygame.sprite import Sprite, spritecollide
 from pygame.surface import Surface
 
-from utils.soundplayer import SoundPlayer
 from config import white
 from game.control.control_engine import ControlEngine
+from utils.soundplayer import SoundPlayer
 
 
 class Pad(Sprite):
@@ -60,8 +60,7 @@ class Pad(Sprite):
         self.engine.handle(events)
 
     def hit(self, ball):
-        player = SoundPlayer()
-        player.play('pad-hit')
+        SoundPlayer().play('pad-hit')
         ball_center_y = ball.rect.y + ball.radius - self.rect.y
 
         if ball_center_y < self.__top_region_limit():

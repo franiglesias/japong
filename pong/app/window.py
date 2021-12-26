@@ -22,7 +22,7 @@ class Window(object):
     def run_or_exit(self, status):
         if status.is_play_again():
             return self.run()
-        return status.value()
+        return status
 
     def run_scenes(self):
         for scene in self.scenes:

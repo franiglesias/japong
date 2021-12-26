@@ -80,8 +80,8 @@ class GameScene(Scene):
         self.pads.add(self.player_two.pad)
 
         self.ball.pads = self.pads
-        self.ball.borders = self.borders
         self.ball.goals = self.goals
+
 
         # Game loop
         clock = Clock()
@@ -133,7 +133,12 @@ class GameScene(Scene):
     def prepare_borders(self):
         border_top = Border(0)
         border_bottom = Border(590)
+
+        border_top.bind_ball(self.ball)
+        border_bottom.bind_ball(self.ball)
+
         self.all_sprites.add(border_top)
         self.all_sprites.add(border_bottom)
         self.borders.add(border_top)
         self.borders.add(border_bottom)
+

@@ -1,6 +1,8 @@
 import pygame
+from pygame.sprite import spritecollide
 
 from config import white
+from game.ball import Ball
 from utils.soundplayer import SoundPlayer
 
 
@@ -14,6 +16,17 @@ class Border(pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
         self.rect.y = y
         self.rect.x = 0
+        self.balls = None
+
+    def bind_ball(self, ball):
+        self.balls = [ball]
+
+    def update(self):
+        collisions = spritecollide(self, self.balls, False)
+        ball: Ball
+        for ball in collisions:
+            ball.border_rebound()
+            self.hit()
 
     @staticmethod
     def hit():

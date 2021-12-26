@@ -5,8 +5,8 @@ from pygame.draw import ellipse
 from pygame.sprite import Sprite, spritecollide
 
 from config import white, FPS
-from field.border import Border
 from field.goal import Goal
+from game.direction import Direction
 from game.pad import Pad
 
 
@@ -16,19 +16,17 @@ class Ball(Sprite):
 
         self.color = color
         self.radius = radius
-        self.dx = 0
-        self.dy = 0
         self.rx = 2
         self.ry = 2
         self.remaining = 0
+        self.direction = Direction(0, 0)
 
         self.image = Surface((self.radius * 2, self.radius * 2))
-
         self.image.fill(white)
         self.image.set_colorkey(white)
         ellipse(self.image, self.color, [0, 0, self.radius * self.rx, self.radius * self.ry])
-
         self.rect = self.image.get_rect()
+
         self.restart()
 
         self.borders = None
@@ -42,18 +40,19 @@ class Ball(Sprite):
         self._set_random_direction()
 
     def _set_random_direction(self):
-        direction = random.choice([(-1, -1), (1, -1), (1, 1), (-1, 1)])
-        self.dx = direction[0]
-        self.dy = direction[1]
+        self.direction = random.choice([
+            Direction(-1, -1),
+            Direction(1, -1),
+            Direction(1, 1),
+            Direction(-1, 1)
+        ])
 
     def vertical_position(self):
         return self.rect.y
 
     def update(self):
-        self.rect.x += self.dx
-        self.rect.y += self.dy
+        self.direction.update(self.rect)
 
-        self._manage_border_collisions()
         self._manage_pad_hits()
 
         if self.remaining > 0:
@@ -76,53 +75,35 @@ class Ball(Sprite):
         pad_collisions = spritecollide(self, self.pads, False)
         pad: Pad
         for pad in pad_collisions:
-            self._horiz_rebound()
+            self.direction.horiz_rebound(self.rect)
             self._start_transformation_count_down()
             self.rx = 1.3
             pad.hit(self)
 
-    def _horiz_rebound(self):
-        self.rect.x -= self.dx
-
-    def _manage_border_collisions(self):
-        border_collisions = spritecollide(self, self.borders, False)
-        border: Border
-        for border in border_collisions:
-            self._vertical_rebound()
-            self._start_transformation_count_down()
-            self.ry = 1.3
-            self.bounce_with_border()
-            border.hit()
-
-    def _vertical_rebound(self):
-        self.rect.y -= self.dy
+    def border_rebound(self):
+        self.direction.vertical_rebound(self.rect)
+        self.direction.border_bounce()
+        self._start_transformation_count_down()
+        self.ry = 1.3
 
     def manage_goals(self):
         goal_collisions = spritecollide(self, self.goals, False)
         goal: Goal
         for goal in goal_collisions:
             goal.hit()
-            goal.player.win_point()
             self.restart()
 
-    def bounce_with_border(self):
-        self.dy *= -1
-
     def bounce_with_pad(self):
-        self.dx = 1 * -(self.dx // abs(self.dx))
-        self.dy = 1 * (self.dy // abs(self.dy))
+        self.direction.pad_bounce(1, 1)
 
     def bounce_middle_pad(self):
-        self.dx = 2 * -(self.dx // abs(self.dx))
-        self.dy = 2 * (self.dy // abs(self.dy))
+        self.direction.pad_bounce(2, 2)
 
     def bounce_with_pad_top(self):
-        self.dx = 1 * -(self.dx // abs(self.dx))
-        self.dy = -2
+        self.direction.pad_bounce(1, -2)
 
     def bounce_with_pad_bottom(self):
-        self.dx = 1 * -(self.dx // abs(self.dx))
-        self.dy = 2
+        self.direction.pad_bounce(1, 2)
 
     def _start_transformation_count_down(self):
         self.remaining = FPS / 16

@@ -1,8 +1,8 @@
 from pygame import Surface
 from pygame.sprite import Sprite
 
-from config import FPS
 from config import white, red, lighten
+from field.effect import Effect
 from utils.soundplayer import SoundPlayer
 
 GOAL_HIGHLIGHT_IN_SECONDS = 1.5
@@ -13,34 +13,37 @@ class Goal(Sprite):
     def __init__(self, x, player):
         super().__init__()
 
-        self.image = Surface((10, 580))
-        self.image.fill(white)
+        self.color = white
+
+        self.width = 10
+        self.height = 580
+
+        self.image = Surface((self.width, self.height))
+        self.image.fill(self.color)
 
         self.rect = self.image.get_rect()
         self.rect.y = 10
         self.rect.x = x
 
-        self.remaining = 0
-        self.color = white
+        self.effect = Effect(GOAL_HIGHLIGHT_IN_SECONDS)
         self.player = player
 
     def hit(self):
-        self.play_sound('point')
-        self.color = red
-        self.image.fill(self.color)
+        self.play_sound()
+        self.change_color()
+        self.player.win_point()
 
-        self.remaining = FPS * GOAL_HIGHLIGHT_IN_SECONDS
+    def change_color(self):
+        self.color = red
+        self.effect.start()
 
     @staticmethod
-    def play_sound(sound):
-        player = SoundPlayer()
-        player.play(sound)
+    def play_sound():
+        SoundPlayer().play('point')
 
     def update(self):
-        self._update_color()
+        self.effect.apply(self)
         self.image.fill(self.color)
 
-    def _update_color(self):
-        if self.remaining > 0:
-            self.remaining -= 1
-            self.color = lighten(self.color, 2)
+    def apply_effect(self):
+        self.color = lighten(self.color, 2)

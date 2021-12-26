@@ -23,10 +23,10 @@ class App(object):
 
     def run(self):
         pygame.init()
-        code = self.window.run()
+        exit_code = self.window.run()
 
         pygame.quit()
-        return code
+        return exit_code.value()
 
     def add_scene(self, scene):
         self.window.add_scene(scene)
