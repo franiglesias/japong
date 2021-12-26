@@ -14,6 +14,8 @@ class Goal(Sprite):
     def __init__(self, x, player):
         super().__init__()
 
+        self.player = player
+
         self.color = white
 
         self.width = 10
@@ -27,7 +29,6 @@ class Goal(Sprite):
         self.rect.x = x
 
         self.effect = Effect(GOAL_HIGHLIGHT_IN_SECONDS)
-        self.player = player
 
         self.balls = None
 

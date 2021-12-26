@@ -45,7 +45,7 @@ class TestBall(TestCase):
         self.ball.direction = Direction(1, -1)
 
         ball = self.ball
-        ball.direction.border_bounce()
+        ball.direction.vertical_bounce()
 
         self.assertEqual(1, self.ball.direction.dy)
         self.assertEqual(1, self.ball.direction.dx)
@@ -54,7 +54,7 @@ class TestBall(TestCase):
         self.ball.direction = Direction(1, 1)
 
         ball = self.ball
-        ball.direction.border_bounce()
+        ball.direction.vertical_bounce()
 
         self.assertEqual(-1, self.ball.direction.dy)
         self.assertEqual(1, self.ball.direction.dx)

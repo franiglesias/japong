@@ -2,6 +2,7 @@ from pygame.sprite import Sprite, spritecollide
 from pygame.surface import Surface
 
 from config import white
+from game.ball import Ball
 from game.control.control_engine import ControlEngine
 from utils.soundplayer import SoundPlayer
 
@@ -37,6 +38,11 @@ class Pad(Sprite):
         self.rect.x = self.margin
         self.borders = None
 
+        self.balls = None
+
+    def bind_ball(self, ball):
+        self.balls = [ball]
+
     def up(self):
         self.dy = -self.speed
 
@@ -49,6 +55,15 @@ class Pad(Sprite):
     def update(self):
         self.rect.y += self.dy
 
+        self.__border_collision()
+        self.__ball_collision()
+
+    def __ball_collision(self):
+        ball: Ball
+        for ball in spritecollide(self, self.balls, False):
+            self.hit(ball)
+
+    def __border_collision(self):
         for _ in spritecollide(self, self.borders, False):
             self.rect.y -= self.dy
             self.stop()
@@ -64,15 +79,15 @@ class Pad(Sprite):
         ball_center_y = ball.rect.y + ball.radius - self.rect.y
 
         if ball_center_y < self.__top_region_limit():
-            ball.bounce_with_pad_top()
+            ball.bounce_with_pad(1, -2)
         elif ball_center_y > self.__bottom_region_limit():
-            ball.bounce_with_pad_bottom()
+            ball.bounce_with_pad(1, 2)
         elif self.__top_region_limit() <= ball_center_y < self.__upper_middle_limit():
-            ball.bounce_middle_pad()
+            ball.bounce_with_pad(2, 2)
         elif self.__bottom_middle_limit() < ball_center_y <= self.__bottom_region_limit():
-            ball.bounce_middle_pad()
+            ball.bounce_with_pad(2, 2)
         else:
-            ball.bounce_with_pad()
+            ball.bounce_with_pad(1, 1)
 
     def __top_region_limit(self):
         return self.top_region_pct * self.height // 100

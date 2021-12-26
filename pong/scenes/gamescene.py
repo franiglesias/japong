@@ -15,6 +15,7 @@ from game.ball import Ball
 from game.control.computer_control_engine import ComputerControlEngine
 from game.control.keyboard_control_engine import KeyboardControlEngine
 from game.game import Game
+from game.pad import Pad
 from game.player import Player
 from game.scoring.score_manager import ScoreManager
 from game.scoring.scoreboard import ScoreBoard
@@ -75,18 +76,18 @@ class GameScene(Scene):
         self.goals.add(self.player_one.goal)
         self.goals.add(self.player_two.goal)
 
-        self.all_sprites.add(self.player_one.pad)
-        self.all_sprites.add(self.player_two.pad)
-
         self.pads.add(self.player_one.pad)
         self.pads.add(self.player_two.pad)
-
-        self.ball.pads = self.pads
 
         goal: Goal
         for goal in self.goals:
             goal.bind_ball(self.ball)
             self.all_sprites.add(goal)
+
+        pad: Pad
+        for pad in self.pads:
+            pad.bind_ball(self.ball)
+            self.all_sprites.add(pad)
 
         # Game loop
         clock = Clock()

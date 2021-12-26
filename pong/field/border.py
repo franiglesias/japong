@@ -26,10 +26,9 @@ class Border(pygame.sprite.Sprite):
         collisions = spritecollide(self, self.balls, False)
         ball: Ball
         for ball in collisions:
-            ball.border_rebound()
+            ball.vertical_bounce()
             self.hit()
 
     @staticmethod
     def hit():
-        player = SoundPlayer()
-        player.play('table-hit')
+        SoundPlayer().play('table-hit')
