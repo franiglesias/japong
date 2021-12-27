@@ -34,6 +34,3 @@ class Window(object):
     def add_scene(self, scene):
         self.scenes.append(scene)
 
-    def game_side(self):
-        return self.game.side_preference
-
