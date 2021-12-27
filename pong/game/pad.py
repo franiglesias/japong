@@ -74,20 +74,30 @@ class Pad(Sprite):
     def handle(self, *events):
         self.engine.handle(events)
 
-    def hit(self, ball):
+    def hit(self, ball: Ball):
         SoundPlayer().play('pad-hit')
-        ball_center_y = ball.rect.y + ball.radius - self.rect.y
-
-        if ball_center_y < self.__top_region_limit():
+        if self.hit_top(ball):
             ball.bounce_with_pad(1, -2)
-        elif ball_center_y > self.__bottom_region_limit():
+        elif self.hit_bottom(ball):
             ball.bounce_with_pad(1, 2)
-        elif self.__top_region_limit() <= ball_center_y < self.__upper_middle_limit():
+        elif self.hit_middle_top(ball):
             ball.bounce_with_pad(2, 2)
-        elif self.__bottom_middle_limit() < ball_center_y <= self.__bottom_region_limit():
+        elif self.hit_middle_bottom(ball):
             ball.bounce_with_pad(2, 2)
         else:
             ball.bounce_with_pad(1, 1)
+
+    def hit_middle_bottom(self, ball):
+        return self.__bottom_middle_limit() < ball.y_center(self.rect.y) <= self.__bottom_region_limit()
+
+    def hit_middle_top(self, ball):
+        return self.__top_region_limit() <= ball.y_center(self.rect.y) < self.__upper_middle_limit()
+
+    def hit_bottom(self, ball):
+        return ball.y_center(self.rect.y) > self.__bottom_region_limit()
+
+    def hit_top(self, ball):
+        return ball.y_center(self.rect.y) < self.__top_region_limit()
 
     def __top_region_limit(self):
         return self.top_region_pct * self.height // 100

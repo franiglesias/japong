@@ -58,3 +58,6 @@ class Ball(Sprite):
 
     def bounce_with_pad(self, x_speed=1, y_speed=1):
         self.direction.horizontal_bounce(x_speed, y_speed)
+
+    def y_center(self, y):
+        return self.rect.y + self.radius - y
