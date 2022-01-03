@@ -40,6 +40,14 @@ class Pad(Sprite):
 
         self.balls = None
 
+        self.regions = [
+            TopRegion(),
+            MiddleTopRegion(),
+            MiddleRegion(),
+            MiddleBottomRegion(),
+            BottomRegion()
+        ]
+
     def bind_ball(self, ball):
         self.balls = [ball]
 
@@ -58,15 +66,15 @@ class Pad(Sprite):
         self.__border_collision()
         self.__ball_collision()
 
-    def __ball_collision(self):
-        ball: Ball
-        for ball in spritecollide(self, self.balls, False):
-            self.hit(ball)
-
     def __border_collision(self):
         for _ in spritecollide(self, self.borders, False):
             self.rect.y -= self.dy
             self.stop()
+
+    def __ball_collision(self):
+        ball: Ball
+        for ball in spritecollide(self, self.balls, False):
+            self.hit(ball)
 
     def vertical_position(self):
         return self.rect.y
@@ -76,37 +84,70 @@ class Pad(Sprite):
 
     def hit(self, ball: Ball):
         SoundPlayer().play('pad-hit')
-        if self.hit_top(ball):
-            ball.bounce_with_pad(1, -2)
-        elif self.hit_bottom(ball):
-            ball.bounce_with_pad(1, 2)
-        elif self.hit_middle_top(ball):
-            ball.bounce_with_pad(2, 2)
-        elif self.hit_middle_bottom(ball):
-            ball.bounce_with_pad(2, 2)
-        else:
-            ball.bounce_with_pad(1, 1)
+        for region in self.regions:
+            if region.hit(ball, self):
+                region.bounce(ball)
+                break
 
-    def hit_middle_bottom(self, ball):
-        return self.__bottom_middle_limit() < ball.y_center(self.rect.y) <= self.__bottom_region_limit()
+    def top_region_limit(self):
+        return (self.top_region_pct * self.height // 100) + self.rect.y
 
-    def hit_middle_top(self, ball):
-        return self.__top_region_limit() <= ball.y_center(self.rect.y) < self.__upper_middle_limit()
+    def bottom_region_limit(self):
+        return ((100 - self.top_region_pct) * self.height // 100) + self.rect.y
 
-    def hit_bottom(self, ball):
-        return ball.y_center(self.rect.y) > self.__bottom_region_limit()
+    def upper_middle_limit(self):
+        return ((self.middle_region_pct + self.top_region_pct) * self.height // 100) + self.rect.y
 
-    def hit_top(self, ball):
-        return ball.y_center(self.rect.y) < self.__top_region_limit()
+    def bottom_middle_limit(self):
+        return ((100 - self.top_region_pct - self.middle_region_pct) * self.height // 100) + self.rect.y
 
-    def __top_region_limit(self):
-        return self.top_region_pct * self.height // 100
 
-    def __upper_middle_limit(self):
-        return (self.middle_region_pct + self.top_region_pct) * self.height // 100
+class PadRegion():
+    def hit(self, ball: Ball, pad: Pad):
+        return False
 
-    def __bottom_middle_limit(self):
-        return ((100 - self.top_region_pct - self.middle_region_pct) * self.height) // 100
+    def bounce(self, ball):
+        ball.bounce_with_pad(1, 1)
 
-    def __bottom_region_limit(self):
-        return ((100 - self.top_region_pct) * self.height) // 100
+
+class TopRegion(PadRegion):
+
+    def hit(self, ball: Ball, pad: Pad):
+        return ball.y_center() < pad.top_region_limit()
+
+    def bounce(self, ball):
+        ball.bounce_with_pad(1, -2)
+
+
+class MiddleTopRegion(PadRegion):
+
+    def hit(self, ball: Ball, pad: Pad):
+        return pad.top_region_limit() <= ball.y_center() < pad.upper_middle_limit()
+
+    def bounce(self, ball):
+        ball.bounce_with_pad(2, 2)
+
+
+class MiddleRegion(PadRegion):
+    def hit(self, ball: Ball, pad: Pad):
+        return pad.upper_middle_limit() < ball.y_center() <= pad.bottom_middle_limit()
+
+    def bounce(self, ball):
+        ball.bounce_with_pad(1, 1)
+
+
+class MiddleBottomRegion(PadRegion):
+    def hit(self, ball: Ball, pad: Pad):
+        return pad.bottom_middle_limit() < ball.y_center() <= pad.bottom_region_limit()
+
+    def bounce(self, ball):
+        ball.bounce_with_pad(2, 2)
+
+
+class BottomRegion(PadRegion):
+
+    def hit(self, ball: Ball, pad: Pad):
+        return ball.y_center() >= pad.bottom_region_limit()
+
+    def bounce(self, ball):
+        ball.bounce_with_pad(1, 2)
