@@ -84,10 +84,8 @@ class Pad(Sprite):
 
     def hit(self, ball: Ball):
         SoundPlayer().play('pad-hit')
-        for region in self.regions:
-            if region.hit(ball, self):
-                region.bounce(ball)
-                break
+        region = PadRegion.where(ball, self)
+        region.bounce(ball)
 
     def top_region_limit(self):
         return (self.top_region_pct * self.height // 100) + self.rect.y
@@ -109,9 +107,15 @@ class PadRegion():
     def bounce(self, ball):
         ball.bounce_with_pad(1, 1)
 
+    @staticmethod
+    def where(ball: Ball, pad: Pad):
+        for region in pad.regions:
+            if region.hit(ball, pad):
+                return region
+        return PadRegion()
+
 
 class TopRegion(PadRegion):
-
     def hit(self, ball: Ball, pad: Pad):
         return ball.y_center() < pad.top_region_limit()
 
@@ -120,7 +124,6 @@ class TopRegion(PadRegion):
 
 
 class MiddleTopRegion(PadRegion):
-
     def hit(self, ball: Ball, pad: Pad):
         return pad.top_region_limit() <= ball.y_center() < pad.upper_middle_limit()
 
@@ -145,7 +148,6 @@ class MiddleBottomRegion(PadRegion):
 
 
 class BottomRegion(PadRegion):
-
     def hit(self, ball: Ball, pad: Pad):
         return ball.y_center() >= pad.bottom_region_limit()
 
