@@ -1,9 +1,9 @@
-from pygame.sprite import Sprite, spritecollide
-from pygame.surface import Surface
+from pygame.sprite import Sprite, spritecollide, Group
 
 from config import white
 from game.ball import Ball
 from game.control.control_engine import ControlEngine
+from utils.image import create_image
 from utils.soundplayer import SoundPlayer
 
 
@@ -16,40 +16,35 @@ class Pad(Sprite):
         self.engine = engine
         self.engine.bind_pad(self)
 
-        self.top_region_pct = 10
-        self.middle_region_pct = 15
-
-        self.width = 25
-        self.height = 75
-
         self.dy = 0
 
-        self.image = Surface((self.width, self.height))
-        self.image.fill(white)
-
+        self.image = create_image(25, 75, white)
         self.rect = self.image.get_rect()
 
+        self.__set_initial_position(side)
+
+        self.borders = None
+        self.ball = None
+
+        self.regions = [
+            TopRegion(75, 10),
+            MiddleTopRegion(75, 25),
+            MiddleRegion(75, 75),
+            MiddleBottomRegion(75, 90),
+            BottomRegion(75, 100)
+        ]
+
+    def __set_initial_position(self, side):
         if side == 'left':
             self.margin = 25
         else:
-            self.margin = 775 - self.width
+            self.margin = 750
 
-        self.rect.y = 300
         self.rect.x = self.margin
-        self.borders = None
-
-        self.balls = None
-
-        self.regions = [
-            TopRegion(),
-            MiddleTopRegion(),
-            MiddleRegion(),
-            MiddleBottomRegion(),
-            BottomRegion()
-        ]
+        self.rect.y = 300
 
     def bind_ball(self, ball):
-        self.balls = [ball]
+        self.ball = ball
 
     def up(self):
         self.dy = -self.speed
@@ -72,9 +67,10 @@ class Pad(Sprite):
             self.stop()
 
     def __ball_collision(self):
-        ball: Ball
-        for ball in spritecollide(self, self.balls, False):
-            self.hit(ball)
+        collisions = spritecollide(self, Group(self.ball), False)
+
+        if len(collisions) > 0:
+            self.hit(self.ball)
 
     def vertical_position(self):
         return self.rect.y
@@ -87,22 +83,14 @@ class Pad(Sprite):
         region = PadRegion.where(ball, self)
         region.bounce(ball)
 
-    def top_region_limit(self):
-        return (self.top_region_pct * self.height // 100) + self.rect.y
-
-    def bottom_region_limit(self):
-        return ((100 - self.top_region_pct) * self.height // 100) + self.rect.y
-
-    def upper_middle_limit(self):
-        return ((self.middle_region_pct + self.top_region_pct) * self.height // 100) + self.rect.y
-
-    def bottom_middle_limit(self):
-        return ((100 - self.top_region_pct - self.middle_region_pct) * self.height // 100) + self.rect.y
-
 
 class PadRegion():
+    def __init__(self, height, pct):
+        self.height = height
+        self.pct = pct
+
     def hit(self, ball: Ball, pad: Pad):
-        return False
+        return ball.y_center() < self.height * self.pct // 100 + pad.rect.y
 
     def bounce(self, ball):
         ball.bounce_with_pad(1, 1)
@@ -116,40 +104,25 @@ class PadRegion():
 
 
 class TopRegion(PadRegion):
-    def hit(self, ball: Ball, pad: Pad):
-        return ball.y_center() < pad.top_region_limit()
-
     def bounce(self, ball):
         ball.bounce_with_pad(1, -2)
 
 
 class MiddleTopRegion(PadRegion):
-    def hit(self, ball: Ball, pad: Pad):
-        return pad.top_region_limit() <= ball.y_center() < pad.upper_middle_limit()
-
     def bounce(self, ball):
         ball.bounce_with_pad(2, 2)
 
 
 class MiddleRegion(PadRegion):
-    def hit(self, ball: Ball, pad: Pad):
-        return pad.upper_middle_limit() < ball.y_center() <= pad.bottom_middle_limit()
-
     def bounce(self, ball):
         ball.bounce_with_pad(1, 1)
 
 
 class MiddleBottomRegion(PadRegion):
-    def hit(self, ball: Ball, pad: Pad):
-        return pad.bottom_middle_limit() < ball.y_center() <= pad.bottom_region_limit()
-
     def bounce(self, ball):
         ball.bounce_with_pad(2, 2)
 
 
 class BottomRegion(PadRegion):
-    def hit(self, ball: Ball, pad: Pad):
-        return ball.y_center() >= pad.bottom_region_limit()
-
     def bounce(self, ball):
         ball.bounce_with_pad(1, 2)
