@@ -1,8 +1,8 @@
 import pygame
 
+from app.exit_code import ExitCode
 from app.scene import Scene
 from app.window import Window
-from app.exit_code import ExitCode
 from config import base_path, white, styles
 from game.game import Game
 
@@ -39,8 +39,8 @@ class StartScene(Scene):
         return ExitCode.success()
 
     def _show_configuration(self):
-        self.text_renderer.blit("Table side: L/R ({0}) ".format(self.game.side_preference), styles['config_side'])
-        self.text_renderer.blit("Players: 1/2 ({0}) ".format(self.game.game_mode), styles['config_players'])
+        self.text_renderer.blit("Table side: L/R ({0}) ".format(self.game.side_preference.str()), styles['config_side'])
+        self.text_renderer.blit("Players: 1/2 ({0}) ".format(self.game.game_mode.str()), styles['config_players'])
         self.text_renderer.blit('Press any key to play', styles['prompt'])
 
     def _show_background(self):

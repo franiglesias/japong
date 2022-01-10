@@ -18,6 +18,9 @@ class Side:
     def is_left(self):
         pass
 
+    def str(self):
+        return '?'
+
 
 class Left(Side):
     def pad(self):
@@ -32,6 +35,9 @@ class Left(Side):
     def is_left(self):
         return True
 
+    def str(self):
+        return 'left'
+
 
 class Right(Side):
     def pad(self):
@@ -45,3 +51,6 @@ class Right(Side):
 
     def is_left(self):
         return False
+
+    def str(self):
+        return 'right'

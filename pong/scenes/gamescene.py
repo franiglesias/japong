@@ -6,7 +6,6 @@ from app.exit_code import ExitCode
 from app.scene import Scene
 from app.window import Window
 from config import COMPUTER_MOVES_EVENT, FPS, COMPUTER_MOVES_TIMER_MS
-from config import left_keys, right_keys
 from config import yellow, green
 from field.border import Border
 from field.goal import Goal
@@ -16,10 +15,8 @@ from game.control.computer_control_engine import ComputerControlEngine
 from game.control.keyboard_control_engine import KeyboardControlEngine
 from game.game import Game
 from game.pad import Pad
-from game.player import Player
 from game.scoring.score_manager import ScoreManager
 from game.scoring.scoreboard import ScoreBoard
-from game.side import Side
 
 
 class GameScene(Scene):
@@ -30,6 +27,7 @@ class GameScene(Scene):
         self.score_manager = score_manager
 
         self.ball = Ball(yellow, 10)
+        self.game.game_mode.bind_ball(self.ball)
 
         self.all_sprites = Group()
         self.goals = Group()
@@ -40,27 +38,8 @@ class GameScene(Scene):
         self.all_sprites.add(Net())
         self.all_sprites.add(self.ball)
 
-        player_one_side = 'left'
-        player_two_side = 'right'
-        player_one_speed = self.game.human_speed
-        player_two_speed = self.game.human_speed
-        player_one_engine = self.player_engine(left_keys)
-        player_two_engine = self.player_engine(right_keys)
-
-        if self.game.game_mode == 1:
-            player_one_side = Side.from_raw(self.game.side_preference)
-            player_two_side = player_one_side.opposite()
-
-            player_one_speed = self.game.human_speed
-            player_two_speed = self.game.computer_speed
-            player_two_engine = self.player_engine(())
-        elif self.game.game_mode == 0:
-            player_one_speed = self.game.computer_speed
-            player_two_speed = self.game.computer_speed
-            player_one_engine = self.player_engine(())
-
-        self.player_one = Player('human', player_one_side, player_one_engine, player_one_speed)
-        self.player_two = Player('computer', player_two_side, player_two_engine, player_two_speed)
+        self.player_one = self.game.player_one()
+        self.player_two = self.game.player_two()
 
         self.score_manager.register_players(self.player_one, self.player_two)
         self.score_board = score_board
@@ -140,4 +119,3 @@ class GameScene(Scene):
         for border in self.borders:
             border.bind_ball(self.ball)
             self.all_sprites.add(border)
-

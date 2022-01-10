@@ -89,7 +89,7 @@ class PadRegion():
         for region in pad.regions:
             if region.hit(ball, pad):
                 return region
-        return PadRegion()
+        return PadRegion(75, 0)
 
 
 class TopRegion(PadRegion):
