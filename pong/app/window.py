@@ -26,9 +26,9 @@ class Window(object):
 
     def run_scenes(self):
         for scene in self.scenes:
-            code = scene.run()
-            if code.is_error():
-                return code
+            scene_exit_code = scene.run()
+            if scene_exit_code.is_error():
+                return scene_exit_code
         return ExitCode(0)
 
     def add_scene(self, scene):

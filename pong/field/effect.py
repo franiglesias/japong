@@ -1,7 +1,7 @@
 from config import FPS
 
 
-class Effect():
+class Effect:
     def __init__(self, duration):
         self.duration = duration
         self.state = 0

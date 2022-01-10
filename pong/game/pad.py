@@ -1,13 +1,15 @@
 from pygame.sprite import Sprite, spritecollide, Group
 
 from config import white
+from field.positionable import Positionable
+from field.reacts_to_ball import ReactsToBall
 from game.ball import Ball
 from game.control.control_engine import ControlEngine
 from utils.image import create_image
 from utils.soundplayer import SoundPlayer
 
 
-class Pad(Sprite):
+class Pad(Sprite, Positionable, ReactsToBall):
     def __init__(self, side, speed, engine: ControlEngine):
         super().__init__()
 
@@ -21,10 +23,9 @@ class Pad(Sprite):
         self.image = create_image(25, 75, white)
         self.rect = self.image.get_rect()
 
-        self.__set_initial_position(side)
+        self.set_position(side.pad(), 300)
 
         self.borders = None
-        self.ball = None
 
         self.regions = [
             TopRegion(75, 10),
@@ -33,18 +34,6 @@ class Pad(Sprite):
             MiddleBottomRegion(75, 90),
             BottomRegion(75, 100)
         ]
-
-    def __set_initial_position(self, side):
-        if side == 'left':
-            self.margin = 25
-        else:
-            self.margin = 750
-
-        self.rect.x = self.margin
-        self.rect.y = 300
-
-    def bind_ball(self, ball):
-        self.ball = ball
 
     def up(self):
         self.dy = -self.speed

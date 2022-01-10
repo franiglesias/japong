@@ -19,6 +19,7 @@ from game.pad import Pad
 from game.player import Player
 from game.scoring.score_manager import ScoreManager
 from game.scoring.scoreboard import ScoreBoard
+from game.side import Side
 
 
 class GameScene(Scene):
@@ -47,11 +48,9 @@ class GameScene(Scene):
         player_two_engine = self.player_engine(right_keys)
 
         if self.game.game_mode == 1:
-            player_one_side = self.game.side_preference
-            if player_one_side == 'left':
-                player_two_side = 'right'
-            else:
-                player_two_side = 'left'
+            player_one_side = Side.from_raw(self.game.side_preference)
+            player_two_side = player_one_side.opposite()
+
             player_one_speed = self.game.human_speed
             player_two_speed = self.game.computer_speed
             player_two_engine = self.player_engine(())

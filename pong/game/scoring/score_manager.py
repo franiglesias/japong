@@ -1,6 +1,3 @@
-from game.scoring.match import Match
-
-
 class ScoreManager(object):
 
     def __init__(self, match) -> None:
@@ -8,10 +5,10 @@ class ScoreManager(object):
         self.match = match
 
     def register_players(self, one, two):
-        if one.is_at_left():
-            self.players = (one, two)
-        else:
+        if one.side.is_left():
             self.players = (two, one)
+        else:
+            self.players = (one, two)
 
     def left_player(self):
         return self.players[0]

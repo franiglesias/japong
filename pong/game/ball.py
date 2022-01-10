@@ -3,10 +3,11 @@ from pygame.draw import ellipse
 from pygame.sprite import Sprite
 
 from config import white
+from field.positionable import Positionable
 from game.direction import Direction
 
 
-class Ball(Sprite):
+class Ball(Sprite, Positionable):
     def __init__(self, color, radius):
         super().__init__()
 
@@ -42,13 +43,9 @@ class Ball(Sprite):
         return image
 
     def __restart(self):
-        self.__position_at(400, 300)
+        self.set_position(400, 300)
 
         self.direction = Direction.random()
-
-    def __position_at(self, x, y):
-        self.rect.x = x
-        self.rect.y = y
 
     def vertical_bounce(self):
         self.direction.vertical_bounce()
