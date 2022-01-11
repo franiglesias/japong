@@ -11,8 +11,6 @@ from field.border import Border
 from field.goal import Goal
 from field.net import Net
 from game.ball import Ball
-from game.control.computer_control_engine import ComputerControlEngine
-from game.control.keyboard_control_engine import KeyboardControlEngine
 from game.game import Game
 from game.pad import Pad
 from game.scoring.score_manager import ScoreManager
@@ -104,12 +102,6 @@ class GameScene(Scene):
 
                 clock.tick(FPS)
         return ExitCode.success()
-
-    def player_engine(self, keys):
-        if len(keys) == 0:
-            return ComputerControlEngine(self.ball)
-
-        return KeyboardControlEngine(keys)
 
     def __prepare_borders(self):
         self.borders.add(Border(0))
