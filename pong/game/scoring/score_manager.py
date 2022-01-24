@@ -17,16 +17,10 @@ class ScoreManager(object):
         return self.players[1]
 
     def end_of_game(self):
-        return self._sets_won_by_best_player() >= self._sets_to_win_game()
+        return self.__sets_won_by_best_player() >= self.__sets_to_win_game()
 
     def end_of_set(self):
-        return self._minimum_score_reached() and self._minimum_difference_reached()
-
-    def _minimum_score_reached(self):
-        return self._winner_points() >= self._points_to_win_set()
-
-    def _minimum_difference_reached(self):
-        return self._points_difference() >= 2
+        return self.__minimum_score_reached() and self.__minimum_difference_reached()
 
     def winner(self):
         if self.left_player().beats(self.right_player()):
@@ -34,19 +28,25 @@ class ScoreManager(object):
 
         return self.right_player()
 
-    def _points_to_win_set(self):
+    def __minimum_difference_reached(self):
+        return self.__points_difference() >= 2
+
+    def __minimum_score_reached(self):
+        return self.__winner_points() >= self.__points_to_win_set()
+
+    def __points_to_win_set(self):
         return self.match.points_to_win_set()
 
-    def _sets_to_win_game(self):
+    def __sets_to_win_game(self):
         return self.match.sets_to_win_game()
 
-    def _sets_won_by_best_player(self):
+    def __sets_won_by_best_player(self):
         return max(self.left_player().sets(), self.right_player().sets())
 
-    def _winner_points(self):
+    def __winner_points(self):
         return max(self.left_player().points(), self.right_player().points())
 
-    def _points_difference(self):
+    def __points_difference(self):
         return abs(self.left_player().points() - self.right_player().points())
 
     def points(self):
