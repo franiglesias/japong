@@ -1,16 +1,9 @@
 class Side:
-    def pad(self):
+    def pad_x(self):
         return 0
 
-    def goal(self):
+    def goal_x(self):
         return 0
-
-    @staticmethod
-    def from_raw(side):
-        if side == 'left':
-            return Left()
-        else:
-            return Right()
 
     def is_left(self):
         pass
@@ -21,12 +14,19 @@ class Side:
     def equals(self, other):
         return type(self) == type(other)
 
+    @staticmethod
+    def from_raw(side):
+        if side == 'left':
+            return Left()
+        else:
+            return Right()
+
 
 class Left(Side):
-    def pad(self):
+    def pad_x(self):
         return 25
 
-    def goal(self):
+    def goal_x(self):
         return 0
 
     def is_left(self):
@@ -37,10 +37,10 @@ class Left(Side):
 
 
 class Right(Side):
-    def pad(self):
+    def pad_x(self):
         return 750
 
-    def goal(self):
+    def goal_x(self):
         return 790
 
     def is_left(self):

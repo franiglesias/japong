@@ -45,13 +45,6 @@ chroma = (0, 0, 0)
 
 net_color = lighten(green, 80)
 
-# TEXT SIZES
-
-text_prompt = 30
-text_main_title = 60
-text_score = 60
-text_winner = 64
-
 # TEXT STYLES
 
 styles = {

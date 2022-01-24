@@ -10,7 +10,7 @@ from utils.soundplayer import SoundPlayer
 
 
 class Pad(Sprite, Positionable, BoundToBall):
-    def __init__(self, side, engine: ControlEngine):
+    def __init__(self, side, engine: ControlEngine, height=75, width=25):
         super().__init__()
 
         self.engine = engine
@@ -18,19 +18,19 @@ class Pad(Sprite, Positionable, BoundToBall):
 
         self.dy = 0
 
-        self.image = create_image(25, 75, white)
+        self.image = create_image(width, height, white)
         self.rect = self.image.get_rect()
 
-        self.set_position(side.pad(), 300)
+        self.set_position(side.pad_x(), 300 - (75 // 2))
 
         self.borders = None
 
         self.regions = [
-            TopRegion(75, 10),
-            MiddleTopRegion(75, 25),
-            MiddleRegion(75, 75),
-            MiddleBottomRegion(75, 90),
-            BottomRegion(75, 100)
+            TopRegion(height, 10),
+            MiddleTopRegion(height, 25),
+            MiddleRegion(height, height),
+            MiddleBottomRegion(height, 90),
+            BottomRegion(height, 100)
         ]
 
     def up(self):

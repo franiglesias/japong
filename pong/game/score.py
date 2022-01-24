@@ -1,30 +1,30 @@
 class Score(object):
     def __init__(self):
-        self._sets = 0
-        self._points = 0
-        self._partials = None
+        self.__sets = 0
+        self.__points = 0
+        self.__partials = None
 
     def win_point(self):
-        self._points += 1
+        self.__points += 1
 
     def points(self):
-        return self._points
+        return self.__points
 
     def win_set(self):
-        self._sets += 1
+        self.__sets += 1
 
     def sets(self):
-        return self._sets
+        return self.__sets
 
     def new_set(self):
-        if self._partials is None:
-            self._partials = []
+        if self.__partials is None:
+            self.__partials = []
 
-        self._partials.append(self._points)
-        self._points = 0
+        self.__partials.append(self.__points)
+        self.__points = 0
 
     def partials(self):
-        return self._partials
+        return self.__partials
 
     def end_match(self):
         self.new_set()

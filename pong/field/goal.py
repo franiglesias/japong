@@ -21,7 +21,7 @@ class Goal(Sprite, Positionable, BoundToBall):
 
         self.image = create_image(10, 580, self.color)
         self.rect = self.image.get_rect()
-        self.set_position(self.player.side.goal(), 10)
+        self.set_position(self.player.side.goal_x(), 10)
 
         self.effect = Effect(GOAL_HIGHLIGHT_IN_SECONDS)
 
