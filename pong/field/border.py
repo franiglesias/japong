@@ -1,13 +1,13 @@
 from pygame.sprite import spritecollide, Group, Sprite
 
 from config import white
+from field.bound_to_ball import BoundToBall
 from field.positionable import Positionable
-from field.reacts_to_ball import ReactsToBall
 from utils.image import create_image
 from utils.soundplayer import SoundPlayer
 
 
-class Border(Sprite, Positionable, ReactsToBall):
+class Border(Sprite, Positionable, BoundToBall):
     def __init__(self, y):
         super().__init__()
 

@@ -37,7 +37,4 @@ class App(object):
 
     def __add_scenes(self, *scenes):
         for scene in scenes:
-            self.__add_scene(scene)
-
-    def __add_scene(self, scene):
-        self.window.add_scene(scene)
+            self.window.add_scene(scene)

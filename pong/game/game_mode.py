@@ -1,5 +1,5 @@
 from config import left_keys, right_keys
-from field.reacts_to_ball import ReactsToBall
+from field.bound_to_ball import BoundToBall
 from game.control.computer_control_engine import ComputerControlEngine
 from game.control.keyboard_control_engine import KeyboardControlEngine
 from game.pad import Pad
@@ -7,7 +7,7 @@ from game.player import Player
 from game.side import Left, Right
 
 
-class GameMode(ReactsToBall):
+class GameMode(BoundToBall):
 
     def __init__(self):
         pass

@@ -1,9 +1,9 @@
 from pygame.sprite import Sprite, spritecollide, Group
 
 from config import white, red, lighten
+from field.bound_to_ball import BoundToBall
 from field.effect import Effect
 from field.positionable import Positionable
-from field.reacts_to_ball import ReactsToBall
 from game.ball import Ball
 from utils.image import create_image
 from utils.soundplayer import SoundPlayer
@@ -11,7 +11,7 @@ from utils.soundplayer import SoundPlayer
 GOAL_HIGHLIGHT_IN_SECONDS = 1.5
 
 
-class Goal(Sprite, Positionable, ReactsToBall):
+class Goal(Sprite, Positionable, BoundToBall):
 
     def __init__(self, player):
         super().__init__()

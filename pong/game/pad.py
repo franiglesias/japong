@@ -1,15 +1,15 @@
 from pygame.sprite import Sprite, spritecollide, Group
 
 from config import white
+from field.bound_to_ball import BoundToBall
 from field.positionable import Positionable
-from field.reacts_to_ball import ReactsToBall
 from game.ball import Ball
 from game.control.control_engine import ControlEngine
 from utils.image import create_image
 from utils.soundplayer import SoundPlayer
 
 
-class Pad(Sprite, Positionable, ReactsToBall):
+class Pad(Sprite, Positionable, BoundToBall):
     def __init__(self, side, engine: ControlEngine):
         super().__init__()
 
