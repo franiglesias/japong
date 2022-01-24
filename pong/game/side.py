@@ -12,9 +12,6 @@ class Side:
         else:
             return Right()
 
-    def opposite(self):
-        pass
-
     def is_left(self):
         pass
 
@@ -32,9 +29,6 @@ class Left(Side):
     def goal(self):
         return 0
 
-    def opposite(self):
-        return Right()
-
     def is_left(self):
         return True
 
@@ -48,9 +42,6 @@ class Right(Side):
 
     def goal(self):
         return 790
-
-    def opposite(self):
-        return Left()
 
     def is_left(self):
         return False

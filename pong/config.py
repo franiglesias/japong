@@ -3,6 +3,10 @@ import os
 # COLORS
 import pygame.constants
 
+width = 800
+height = 600
+title = 'Japong!'
+
 
 def inc_byte(byte, pct):
     if byte == 0:

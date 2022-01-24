@@ -1,7 +1,7 @@
 import pygame
 
 from app.window import Window
-from config import POINTS_TO_WIN, human_side, game_mode
+from config import POINTS_TO_WIN, human_side, game_mode, width, height, title
 from game.game import Game
 from game.game_mode import GameMode
 from game.scoring.match import Match
@@ -15,7 +15,7 @@ from scenes.startscene import StartScene
 
 class App(object):
     def __init__(self, match=Match(3, POINTS_TO_WIN)):
-        self.window = Window(800, 600, 'Japong!')
+        self.window = Window(width, height, title)
         game = Game(Side.from_raw(human_side), GameMode.from_raw(game_mode))
 
         score_manager = ScoreManager(match)
