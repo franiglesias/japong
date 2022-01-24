@@ -21,6 +21,9 @@ class Side:
     def str(self):
         return '?'
 
+    def equals(self, other):
+        return type(self) == type(other)
+
 
 class Left(Side):
     def pad(self):

@@ -1,10 +1,9 @@
-from pygame import Surface
 from pygame.draw import ellipse
 from pygame.sprite import Sprite
 
-from config import white
 from field.positionable import Positionable
 from game.direction import Direction
+from utils.image import create_transparent_image
 
 
 class Ball(Sprite, Positionable):
@@ -36,9 +35,7 @@ class Ball(Sprite, Positionable):
         return self.radius * self.rx
 
     def __draw_ball(self):
-        image = Surface((self.__width(), self.__height()))
-        image.fill(white)
-        image.set_colorkey(white)
+        image = create_transparent_image(self.__width(), self.__height())
         ellipse(image, self.color, [0, 0, self.__width(), self.__height()])
         return image
 

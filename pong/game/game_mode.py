@@ -18,6 +18,9 @@ class GameMode(ReactsToBall):
         if raw_game_mode == 2:
             return TwoPlayers()
 
+    def equals(self, other):
+        return type(self) == type(other)
+
     def player_one(self):
         return Player(
             'computer',

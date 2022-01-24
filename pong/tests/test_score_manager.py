@@ -6,6 +6,7 @@ from game.control.computer_control_engine import ComputerControlEngine
 from game.player import Player
 from game.scoring.match import Match
 from game.scoring.score_manager import ScoreManager
+from game.side import Left
 
 
 class TestScoreManager(TestCase):
@@ -81,4 +82,4 @@ class TestScoreManager(TestCase):
     def preparePlayer():
         ball = Ball(pong.config.white, 10)
         engine = ComputerControlEngine(ball)
-        return Player('left', 'left', engine)
+        return Player('left', Left(), engine)

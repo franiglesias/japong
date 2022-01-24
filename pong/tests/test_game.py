@@ -1,15 +1,17 @@
 import unittest
 
 from game.game import Game
+from game.game_mode import OnePlayer
+from game.side import Left, Right
 
 
 class GameTestCase(unittest.TestCase):
     def test_should_allow_to_set_side_preference(self):
-        game = Game()
+        game = Game(Left(), OnePlayer())
         game.prefer_right()
-        self.assertEqual('right', game.side_preference)
+        self.assertTrue(Right().equals(game.side_preference))
         game.prefer_left()
-        self.assertEqual('left', game.side_preference)
+        self.assertTrue(Left().equals(game.side_preference))
 
 
 if __name__ == '__main__':

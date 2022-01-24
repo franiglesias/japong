@@ -7,6 +7,7 @@ import pong.tests.events
 from game.ball import Ball
 from game.control.computer_control_engine import ComputerControlEngine
 from game.pad import Pad
+from game.side import Left
 
 
 class TestComputerControlEngine(TestCase):
@@ -14,7 +15,7 @@ class TestComputerControlEngine(TestCase):
     def setUp(self) -> None:
         self.ball = Ball(pong.config.white, 10)
         self.engine = ComputerControlEngine(self.ball)
-        self.pad = Pad('left', 1, self.engine)
+        self.pad = Pad(Left(), 1, self.engine)
         self.pad.rect.y = 100
 
     def test_invalid_event_does_not_move_pad(self):

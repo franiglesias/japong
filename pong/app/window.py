@@ -1,13 +1,11 @@
 import pygame
 
 from app.exit_code import ExitCode
-from game.game import Game
 
 
 class Window(object):
     def __init__(self, width: int, height: int, title: str):
         self.screen = self.set_up_screen(width, height, title)
-        self.game = Game()
         self.score_board = None
         self.scenes = []
 
@@ -33,4 +31,3 @@ class Window(object):
 
     def add_scene(self, scene):
         self.scenes.append(scene)
-

@@ -1,32 +1,43 @@
 import pygame
 
 from app.window import Window
-from config import POINTS_TO_WIN
+from config import POINTS_TO_WIN, human_side, game_mode
 from game.game import Game
+from game.game_mode import GameMode
 from game.scoring.match import Match
 from game.scoring.score_manager import ScoreManager
 from game.scoring.scoreboard import ScoreBoard
+from game.side import Side
 from scenes.endscene import EndScene
 from scenes.gamescene import GameScene
 from scenes.startscene import StartScene
 
 
 class App(object):
-    def __init__(self):
+    def __init__(self, match=Match(3, POINTS_TO_WIN)):
         self.window = Window(800, 600, 'Japong!')
-        game = Game()
-        score_manager = ScoreManager(Match(3, POINTS_TO_WIN))
+        game = Game(Side.from_raw(human_side), GameMode.from_raw(game_mode))
+
+        score_manager = ScoreManager(match)
         score_board = ScoreBoard(score_manager)
-        self.add_scene(StartScene(self.window, game))
-        self.add_scene(GameScene(self.window, game, score_manager, score_board))
-        self.add_scene(EndScene(self.window, score_board))
+
+        self.__add_scenes(
+            StartScene(self.window, game),
+            GameScene(self.window, game, score_manager, score_board),
+            EndScene(self.window, score_board)
+        )
 
     def run(self):
-        pygame.init()
+        pygame.display.init()
+        pygame.font.init()
         exit_code = self.window.run()
 
         pygame.quit()
         return exit_code.value()
 
-    def add_scene(self, scene):
+    def __add_scenes(self, *scenes):
+        for scene in scenes:
+            self.__add_scene(scene)
+
+    def __add_scene(self, scene):
         self.window.add_scene(scene)

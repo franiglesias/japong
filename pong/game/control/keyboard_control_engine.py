@@ -10,15 +10,15 @@ class KeyboardControlEngine(ControlEngine):
 
     def handle(self, events):
         for event in events:
-            self._handle_keyboard_event(event)
+            self.__handle_keyboard_event(event)
 
-    def _handle_keyboard_event(self, event):
+    def __handle_keyboard_event(self, event):
         if event.type == KEYUP:
             self.__handle_released_keys(event)
         elif event.type == KEYDOWN:
-            self._handle_pressed_keys(event)
+            self.__handle_pressed_keys(event)
 
-    def _handle_pressed_keys(self, event):
+    def __handle_pressed_keys(self, event):
         if self._up_key_was_pressed(event):
             self._move_pad_up()
         elif self._down_key_was_pressed(event):
@@ -26,9 +26,9 @@ class KeyboardControlEngine(ControlEngine):
 
     def __handle_released_keys(self, event):
         if self._control_key_was_released(event):
-            self._stop_pad()
+            self.__stop_pad()
 
-    def _stop_pad(self):
+    def __stop_pad(self):
         super().stop_pad()
 
     def _move_pad_up(self):

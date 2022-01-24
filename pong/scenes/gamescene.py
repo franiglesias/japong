@@ -18,76 +18,45 @@ from game.scoring.scoreboard import ScoreBoard
 
 
 class GameScene(Scene):
-    def __init__(self, window: Window, game: Game, score_manager: ScoreManager, score_board: ScoreBoard):
+    def __init__(
+            self,
+            window: Window,
+            game: Game,
+            score_manager: ScoreManager,
+            score_board: ScoreBoard
+    ):
         super().__init__(window)
-
-        self.game = game
         self.score_manager = score_manager
-
-        self.ball = Ball(yellow, 10)
-        self.game.game_mode.bind_ball(self.ball)
-
-        self.all_sprites = Group()
-        self.goals = Group()
-        self.pads = Group()
-
-        self.borders = Group()
-
-        self.all_sprites.add(Net())
-        self.all_sprites.add(self.ball)
-
-        self.player_one = self.game.player_one()
-        self.player_two = self.game.player_two()
-
-        self.score_manager.register_players(self.player_one, self.player_two)
+        self.game = game
         self.score_board = score_board
 
     def run(self):
+        all_sprites, player_one, player_two = self.prepare_game()
 
-        self.__prepare_borders()
+        return self.game_loop(all_sprites, player_one, player_two)
 
-        self.player_one.pad.borders = self.borders
-        self.player_two.pad.borders = self.borders
-
-        self.goals.add(self.player_one.goal)
-        self.goals.add(self.player_two.goal)
-
-        self.pads.add(self.player_one.pad)
-        self.pads.add(self.player_two.pad)
-
-        goal: Goal
-        for goal in self.goals:
-            goal.bind_ball(self.ball)
-            self.all_sprites.add(goal)
-
-        pad: Pad
-        for pad in self.pads:
-            pad.bind_ball(self.ball)
-            self.all_sprites.add(pad)
-
+    def game_loop(self, all_sprites, player_one, player_two):
         # Game loop
         clock = Clock()
         pygame.time.set_timer(COMPUTER_MOVES_EVENT, COMPUTER_MOVES_TIMER_MS)
         end_of_match = False
-
         while not end_of_match:
-
             end_of_set = False
             while not end_of_set:
                 for event in pygame.event.get():
                     if event.type == pygame.QUIT:
                         end_of_match = True
                         break
-                    self.player_one.handle(event)
-                    self.player_two.handle(event)
+                    player_one.handle(event)
+                    player_two.handle(event)
 
                 pygame.event.pump()
-                self.all_sprites.update()
+                all_sprites.update()
 
                 # Game draw
                 self.window.screen.fill(green)
                 self.score_board.draw(self)
-                self.all_sprites.draw(self.window.screen)
+                all_sprites.draw(self.window.screen)
 
                 # Screen update
                 pygame.display.flip()
@@ -103,11 +72,55 @@ class GameScene(Scene):
                 clock.tick(FPS)
         return ExitCode.success()
 
-    def __prepare_borders(self):
-        self.borders.add(Border(0))
-        self.borders.add(Border(590))
+    def prepare_game(self):
+        ball = Ball(yellow, 10)
+        self.game.game_mode.bind_ball(ball)
+
+        player_one = self.game.player_one()
+        player_two = self.game.player_two()
+        self.score_manager.register_players(player_one, player_two)
+
+        borders = Group()
+        borders.add(Border(0))
+        borders.add(Border(590))
+        player_one.pad.borders = borders
+        player_two.pad.borders = borders
+
+        goals = Group()
+        goals.add(player_one.goal)
+        goals.add(player_two.goal)
+
+        pads = Group()
+        pads.add(player_one.pad)
+        pads.add(player_two.pad)
 
         border: Border
-        for border in self.borders:
-            border.bind_ball(self.ball)
-            self.all_sprites.add(border)
+        for border in borders:
+            border.bind_ball(ball)
+
+        goal: Goal
+        for goal in goals:
+            goal.bind_ball(ball)
+
+        pad: Pad
+        for pad in pads:
+            pad.bind_ball(ball)
+
+        all_sprites = self.collect_sprites(ball, borders, goals, pads)
+
+        return all_sprites, player_one, player_two
+
+    def collect_sprites(self, ball, borders, goals, pads):
+        all_sprites = Group()
+        all_sprites.add(Net())
+        all_sprites.add(ball)
+        border: Border
+        for border in borders:
+            all_sprites.add(border)
+        goal: Goal
+        for goal in goals:
+            all_sprites.add(goal)
+        pad: Pad
+        for pad in pads:
+            all_sprites.add(pad)
+        return all_sprites

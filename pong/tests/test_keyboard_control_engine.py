@@ -1,18 +1,17 @@
 from unittest import TestCase
 
-import pygame
-
 import pong
 import pong.game.control.keyboard_control_engine
 import pong.game.pad
 import pong.tests.events
+from game.side import Left
 
 
 class TestKeyboardControlEngine(TestCase):
 
     def setUp(self) -> None:
         self.engine = pong.game.control.keyboard_control_engine.KeyboardControlEngine(('u', 'd'))
-        self.pad = pong.game.pad.Pad('left', 1, self.engine)
+        self.pad = pong.game.pad.Pad(Left(), 1, self.engine)
         self.pad.rect.y = 100
 
     def test_should_ignore_some_keys(self):

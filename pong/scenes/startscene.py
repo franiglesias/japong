@@ -39,9 +39,18 @@ class StartScene(Scene):
         return ExitCode.success()
 
     def _show_configuration(self):
-        self.text_renderer.blit("Table side: L/R ({0}) ".format(self.game.side_preference.str()), styles['config_side'])
-        self.text_renderer.blit("Players: 1/2 ({0}) ".format(self.game.game_mode.str()), styles['config_players'])
-        self.text_renderer.blit('Press any key to play', styles['prompt'])
+        self.text_renderer.blit(
+            "Table side: L/R ({0}) ".format(self.game.side_preference.str()),
+            styles['config_side']
+        )
+        self.text_renderer.blit(
+            "Players: 1/2 ({0}) ".format(self.game.game_mode.str()),
+            styles['config_players']
+        )
+        self.text_renderer.blit(
+            'Press any key to play',
+            styles['prompt']
+        )
 
     def _show_background(self):
         self.window.screen.fill(white)

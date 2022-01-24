@@ -28,7 +28,7 @@ class WindowTestCase(unittest.TestCase):
     def test_should_exit_with_error(self):
         window = Window(800, 600, 'Test')
         error_scene = Scene(window)
-        with unittest.mock.patch.object(error_scene, 'run', wraps=error_scene.run, return_value=ExitCode(-1)) as spy:
+        with unittest.mock.patch.object(error_scene, 'run', wraps=error_scene.run, return_value=ExitCode(-1)):
             window.add_scene(error_scene)
             self.assertTrue(window.run().equals(ExitCode(-1)))
 
@@ -37,7 +37,7 @@ class WindowTestCase(unittest.TestCase):
         play_again_scene = Scene(window)
         with unittest.mock.patch.object(
                 play_again_scene, 'run', wraps=play_again_scene.run,
-                side_effect=[ExitCode.play_again(), ExitCode.success()]) as spy:
+                side_effect=[ExitCode.play_again(), ExitCode.success()]):
             window.add_scene(play_again_scene)
             self.assertTrue(window.run().equals(ExitCode.success()))
 
