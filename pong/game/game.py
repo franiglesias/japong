@@ -9,11 +9,11 @@ class Game(object):
         self.side_preference = side
         self.game_mode = game_mode
 
-    def prefer_right(self):
-        self.side_preference = Right()
-
     def prefer_left(self):
         self.side_preference = Left()
+
+    def prefer_right(self):
+        self.side_preference = Right()
 
     def prefer_two_players(self):
         self.game_mode = TwoPlayers()

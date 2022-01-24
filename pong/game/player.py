@@ -1,14 +1,12 @@
-from game.pad import Pad
 from game.score import Score
 
 
 class Player:
-    def __init__(self, name, side, engine, speed=1):
+    def __init__(self, name, side, pad):
         self.name = name
         self.score = Score()
-        self.engine = engine
         self.side = side
-        self.pad = Pad(side, speed, self.engine)
+        self.pad = pad
 
     def win_point(self):
         self.score.win_point()

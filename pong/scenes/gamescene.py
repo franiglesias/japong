@@ -29,6 +29,7 @@ class GameScene(Scene):
         self.score_manager = score_manager
         self.game = game
         self.score_board = score_board
+        self.pads = Group()
 
     def run(self):
         all_sprites, player_one, player_two = self.prepare_game()
@@ -47,8 +48,9 @@ class GameScene(Scene):
                     if event.type == pygame.QUIT:
                         end_of_match = True
                         break
-                    player_one.handle(event)
-                    player_two.handle(event)
+                    pad: Pad
+                    for pad in self.pads:
+                        pad.handle(event)
 
                 pygame.event.pump()
                 all_sprites.update()
@@ -78,6 +80,7 @@ class GameScene(Scene):
 
         player_one = self.game.player_one()
         player_two = self.game.player_two()
+
         self.score_manager.register_players(player_one, player_two)
 
         borders = Group()
@@ -90,9 +93,8 @@ class GameScene(Scene):
         goals.add(Goal(player_one))
         goals.add(Goal(player_two))
 
-        pads = Group()
-        pads.add(player_one.pad)
-        pads.add(player_two.pad)
+        self.pads.add(player_one.pad)
+        self.pads.add(player_two.pad)
 
         border: Border
         for border in borders:
@@ -103,10 +105,10 @@ class GameScene(Scene):
             goal.bind_ball(ball)
 
         pad: Pad
-        for pad in pads:
+        for pad in self.pads:
             pad.bind_ball(ball)
 
-        all_sprites = self.collect_sprites(ball, borders, goals, pads)
+        all_sprites = self.collect_sprites(ball, borders, goals, self.pads)
 
         return all_sprites, player_one, player_two
 

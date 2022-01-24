@@ -2,6 +2,7 @@ from config import computer_speed, left_keys, human_speed, right_keys
 from field.reacts_to_ball import ReactsToBall
 from game.control.computer_control_engine import ComputerControlEngine
 from game.control.keyboard_control_engine import KeyboardControlEngine
+from game.pad import Pad
 from game.player import Player
 from game.side import Left, Right
 
@@ -22,20 +23,12 @@ class GameMode(ReactsToBall):
         return type(self) == type(other)
 
     def player_one(self):
-        return Player(
-            'computer',
-            Left(),
-            KeyboardControlEngine(self.ball),
-            computer_speed
-        )
+        pad = Pad(Left(), computer_speed, ComputerControlEngine(self.ball))
+        return Player('computer', Left(), pad)
 
     def player_two(self):
-        return Player(
-            'computer',
-            Right(),
-            ComputerControlEngine(self.ball),
-            computer_speed
-        )
+        pad = Pad(Right(), computer_speed, ComputerControlEngine(self.ball))
+        return Player('computer', Right(), pad)
 
     def str(self):
         return 'comp/comp'
@@ -43,20 +36,13 @@ class GameMode(ReactsToBall):
 
 class OnePlayer(GameMode):
     def player_one(self):
-        return Player(
-            'human',
-            Left(),
-            KeyboardControlEngine(left_keys),
-            human_speed
-        )
+        pad = Pad(Left(), human_speed, KeyboardControlEngine(left_keys))
+
+        return Player('human', Left(), pad)
 
     def player_two(self):
-        return Player(
-            'computer',
-            Right(),
-            ComputerControlEngine(self.ball),
-            computer_speed
-        )
+        pad = Pad(Right(), computer_speed, ComputerControlEngine(self.ball))
+        return Player('computer', Right(), pad)
 
     def str(self):
         return '1 player'
@@ -64,20 +50,14 @@ class OnePlayer(GameMode):
 
 class TwoPlayers(GameMode):
     def player_one(self):
-        return Player(
-            'human',
-            Left(),
-            KeyboardControlEngine(left_keys),
-            human_speed
-        )
+        pad = Pad(Left(), human_speed, KeyboardControlEngine(left_keys))
+
+        return Player('human', Left(), pad)
 
     def player_two(self):
-        return Player(
-            'other',
-            Right(),
-            KeyboardControlEngine(right_keys),
-            human_speed
-        )
+        pad = Pad(Right(), human_speed, KeyboardControlEngine(right_keys))
+
+        return Player('other', Right(), pad)
 
     def str(self):
         return 'Two players'

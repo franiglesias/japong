@@ -1,8 +1,9 @@
 from unittest import TestCase
 
-import pong.config
+from config import computer_speed, white
 from game.ball import Ball
 from game.control.computer_control_engine import ComputerControlEngine
+from game.pad import Pad
 from game.player import Player
 from game.scoring.match import Match
 from game.scoring.score_manager import ScoreManager
@@ -80,6 +81,7 @@ class TestScoreManager(TestCase):
 
     @staticmethod
     def preparePlayer():
-        ball = Ball(pong.config.white, 10)
+        ball = Ball(white, 10)
         engine = ComputerControlEngine(ball)
-        return Player('left', Left(), engine)
+        pad = Pad(Left(), computer_speed, engine)
+        return Player('left', Left(), pad)
