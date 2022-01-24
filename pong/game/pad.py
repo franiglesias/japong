@@ -5,6 +5,7 @@ from field.bound_to_ball import BoundToBall
 from field.positionable import Positionable
 from game.ball import Ball
 from game.control.control_engine import ControlEngine
+from game.region import PadRegion, TopRegion, MiddleTopRegion, MiddleRegion, MiddleBottomRegion, BottomRegion
 from utils.image import create_image
 from utils.soundplayer import SoundPlayer
 
@@ -71,45 +72,3 @@ class Pad(Sprite, Positionable, BoundToBall):
         region.bounce(ball)
 
 
-class PadRegion():
-    def __init__(self, height, pct):
-        self.height = height
-        self.pct = pct
-
-    def hit(self, ball: Ball, pad: Pad):
-        return ball.y_center() < self.height * self.pct // 100 + pad.rect.y
-
-    def bounce(self, ball):
-        ball.bounce_with_pad(1, 1)
-
-    @staticmethod
-    def where(ball: Ball, pad: Pad):
-        for region in pad.regions:
-            if region.hit(ball, pad):
-                return region
-        return PadRegion(75, 0)
-
-
-class TopRegion(PadRegion):
-    def bounce(self, ball):
-        ball.bounce_with_pad(1, -2)
-
-
-class MiddleTopRegion(PadRegion):
-    def bounce(self, ball):
-        ball.bounce_with_pad(2, 2)
-
-
-class MiddleRegion(PadRegion):
-    def bounce(self, ball):
-        ball.bounce_with_pad(1, 1)
-
-
-class MiddleBottomRegion(PadRegion):
-    def bounce(self, ball):
-        ball.bounce_with_pad(2, 2)
-
-
-class BottomRegion(PadRegion):
-    def bounce(self, ball):
-        ball.bounce_with_pad(1, 2)
