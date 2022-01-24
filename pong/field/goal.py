@@ -13,7 +13,7 @@ GOAL_HIGHLIGHT_IN_SECONDS = 1.5
 
 class Goal(Sprite, Positionable, ReactsToBall):
 
-    def __init__(self, x, player):
+    def __init__(self, player):
         super().__init__()
 
         self.player = player
@@ -21,7 +21,7 @@ class Goal(Sprite, Positionable, ReactsToBall):
 
         self.image = create_image(10, 580, self.color)
         self.rect = self.image.get_rect()
-        self.set_position(x, 10)
+        self.set_position(self.player.side.goal(), 10)
 
         self.effect = Effect(GOAL_HIGHLIGHT_IN_SECONDS)
 

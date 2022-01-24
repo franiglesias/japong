@@ -87,8 +87,8 @@ class GameScene(Scene):
         player_two.pad.borders = borders
 
         goals = Group()
-        goals.add(player_one.goal)
-        goals.add(player_two.goal)
+        goals.add(Goal(player_one))
+        goals.add(Goal(player_two))
 
         pads = Group()
         pads.add(player_one.pad)

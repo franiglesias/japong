@@ -1,4 +1,3 @@
-from field.goal import Goal
 from game.pad import Pad
 from game.score import Score
 
@@ -10,7 +9,6 @@ class Player:
         self.engine = engine
         self.side = side
         self.pad = Pad(side, speed, self.engine)
-        self.goal = Goal(side.goal(), self)
 
     def win_point(self):
         self.score.win_point()
