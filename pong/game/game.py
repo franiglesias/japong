@@ -20,9 +20,3 @@ class Game(object):
 
     def prefer_one_player(self):
         self.game_mode = OnePlayer()
-
-    def player_one(self):
-        return self.game_mode.player_one()
-
-    def player_two(self):
-        return self.game_mode.player_two()

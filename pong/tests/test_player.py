@@ -13,6 +13,6 @@ class TestPlayer(TestCase):
         ball = Ball(white, 10)
         engine = ComputerControlEngine(ball)
         pad = Pad(Left(), computer_speed, engine)
-        self.player = Player('left', Left(), pad)
+        self.player = Player('left', Left())
         self.player.win_set()
         self.assertEqual(1, self.player.sets())

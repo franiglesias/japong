@@ -2,17 +2,13 @@ from game.score import Score
 
 
 class Player:
-    def __init__(self, name, side, pad):
+    def __init__(self, name, side):
         self.name = name
         self.score = Score()
         self.side = side
-        self.pad = pad
 
     def win_point(self):
         self.score.win_point()
-
-    def handle(self, event):
-        self.pad.handle(event)
 
     def points(self):
         return self.score.points()

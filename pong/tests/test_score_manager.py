@@ -84,4 +84,4 @@ class TestScoreManager(TestCase):
         ball = Ball(white, 10)
         engine = ComputerControlEngine(ball)
         pad = Pad(Left(), computer_speed, engine)
-        return Player('left', Left(), pad)
+        return Player('left', Left())

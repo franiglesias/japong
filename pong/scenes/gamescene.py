@@ -78,23 +78,23 @@ class GameScene(Scene):
         ball = Ball(yellow, 10)
         self.game.game_mode.bind_ball(ball)
 
-        player_one = self.game.player_one()
-        player_two = self.game.player_two()
+        pad_one, player_one = self.game.game_mode.player_one()
+        pad_two, player_two = self.game.game_mode.player_two()
 
         self.score_manager.register_players(player_one, player_two)
 
         borders = Group()
         borders.add(Border(0))
         borders.add(Border(590))
-        player_one.pad.borders = borders
-        player_two.pad.borders = borders
+        pad_one.borders = borders
+        pad_two.borders = borders
 
         goals = Group()
         goals.add(Goal(player_one))
         goals.add(Goal(player_two))
 
-        self.pads.add(player_one.pad)
-        self.pads.add(player_two.pad)
+        self.pads.add(pad_one)
+        self.pads.add(pad_two)
 
         border: Border
         for border in borders:

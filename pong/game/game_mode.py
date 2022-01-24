@@ -24,11 +24,11 @@ class GameMode(ReactsToBall):
 
     def player_one(self):
         pad = Pad(Left(), computer_speed, ComputerControlEngine(self.ball))
-        return Player('computer', Left(), pad)
+        return pad, Player('computer', Left())
 
     def player_two(self):
         pad = Pad(Right(), computer_speed, ComputerControlEngine(self.ball))
-        return Player('computer', Right(), pad)
+        return pad, Player('computer', Right())
 
     def str(self):
         return 'comp/comp'
@@ -38,11 +38,11 @@ class OnePlayer(GameMode):
     def player_one(self):
         pad = Pad(Left(), human_speed, KeyboardControlEngine(left_keys))
 
-        return Player('human', Left(), pad)
+        return pad, Player('human', Left())
 
     def player_two(self):
         pad = Pad(Right(), computer_speed, ComputerControlEngine(self.ball))
-        return Player('computer', Right(), pad)
+        return pad, Player('computer', Right())
 
     def str(self):
         return '1 player'
@@ -52,12 +52,12 @@ class TwoPlayers(GameMode):
     def player_one(self):
         pad = Pad(Left(), human_speed, KeyboardControlEngine(left_keys))
 
-        return Player('human', Left(), pad)
+        return pad, Player('human', Left())
 
     def player_two(self):
         pad = Pad(Right(), human_speed, KeyboardControlEngine(right_keys))
 
-        return Player('other', Right(), pad)
+        return pad, Player('other', Right())
 
     def str(self):
         return 'Two players'
