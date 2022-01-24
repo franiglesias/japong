@@ -10,10 +10,8 @@ from utils.soundplayer import SoundPlayer
 
 
 class Pad(Sprite, Positionable, ReactsToBall):
-    def __init__(self, side, speed, engine: ControlEngine):
+    def __init__(self, side, engine: ControlEngine):
         super().__init__()
-
-        self.speed = speed
 
         self.engine = engine
         self.engine.bind_pad(self)
@@ -36,10 +34,10 @@ class Pad(Sprite, Positionable, ReactsToBall):
         ]
 
     def up(self):
-        self.dy = -self.speed
+        self.dy = -self.engine.speed()
 
     def down(self):
-        self.dy = self.speed
+        self.dy = self.engine.speed()
 
     def stop(self):
         self.dy = 0

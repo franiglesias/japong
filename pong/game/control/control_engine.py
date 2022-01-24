@@ -8,21 +8,21 @@ class ControlEngine(object, metaclass=ABCMeta):
     def bind_pad(self, the_pad):
         self.pad = the_pad
 
+    def speed(self):
+        return 1
+
     @abstractmethod
     def handle(self, events):
         pass
 
-    def _pad(self):
-        return self.pad
-
     def pad_position(self):
-        return self._pad().vertical_position()
+        return self.pad.vertical_position()
 
     def move_pad_up(self):
-        self._pad().up()
+        self.pad.up()
 
     def move_pad_down(self):
-        self._pad().down()
+        self.pad.down()
 
     def stop_pad(self):
-        self._pad().stop()
+        self.pad.stop()

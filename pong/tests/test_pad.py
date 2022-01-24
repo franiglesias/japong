@@ -10,7 +10,7 @@ class TestPad(TestCase):
     def setUp(self) -> None:
         self.ball = Ball((100, 100, 100), 10)
         self.__given_ball_has_speed_of(1, 1)
-        self.pad = Pad(Left(), 1, KeyboardControlEngine(('u', 'd')))
+        self.pad = Pad(Left(), KeyboardControlEngine(('u', 'd')))
         self.pad.rect.y = 100
 
     def test_ball_hits_in_central_region_left_pad(self):

@@ -1,4 +1,4 @@
-from config import COMPUTER_MOVES_EVENT
+from config import COMPUTER_MOVES_EVENT, computer_speed
 from game.ball import Ball
 from game.control.control_engine import ControlEngine
 
@@ -12,6 +12,9 @@ class ComputerControlEngine(ControlEngine):
         for event in events:
             if event.type == COMPUTER_MOVES_EVENT:
                 self.__follow()
+
+    def speed(self):
+        return computer_speed
 
     def __follow(self):
         if self.__should_move_down():

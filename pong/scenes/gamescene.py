@@ -32,11 +32,11 @@ class GameScene(Scene):
         self.pads = Group()
 
     def run(self):
-        all_sprites, player_one, player_two = self.prepare_game()
+        all_sprites = self.prepare_game()
 
-        return self.game_loop(all_sprites, player_one, player_two)
+        return self.game_loop(all_sprites)
 
-    def game_loop(self, all_sprites, player_one, player_two):
+    def game_loop(self, all_sprites):
         # Game loop
         clock = Clock()
         pygame.time.set_timer(COMPUTER_MOVES_EVENT, COMPUTER_MOVES_TIMER_MS)
@@ -108,9 +108,7 @@ class GameScene(Scene):
         for pad in self.pads:
             pad.bind_ball(ball)
 
-        all_sprites = self.collect_sprites(ball, borders, goals, self.pads)
-
-        return all_sprites, player_one, player_two
+        return self.collect_sprites(ball, borders, goals, self.pads)
 
     def collect_sprites(self, ball, borders, goals, pads):
         all_sprites = Group()

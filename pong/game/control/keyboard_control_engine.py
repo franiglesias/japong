@@ -1,5 +1,6 @@
 from pygame import key, KEYDOWN, KEYUP
 
+from config import human_speed
 from game.control.control_engine import ControlEngine
 
 
@@ -7,6 +8,9 @@ class KeyboardControlEngine(ControlEngine):
     def __init__(self, keys):
         super().__init__()
         self.keys = keys
+
+    def speed(self):
+        return human_speed
 
     def handle(self, events):
         for event in events:
@@ -20,42 +24,42 @@ class KeyboardControlEngine(ControlEngine):
 
     def __handle_pressed_keys(self, event):
         if self._up_key_was_pressed(event):
-            self._move_pad_up()
+            self.__move_pad_up()
         elif self._down_key_was_pressed(event):
             self._move_pad_down()
 
     def __handle_released_keys(self, event):
-        if self._control_key_was_released(event):
+        if self.__control_key_was_released(event):
             self.__stop_pad()
 
     def __stop_pad(self):
         super().stop_pad()
 
-    def _move_pad_up(self):
+    def __move_pad_up(self):
         super().move_pad_up()
 
     def _move_pad_down(self):
         super().move_pad_down()
 
     def _up_key_was_pressed(self, event):
-        return self._get_key(event) == self._up_key()
+        return self._get_key(event) == self.__up_key()
 
     def _down_key_was_pressed(self, event):
-        return self._get_key(event) == self._down_key()
+        return self._get_key(event) == self.__down_key()
 
     def _down_key_was_released(self, event):
-        return self._get_key(event) == self._down_key()
+        return self._get_key(event) == self.__down_key()
 
-    def _up_key_was_released(self, event):
-        return self._get_key(event) == self._up_key()
+    def __up_key_was_released(self, event):
+        return self._get_key(event) == self.__up_key()
 
-    def _control_key_was_released(self, event):
-        return self._up_key_was_released(event) or self._down_key_was_released(event)
+    def __control_key_was_released(self, event):
+        return self.__up_key_was_released(event) or self._down_key_was_released(event)
 
-    def _up_key(self):
+    def __up_key(self):
         return self.keys[0]
 
-    def _down_key(self):
+    def __down_key(self):
         return self.keys[1]
 
     @staticmethod
