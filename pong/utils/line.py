@@ -17,7 +17,7 @@ class Position:
         return Position(coordinates[0], coordinates[1])
 
     def coordinates(self):
-        return (self.__x, self.__y)
+        return self.__x, self.__y
 
     def next(self, text):
         return Position(self.__x, self.__y + text.get_rect().height)
