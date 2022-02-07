@@ -1,4 +1,5 @@
 from config import styles
+from utils.line import Line
 
 
 class ScoreBoard:
@@ -7,10 +8,10 @@ class ScoreBoard:
 
     def draw(self, scene):
         lines = [
-            (self.points(), styles['score']),
-            (self.sets(), styles['sets'])
+            Line(self.points(), styles['score']),
+            Line(self.sets(), styles['sets'])
         ]
-        scene.text_writer.multi_blit(lines, ('center', 40))
+        scene.text_writer.blits(lines, ('center', 30))
 
     def points(self):
         return "{0}   {1}".format(
@@ -30,18 +31,18 @@ class ScoreBoard:
     def final_board(self, scene):
         winner = self.score_manager.winner()
 
-        line = ("{0} WON".format(winner.name), styles['end_title'])
+        line = Line("{0} WON".format(winner.name), styles['end_title'])
 
-        scene.text_writer.multi_blit([line], ('center', 30))
+        scene.text_writer.blits([line], ('center', 'top'))
 
         partials = self.score_manager.partials()
 
-        lines = [(self.sets(), styles['score'])]
+        lines = [Line(self.sets(), styles['score'])]
         for set_index in range(len(partials[0])):
             line = "{0} - {1}".format(
                 partials[0][set_index],
                 partials[1][set_index]
             )
-            lines.append((line, styles['sets']))
+            lines.append(Line(line, styles['sets']))
 
-        scene.text_writer.multi_blit(lines, ('center', 160))
+        scene.text_writer.blits(lines, ('center', 'middle'))

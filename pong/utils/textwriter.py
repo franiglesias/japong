@@ -9,20 +9,18 @@ class TextWriter(object):
         self.surface = surface
 
     def a_line(self, line, style):
-        lines = [(line, style)]
-        self.multi_blit(lines, (style['horizontal'], style['vertical']))
+        lines = [Line(line, style)]
+        self.blits(lines, (style['horizontal'], style['vertical']))
 
-    def multi_blit(self, lines, position):
+    def blits(self, lines, position):
         for line in lines:
-            ln = Line(line[0], line[1])
-
-            the_font = Font(get_default_font(), ln.font_size())
-            text = the_font.render(ln.content(), False, ln.color(), ln.background())
+            the_font = Font(get_default_font(), line.font_size())
+            text = the_font.render(line.content(), False, line.color(), line.background())
 
             p = Position.from_style(position[0], position[1], text, self.surface)
 
-            if ln.is_transparent():
-                text.set_colorkey(ln.background())
+            if line.is_transparent():
+                text.set_colorkey(line.background())
 
             self.surface.blit(text, p.coordinates())
 

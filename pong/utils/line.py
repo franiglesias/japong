@@ -8,10 +8,6 @@ class Position:
         self.__padding = 30
 
     @staticmethod
-    def from_coordinates(x, y):
-        return Position(x, y)
-
-    @staticmethod
     def from_style(horizontal, vertical, text, surface):
         coordinates = position(horizontal, vertical, text, surface, 30)
         return Position(coordinates[0], coordinates[1])
@@ -38,6 +34,10 @@ def position(horizontal, vertical, text, surface, padding):
         y = surface.get_rect().height // 2 - text.get_rect().height // 2
     if vertical == 'bottom':
         y = surface.get_rect().height - text.get_rect().height - padding
+    if isinstance(horizontal, int):
+        x = horizontal
+    if isinstance(vertical, int):
+        y = vertical
     return x, y
 
 
