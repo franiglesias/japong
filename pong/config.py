@@ -3,33 +3,11 @@ import os
 # COLORS
 import pygame.constants
 
+from utils.color import darken, lighten
+
 width = 800
 height = 600
 title = 'Japong!'
-
-
-def inc_byte(byte, pct):
-    if byte == 0:
-        return (pct * 255) / 100
-
-    byte += byte * pct / 100
-
-    return min(byte, 255)
-
-
-def dec_byte(byte, pct):
-    byte -= byte * pct / 100
-
-    return max(byte, 0)
-
-
-def darken(color, pct):
-    return dec_byte(color[0], pct), dec_byte(color[1], pct), dec_byte(color[2], pct)
-
-
-def lighten(color, pct):
-    return inc_byte(color[0], pct), inc_byte(color[1], pct), inc_byte(color[2], pct)
-
 
 black = (0, 0, 0)
 white = (255, 255, 255)
