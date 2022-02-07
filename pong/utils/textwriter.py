@@ -1,48 +1,29 @@
 from pygame.font import Font
 from pygame.font import get_default_font
 
-from config import chroma
-from utils.textrenderer import TextRenderer
+from utils.line import Line, Position
 
 
 class TextWriter(object):
-    def __init__(self, renderer: TextRenderer):
-        self.writer = renderer
-        self.surface = renderer.surface
-        self.HORIZONTAL = 0
-        self.VERTICAL = 1
-        self.STYLE = 1
-        self.TEXT = 0
+    def __init__(self, surface):
+        self.surface = surface
 
-    def blit(self, line, style):
-        self.writer.blit(line, style)
+    def a_line(self, line, style):
+        lines = [(line, style)]
+        self.multi_blit(lines, (style['horizontal'], style['vertical']))
 
     def multi_blit(self, lines, position):
         for line in lines:
-            the_font = Font(get_default_font(), line[self.STYLE]['font_size'])
-            transparent = line[self.STYLE]['background'] == 'transparent'
-            background = self._background(line, transparent)
+            ln = Line(line[0], line[1])
 
-            text = the_font.render(line[self.TEXT], False, line[self.STYLE]['color'], background)
-            if transparent:
-                text.set_colorkey(background)
+            the_font = Font(get_default_font(), ln.font_size())
+            text = the_font.render(ln.content(), False, ln.color(), ln.background())
 
-            self.surface.blit(text, ((self._x(position, text)), position[self.VERTICAL]))
-            position = self.position_next_line(position, text)
+            p = Position.from_style(position[0], position[1], text, self.surface)
 
-    def _x(self, position, text):
-        if self._center(position):
-            return (self.surface.get_rect().width - text.get_rect().width) // 2
-        return position[0]
+            if ln.is_transparent():
+                text.set_colorkey(ln.background())
 
-    def position_next_line(self, position, text):
-        return position[self.HORIZONTAL], position[self.VERTICAL] + text.get_rect().height
+            self.surface.blit(text, p.coordinates())
 
-    def _background(self, line, transparent):
-        if transparent:
-            return chroma
-
-        return line[self.STYLE]['background']
-
-    def _center(self, position):
-        return isinstance(position[self.HORIZONTAL], str) and position[self.HORIZONTAL] == 'center'
+            position = p.next(text).coordinates()

@@ -39,15 +39,15 @@ class StartScene(Scene):
         return ExitCode.success()
 
     def _show_configuration(self):
-        self.text_renderer.blit(
+        self.text_writer.a_line(
             "Table side: L/R ({0}) ".format(self.game.side_preference.str()),
             styles['config_side']
         )
-        self.text_renderer.blit(
+        self.text_writer.a_line(
             "Players: 1/2 ({0}) ".format(self.game.game_mode.str()),
             styles['config_players']
         )
-        self.text_renderer.blit(
+        self.text_writer.a_line(
             'Press any key to play',
             styles['prompt']
         )

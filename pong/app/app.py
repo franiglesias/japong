@@ -14,7 +14,7 @@ from scenes.startscene import StartScene
 
 
 class App(object):
-    def __init__(self, match=Match(3, POINTS_TO_WIN)):
+    def __init__(self, match=Match(3, POINTS_TO_WIN, 2)):
         self.window = Window(width, height, title)
         game = Game(Side.from_raw(human_side), GameMode.from_raw(game_mode))
 

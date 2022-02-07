@@ -46,8 +46,9 @@ class GameScene(Scene):
         self.score_manager.register_players(player_one, player_two)
 
         borders = Group()
-        borders.add(Border(0))
-        borders.add(Border(590))
+        borders.add(Border(0, 0, 800, 10))
+        borders.add(Border(0, 590, 800, 10))
+
         pad_one.borders = borders
         pad_two.borders = borders
 

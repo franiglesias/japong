@@ -13,3 +13,4 @@ python_version = "3.7"
 
 pygame~=2.1.0
 mock~=4.0.3
+approvaltests~=3.5.0

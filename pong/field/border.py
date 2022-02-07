@@ -8,12 +8,12 @@ from utils.soundplayer import SoundPlayer
 
 
 class Border(Sprite, Positionable, BoundToBall):
-    def __init__(self, y):
+    def __init__(self, x, y, width, height):
         super().__init__()
 
-        self.image = create_image(800, 10, white)
+        self.image = create_image(width, height, white)
         self.rect = self.image.get_rect()
-        self.set_position(0, y)
+        self.set_position(x, y)
 
     def update(self):
         collisions = spritecollide(self, Group(self.ball), False)

@@ -1,10 +1,10 @@
 import pygame
 
-from config import styles
-from config import black
+from app.exit_code import ExitCode
 from app.scene import Scene
 from app.window import Window
-from app.exit_code import ExitCode
+from config import black
+from config import styles
 
 
 class EndScene(Scene):
@@ -15,7 +15,7 @@ class EndScene(Scene):
     def run(self):
         self.window.screen.fill(black)
         self.score_board.final_board(self)
-        self.text_renderer.blit('Press P to play again or any other key to exit', styles['prompt'])
+        self.text_writer.a_line('Press P to play again or any other key to exit', styles['prompt'])
 
         pygame.display.flip()
         done = False

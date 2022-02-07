@@ -22,9 +22,6 @@ class Ball(Sprite, Positionable):
 
         self.__restart()
 
-    def vertical_position(self):
-        return self.rect.y
-
     def update(self):
         self.direction.update(self.rect)
 

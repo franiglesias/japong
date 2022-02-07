@@ -60,9 +60,6 @@ class Pad(Sprite, Positionable, BoundToBall):
         if len(collisions) > 0:
             self.hit(self.ball)
 
-    def vertical_position(self):
-        return self.rect.y
-
     def handle(self, *events):
         self.engine.handle(events)
 
@@ -70,5 +67,3 @@ class Pad(Sprite, Positionable, BoundToBall):
         SoundPlayer().play('pad-hit')
         region = PadRegion.where(ball, self)
         region.bounce(ball)
-
-

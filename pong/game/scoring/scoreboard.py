@@ -10,7 +10,7 @@ class ScoreBoard:
             (self.points(), styles['score']),
             (self.sets(), styles['sets'])
         ]
-        scene.text_renderer.multi_blit(lines, ('center', 40))
+        scene.text_writer.multi_blit(lines, ('center', 40))
 
     def points(self):
         return "{0}   {1}".format(
@@ -32,7 +32,7 @@ class ScoreBoard:
 
         line = ("{0} WON".format(winner.name), styles['end_title'])
 
-        scene.text_renderer.multi_blit([line], ('center', 30))
+        scene.text_writer.multi_blit([line], ('center', 30))
 
         partials = self.score_manager.partials()
 
@@ -44,4 +44,4 @@ class ScoreBoard:
             )
             lines.append((line, styles['sets']))
 
-        scene.text_renderer.multi_blit(lines, ('center', 160))
+        scene.text_writer.multi_blit(lines, ('center', 160))
