@@ -2,7 +2,7 @@ from game.game_mode import GameMode, TwoPlayers, OnePlayer
 from game.side import Right, Left
 
 
-class Game(object):
+class Game:
     game_mode: GameMode
 
     def __init__(self, side, game_mode):

@@ -13,7 +13,7 @@ from scenes.gamescene import GameScene
 from scenes.startscene import StartScene
 
 
-class App(object):
+class App:
     def __init__(self, match=Match(3, POINTS_TO_WIN, 2)):
         self.window = Window(width, height, title)
         game = Game(Side.from_raw(human_side), GameMode.from_raw(game_mode))
@@ -32,7 +32,8 @@ class App(object):
         pygame.font.init()
         exit_code = self.window.run()
 
-        pygame.quit()
+        pygame.display.quit()
+        pygame.font.quit()
         return exit_code.value()
 
     def __add_scenes(self, *scenes):

@@ -1,7 +1,7 @@
 from abc import ABCMeta, abstractmethod
 
 
-class ControlEngine(object, metaclass=ABCMeta):
+class ControlEngine(metaclass=ABCMeta):
     def __init__(self):
         self.pad = None
 

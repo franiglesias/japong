@@ -13,17 +13,14 @@ def inc_byte(byte, pct):
         return (pct * 255) / 100
 
     byte += byte * pct / 100
-    if byte > 255:
-        byte = 255
-    return byte
+
+    return min(byte, 255)
 
 
 def dec_byte(byte, pct):
     byte -= byte * pct / 100
 
-    if byte < 0:
-        byte = 0
-    return byte
+    return max(byte, 0)
 
 
 def darken(color, pct):

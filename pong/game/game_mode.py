@@ -14,10 +14,11 @@ class GameMode(BoundToBall):
 
     @staticmethod
     def from_raw(raw_game_mode):
-        if raw_game_mode == 1:
-            return OnePlayer()
-        if raw_game_mode == 2:
-            return TwoPlayers()
+        modes = [
+            OnePlayer(),
+            TwoPlayers()
+        ]
+        return modes[raw_game_mode - 1]
 
     def equals(self, other):
         return type(self) == type(other)

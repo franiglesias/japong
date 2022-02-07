@@ -1,4 +1,4 @@
-class ExitCode(object):
+class ExitCode:
     def __init__(self, code: int):
         self.__code = code
 
