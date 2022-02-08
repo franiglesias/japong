@@ -1,0 +1,22 @@
+[screen]
+width = 800
+height = 600
+title = 'Japong!'
+FPS = 180
+
+[match]
+points_to_win = 5
+sets_to_win = 3
+minimum_diff = 2
+
+[preferences]
+human_side = 'left'
+game_mode = 1
+computer_speed = 1
+human_speed = 2
+
+[control]
+[control.left]
+keys = ['w', 's']
+[control.right]
+keys = ['o', 'l']

@@ -78,9 +78,6 @@ BASE_PATH = os.path.dirname(os.path.realpath(__file__))
 
 # GAME PARAMS
 
-POINTS_TO_WIN = 5
-SETS_TO_WIN = 3
-MINIMUM_DIFF = 2
 FPS = 180
 
 # CUSTOM GAME EVENTS
