@@ -5,9 +5,9 @@ import pygame.constants
 
 from utils.color import darken, lighten
 
-width = 800
-height = 600
-title = 'Japong!'
+WIDTH = 800
+HEIGHT = 600
+TITLE = 'Japong!'
 
 black = (0, 0, 0)
 white = (255, 255, 255)
@@ -74,12 +74,13 @@ styles = {
     },
 }
 
-
-base_path = os.path.dirname(os.path.realpath(__file__))
+BASE_PATH = os.path.dirname(os.path.realpath(__file__))
 
 # GAME PARAMS
 
 POINTS_TO_WIN = 5
+SETS_TO_WIN = 3
+MINIMUM_DIFF = 2
 FPS = 180
 
 # CUSTOM GAME EVENTS
@@ -87,12 +88,12 @@ FPS = 180
 COMPUTER_MOVES_EVENT = pygame.constants.USEREVENT + 1
 COMPUTER_MOVES_TIMER_MS = 5
 
-human_side = 'left'
+HUMAN_SIDE = 'left'
 
-game_mode = 1
+GAME_MODE = 1
 
-computer_speed = 1
-human_speed = 2
+COMPUTER_SPEED = 1
+HUMAN_SPEED = 2
 
-left_keys = ('w', 's')
-right_keys = ('o', 'l')
+LEFT_KEYS = ('w', 's')
+RIGHT_KEYS = ('o', 'l')

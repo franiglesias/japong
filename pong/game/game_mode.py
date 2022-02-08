@@ -1,4 +1,4 @@
-from config import left_keys, right_keys
+from config import LEFT_KEYS, RIGHT_KEYS
 from field.bound_to_ball import BoundToBall
 from game.control.computer_control_engine import ComputerControlEngine
 from game.control.keyboard_control_engine import KeyboardControlEngine
@@ -41,7 +41,7 @@ class GameMode(BoundToBall):
 
 class OnePlayer(GameMode):
     def player_one(self):
-        pad = Pad(Left(), KeyboardControlEngine(left_keys))
+        pad = Pad(Left(), KeyboardControlEngine(LEFT_KEYS))
         player = Player('human', Left())
 
         return pad, player
@@ -58,13 +58,13 @@ class OnePlayer(GameMode):
 
 class TwoPlayers(GameMode):
     def player_one(self):
-        pad = Pad(Left(), KeyboardControlEngine(left_keys))
+        pad = Pad(Left(), KeyboardControlEngine(LEFT_KEYS))
         player = Player('human', Left())
 
         return pad, player
 
     def player_two(self):
-        pad = Pad(Right(), KeyboardControlEngine(right_keys))
+        pad = Pad(Right(), KeyboardControlEngine(RIGHT_KEYS))
         player = Player('other', Right())
 
         return pad, player

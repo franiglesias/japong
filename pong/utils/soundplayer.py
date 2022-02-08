@@ -1,12 +1,12 @@
 import pygame
 
-from config import base_path
+from config import BASE_PATH
 
 
 class SoundPlayer(object):
     def __init__(self) -> None:
         pygame.mixer.init()
-        self.base = base_path + '/assets/sounds/'
+        self.base = BASE_PATH + '/assets/sounds/'
         self.effects = {
             'pad-hit': 'pad-hit.ogg',
             'table-hit': 'table-hit.ogg',

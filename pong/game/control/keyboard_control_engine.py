@@ -1,6 +1,6 @@
 from pygame import key, KEYDOWN, KEYUP
 
-from config import human_speed
+from config import HUMAN_SPEED
 from game.control.control_engine import ControlEngine
 
 
@@ -10,7 +10,7 @@ class KeyboardControlEngine(ControlEngine):
         self.keys = keys
 
     def speed(self):
-        return human_speed
+        return HUMAN_SPEED
 
     def handle(self, events):
         for event in events:

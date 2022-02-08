@@ -3,7 +3,7 @@ import pygame
 from app.exit_code import ExitCode
 from app.scene import Scene
 from app.window import Window
-from config import base_path, white, styles
+from config import BASE_PATH, white, styles
 from game.game import Game
 
 
@@ -58,4 +58,4 @@ class StartScene(Scene):
 
     @staticmethod
     def _get_image_path():
-        return pygame.image.load(base_path + '/assets/pong.jpg')
+        return pygame.image.load(BASE_PATH + '/assets/pong.jpg')
