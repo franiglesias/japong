@@ -5,12 +5,13 @@ from app.scene import Scene
 from app.window import Window
 from config import black
 from config import styles
+from game.scoring.scoreboard import ScoreBoard
 
 
 class EndScene(Scene):
-    def __init__(self, window: Window, score_board=None):
+    def __init__(self, window: Window, score_manager):
         super().__init__(window)
-        self.score_board = score_board
+        self.score_board = ScoreBoard(score_manager)
 
     def run(self):
         self.window.screen.fill(black)

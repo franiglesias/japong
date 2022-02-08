@@ -1,17 +1,19 @@
-[screen]
-width = 800
-height = 600
-title = 'Japong!'
-FPS = 180
-
 [match]
 points_to_win = 5
 sets_to_win = 3
 minimum_diff = 2
 
+[screen]
+width = 800
+height = 600
+title = 'Japong!'
+
 [preferences]
 human_side = 'left'
 game_mode = 1
+
+[game]
+FPS = 180
 computer_speed = 1
 human_speed = 2
 

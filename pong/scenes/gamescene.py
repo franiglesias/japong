@@ -23,12 +23,11 @@ class GameScene(Scene):
             window: Window,
             game: Game,
             score_manager: ScoreManager,
-            score_board: ScoreBoard
     ):
         super().__init__(window)
         self.score_manager = score_manager
         self.game = game
-        self.score_board = score_board
+        self.score_board = ScoreBoard(score_manager)
         self.pads = Group()
 
     def run(self):
