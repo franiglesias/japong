@@ -18,7 +18,7 @@ class GameMode(BoundToBall):
             OnePlayer(),
             TwoPlayers()
         ]
-        return modes[raw_game_mode - 1]
+        return modes[int(raw_game_mode) - 1]
 
     def equals(self, other):
         return type(self) == type(other)
